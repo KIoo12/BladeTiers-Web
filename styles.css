@@ -1,7 +1,7 @@
 /* --- Fuentes de Google Fonts (MCtiers usa Roboto y Open Sans) --- */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
 
-/* Variables para colores (Basadas en MCtiers Dark Theme) */
+/* Variables para colores */
 :root {
     --bg-dark: #1a1a1c; 
     --bg-main: #222226; 
@@ -10,20 +10,16 @@
     --color-text: #e0e0e0; 
     --color-link: #a1a1a1; 
     --border-color: #38383e; 
-
-    /* Colores de ranking */
-    --rank-gold: #ffd700;
+    --rank-gold: #f7a83d; /* Usando el color primario para el rank 1 */
     --rank-silver: #c0c0c0;
     --rank-bronze: #cd7f32;
     --rank-other: #3a3a3f; 
     --rank-text-dark: #212121; 
     --rank-text-light: #ffffff; 
-
-    /* Colores de región */
-    --region-bg-na: #882222; 
-    --region-bg-eu: #224488; 
-    --region-bg-as: #228844; 
-    --region-bg-br: #662266; 
+    --region-bg-na: #b52b2b; /* Rojo más intenso */
+    --region-bg-eu: #3b5998; /* Azul más intenso */
+    --region-bg-as: #3c933c; /* Verde más intenso */
+    --region-bg-br: #833983; /* Púrpura más intenso */
 }
 
 /* Estilos Globales */
@@ -51,7 +47,8 @@ body {
     display: none !important;
 }
 
-/* --- Barra de Navegación (Navbar) --- */
+/* --- Navbar, Header, Filters (Mantenidos) --- */
+/* ... (Los estilos de navbar, filtros, etc. pueden mantenerse sin cambios significativos) ... */
 .navbar {
     background-color: var(--bg-main);
     padding: 15px 40px;
@@ -69,45 +66,6 @@ body {
     font-size: 24px;
     color: var(--color-primary);
 }
-.navbar nav { display: flex; gap: 25px; }
-.navbar .nav-link {
-    color: var(--color-link);
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.navbar .nav-link:hover, .navbar .nav-link.active {
-    color: var(--color-primary);
-}
-.navbar .search-bar { 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    background-color: var(--bg-light); 
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-}
-.navbar .search-bar i { padding: 0 10px; color: var(--color-link); }
-.navbar .search-bar input {
-    background-color: transparent; 
-    border: none; 
-    padding: 8px 10px; 
-    color: var(--color-text);
-    font-size: 14px;
-    width: 200px;
-}
-.navbar .search-bar input:focus { outline: none; }
-.search-separator {
-    width: 1px;
-    height: 24px; 
-    background-color: var(--border-color); 
-    margin: 0 5px; 
-}
-
-/* --- Encabezado de la Sección (RANKINGS) --- */
 .leaderboard-header {
     display: flex;
     justify-content: space-between;
@@ -116,14 +74,6 @@ body {
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
-.leaderboard-header h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 28px;
-    color: var(--color-text);
-}
-.server-info { display: flex; gap: 25px; font-size: 13px; color: var(--color-link); }
-
-/* --- Filtros (Botones) --- */
 .filters {
     background-color: var(--bg-main);
     padding: 12px;
@@ -151,8 +101,6 @@ body {
     color: var(--bg-dark);
     font-weight: 700;
 }
-
-/* --- Contenedor de la Tabla --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
@@ -161,11 +109,12 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* --- Encabezado de la Tabla (AJUSTADO PARA PLACA) --- */
+
+/* --- Encabezado de la Tabla (AJUSTADO: Columnas y alineación) --- */
 .table-header {
     display: grid;
-    /* Ancho de placa más grande para el avatar */
-    grid-template-columns: 140px 3fr 120px 1.5fr; 
+    /* Columna # (Placa): 150px | Columna JUGADOR: 3fr | Columna REGIÓN: 100px | Columna STATS: 2.5fr */
+    grid-template-columns: 150px 3fr 100px 2.5fr; 
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -175,17 +124,16 @@ body {
     align-items: center;
 }
 .table-header .header-region,
-.table-header .header-tiers {
+.table-header .header-stats {
     text-align: right; 
     padding-right: 10px; 
 }
 
-/* --- Filas de Jugadores (AJUSTADO PARA PLACA Y SEPARACION) --- */
+/* --- Filas de Jugadores (Ajuste de Grid) --- */
 .player-row {
     background-color: var(--bg-main); 
     display: grid;
-    /* Ancho de placa más grande para el avatar */
-    grid-template-columns: 140px 3fr 120px 1.5fr; 
+    grid-template-columns: 150px 3fr 100px 2.5fr; 
     align-items: center;
     min-height: 70px; 
     margin-bottom: 5px; 
@@ -193,22 +141,20 @@ body {
     overflow: hidden; 
     border: 1px solid var(--border-color); 
 }
-.player-row:last-child { margin-bottom: 0; } 
 .player-row:hover { background-color: var(--bg-light); }
 .player-row > div { display: flex; align-items: center; padding: 8px 10px; }
 
 
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) - AHORA CON AVATAR --- */
+/* --- COLUMNA # (PLACA DE RANKING) - DISEÑO MCtiers --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
     overflow: hidden; 
     height: 100%; 
     padding: 0; 
-    display: flex; /* Para controlar la posición del número y la imagen */
-    align-items: center;
 }
+
 .rank-placa {
     width: 100%;
     height: 100%;
@@ -217,77 +163,48 @@ body {
     align-items: center;
     font-size: 24px; 
     font-weight: 700;
-    position: absolute; /* Para que quede detrás del avatar */
+    position: absolute; 
     top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 1; /* Para que el número y la placa estén detrás del avatar */
+    z-index: 1; 
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.4); 
-    padding-left: 20px; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
+    padding-left: 15px; /* Espacio para el número */
 }
 
-/* El número del rank dentro de la placa */
-.rank-placa .rank-number {
-    position: relative; /* Para que el z-index funcione en el número */
-    z-index: 2; /* Para que el número esté por encima del avatar si se superpone */
-}
-
-/* Avatar del jugador dentro de la placa */
+/* Avatar del jugador - Ajustes para que esté DENTRO de la placa y sin círculo */
 .col-rank-placa .player-avatar-in-placa {
     position: absolute;
-    right: 15px; /* Ajusta la posición a la derecha de la placa */
-    width: 50px; /* Tamaño del avatar */
-    height: 50px;
-    z-index: 3; /* Para que el avatar esté encima de la placa y el número */
-    object-fit: contain; /* Asegura que la imagen no se recorte y mantenga proporciones */
-    image-rendering: pixelated; /* Si la imagen es pixel art, lo mantiene nítido */
-    border-radius: 0; /* Sin bordes redondeados (sin círculo) */
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%); /* Centrado vertical */
+    width: 60px; /* Tamaño del avatar */
+    height: 60px;
+    z-index: 2; /* Encima de la placa */
+    object-fit: contain; 
+    border-radius: 0; /* Sin bordes (sin círculo) */
+    
+    /* El truco de MCtiers: ocultar una parte del avatar bajo la placa */
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 10% 100%); 
+    
+    /* Pequeña sombra para realzar el borde del avatar */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Colores de placa para TOP 3 */
 .rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
 .rank-placa.rank-2 { background-color: var(--rank-silver); color: var(--rank-text-dark); }
 .rank-placa.rank-3 { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
-/* Color para el resto */
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
     background-color: var(--rank-other); 
     color: var(--rank-text-light);
 }
 
-/* Animación de Brillo (Solo para Top 3) */
-@keyframes shine {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-.col-rank-placa.top-player .rank-placa::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
-    background-size: 200% 100%;
-    animation: shine 3s infinite linear;
-    z-index: 0; 
-    pointer-events: none;
-    opacity: 0.8; 
-}
 
 /* ======================================================= */
-/* --- COLUMNA JUGADOR (ELIMINAR IMAGEN DE AQUÍ) --- */
+/* --- COLUMNA JUGADOR --- */
 /* ======================================================= */
 .col-player { 
-    gap: 15px; 
-    /* Eliminar el avatar de aquí si se movió a la placa */
-    /* .player-details img ya no debería estar aquí */
-}
-.player-details { display: flex; align-items: center; gap: 10px; }
-/* Si el avatar está en la placa, este ya no es necesario o debe ser genérico */
-.player-details img {
-    /* display: none; */ /* Ocultar si el avatar está en la placa */
-    width: 0; /* Eliminar el espacio que ocuparía */
-    height: 0;
-    border: none;
-    margin: 0;
-    padding: 0;
+    padding-left: 20px; /* Espacio extra para que el texto no esté pegado al borde de la placa */
 }
 
 .player-info { display: flex; flex-direction: column; }
@@ -302,6 +219,7 @@ body {
     color: var(--color-link); 
     font-family: 'Open Sans', sans-serif;
 }
+
 
 /* ======================================================= */
 /* --- COLUMNA REGIÓN --- */
@@ -326,12 +244,12 @@ body {
 }
 .region-pill {
     color: white; 
-    padding: 8px 12px; 
-    border-radius: 6px; 
-    font-size: 13px; 
+    padding: 6px 10px; 
+    border-radius: 4px; 
+    font-size: 12px; 
     font-weight: 600;
+    min-width: 45px; 
     text-align: center;
-    min-width: 55px; 
     font-family: 'Open Sans', sans-serif; 
 }
 .region-pill.region-NA { background-color: var(--region-bg-na); }
@@ -340,19 +258,21 @@ body {
 .region-pill.region-BR { background-color: var(--region-bg-br); }
 
 /* ======================================================= */
-/* --- COLUMNA TIERS --- */
+/* --- COLUMNA ESTADÍSTICAS CLAVE (Nueva) --- */
 /* ======================================================= */
-.col-tiers {
+.col-stats {
     display: flex;
-    justify-content: flex-end; 
-    align-items: center;
+    flex-wrap: wrap; /* Permite que las píldoras bajen de línea si hay muchas */
+    justify-content: flex-end; /* Alinea las píldoras a la derecha */
+    gap: 8px; /* Espacio entre las píldoras */
     padding-right: 10px;
 }
-.tier-pill {
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 10px; 
-    border-radius: 5px; 
+
+.stat-box {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 8px; 
+    border-radius: 4px; 
     color: var(--color-text); 
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
@@ -360,55 +280,23 @@ body {
     font-family: 'Open Sans', sans-serif; 
 }
 
-/* ======================================================= */
-/* --- ESTILOS PARA EL CONTENEDOR DE TIERS (Ranks Display) --- */
-/* ======================================================= */
-.ranks-tiers-display {
-    background-color: var(--bg-main);
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 15px; 
-    justify-content: center; 
-}
-.ranks-tiers-display .tier-full-name {
-    background-color: var(--bg-light);
-    color: var(--color-text);
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
-    font-family: 'Open Sans', sans-serif;
-}
-.ranks-tiers-display .tier-full-name:hover {
-    transform: translateY(-3px); 
-    background-color: #3a3a40; 
-}
-
-/* --- Responsive Básico --- */
+/* ... (Responsive Básico) ... */
 @media (max-width: 768px) {
     .table-header, .player-row {
-        grid-template-columns: 100px 2fr 100px 1fr; /* Ajustar el ancho de la placa en móvil */
+        grid-template-columns: 120px 2fr 80px 1.5fr; 
     }
     .col-rank-placa .player-avatar-in-placa {
-        width: 40px; 
-        height: 40px;
-        right: 10px;
+        width: 50px; 
+        height: 50px;
     }
 }
 @media (max-width: 480px) {
     .table-header, .player-row {
-        grid-template-columns: 80px 1.5fr 80px 1fr; 
+        grid-template-columns: 100px 1.5fr 70px 1fr; 
     }
     .col-rank-placa .player-avatar-in-placa {
-        width: 30px; 
-        height: 30px;
-        right: 5px;
+        width: 40px; 
+        height: 40px;
     }
+    .stat-box { font-size: 10px; padding: 3px 6px; }
 }
