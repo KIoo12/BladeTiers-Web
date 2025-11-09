@@ -1,15 +1,22 @@
 // =======================================================
+// MAPA DE TIERS (Para nombres completos)
+// =======================================================
+const tierNames = {
+    'HT1': 'High Tier 1', 'LT1': 'Low Tier 1',
+    'HT2': 'High Tier 2', 'LT2': 'Low Tier 2',
+    'HT3': 'High Tier 3', 'LT3': 'Low Tier 3',
+    'HT4': 'High Tier 4', 'LT4': 'Low Tier 4',
+    'HT5': 'High Tier 5', 'LT5': 'Low Tier 5'
+};
+
+// =======================================================
 // DATOS DEL JUEGO (PARA REPLICAR MCtiers)
 // =======================================================
-
 function getAvatarUrl(playerName) {
-    // URL simulada de avatar. Puedes cambiarla por un servicio real si tienes uno.
-    // Ejemplo: `https://cravatar.eu/helmavatar/${playerName}/32.png` para Minecraft
     return `https://avatar.vercel.sh/${playerName}.png?size=40`; 
 }
 
 const leaderboardData = [
-    // Datos de ejemplo con un solo campo 'tier' para cada jugador
     { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
     { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
     { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
@@ -25,10 +32,9 @@ const leaderboardData = [
 // =======================================================
 // FUNCIÓN PRINCIPAL DE RENDERIZADO DE LA TABLA
 // =======================================================
-
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
-    leaderboardBody.innerHTML = ''; // Limpiar cualquier contenido existente
+    leaderboardBody.innerHTML = ''; 
 
     data.forEach((player) => {
         const row = document.createElement('div');
@@ -38,7 +44,6 @@ function renderLeaderboard(data = leaderboardData) {
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
         
-        // Aplica la clase 'top-player' para el brillo si está en el top 3
         if (player.rank <= 3) {
             rankCol.classList.add('top-player'); 
         }
@@ -50,7 +55,7 @@ function renderLeaderboard(data = leaderboardData) {
         `;
         row.appendChild(rankCol);
 
-        // 2. Columna JUGADOR (Avatar, Nombre, Título)
+        // 2. Columna JUGADOR
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         playerCol.innerHTML = `
@@ -67,16 +72,17 @@ function renderLeaderboard(data = leaderboardData) {
         // 3. Columna REGIÓN (Píldora Centrada)
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
-        // Usamos un span dentro para aplicar el estilo de píldora
+        // CORRECCIÓN: Añadimos la clase region-X a la píldora
         regionCol.innerHTML = `<span class="region-pill region-${player.region}">${player.region}</span>`;
         row.appendChild(regionCol);
 
-        // 4. Columna TIERS (Un Solo Tier por Jugador)
+        // 4. Columna TIERS (Con nombre completo)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
         const tierPill = document.createElement('span');
         tierPill.classList.add('tier-pill');
-        tierPill.textContent = player.tier; // Mostrar el único tier
+        // CAMBIO: Usamos el mapa de tierNames para obtener el nombre completo
+        tierPill.textContent = tierNames[player.tier] || player.tier; 
         tiersCol.appendChild(tierPill);
         row.appendChild(tiersCol);
 
@@ -87,8 +93,6 @@ function renderLeaderboard(data = leaderboardData) {
 // =======================================================
 // LÓGICA DE BÚSQUEDA Y FILTROS
 // =======================================================
-
-// Lógica de Búsqueda
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -99,38 +103,34 @@ searchInput.addEventListener('keyup', (e) => {
         player.region.toLowerCase().includes(searchTerm) ||
         player.tier.toLowerCase().includes(searchTerm)
     );
-
     renderLeaderboard(filteredData);
 });
 
-// Lógica para los botones de filtro (ej: Overall, Eliminaciones, etc.)
-// Esto es un placeholder. Si tienes datos para cada filtro, se implementaría aquí.
 const filterButtons = document.querySelectorAll('.filter-btn');
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-        // Remover 'active' de todos los botones
         filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Añadir 'active' al botón clickeado
         button.classList.add('active');
 
         const filterType = button.dataset.filter;
-        // Aquí iría la lógica para cargar datos diferentes según el filtro
-        // Por ahora, solo volvemos a renderizar con los datos originales si es 'overall'
-        if (filterType === 'overall') {
+        
+        if (filterType === 'ranks') {
+            // Lógica para el botón "Ranks"
+            // Dejamos esto listo para tu próxima petición
+            console.log("Botón Ranks presionado. Mostrando todos los rangos.");
+            renderLeaderboard(leaderboardData); // Por ahora, solo muestra la tabla normal
+        } else if (filterType === 'overall') {
             renderLeaderboard(leaderboardData);
         } else {
-            // Implementar lógica para otros filtros si tienes datos específicos
-            console.log(`Filtro seleccionado: ${filterType}. (No hay datos específicos para este filtro en este ejemplo)`);
-            renderLeaderboard([]); // Mostrar tabla vacía para otros filtros por ahora
+            console.log(`Filtro seleccionado: ${filterType}.`);
+            renderLeaderboard([]); // Vacía la tabla si no es Overall o Ranks
         }
     });
 });
 
-
 // =======================================================
 // INICIALIZACIÓN AL CARGAR LA PÁGINA
 // =======================================================
-
 document.addEventListener('DOMContentLoaded', () => {
     renderLeaderboard(); // Renderizar la tabla inicial
 });

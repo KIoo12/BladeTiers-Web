@@ -1,29 +1,29 @@
-/* --- Fuentes de Google Fonts (MCtiers usa Roboto y Open Sans) --- */
+/* --- Fuentes de Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 /* Variables para colores (Basadas en MCtiers Dark Theme) */
 :root {
-    --bg-dark: #1a1a1c; /* Fondo general más oscuro */
-    --bg-main: #222226; /* Fondo de tarjetas y navbar */
-    --bg-light: #2c2c31; /* Fondo de botones y elementos interactivos */
-    --color-primary: #f7a83d; /* Naranja/Dorado principal */
-    --color-text: #e0e0e0; /* Color de texto general */
-    --color-link: #a1a1a1; /* Color para enlaces y texto secundario */
-    --border-color: #38383e; /* Bordes sutiles */
+    --bg-dark: #1a1a1c; 
+    --bg-main: #222226; 
+    --bg-light: #2c2c31; 
+    --color-primary: #f7a83d; 
+    --color-text: #e0e0e0; 
+    --color-link: #a1a1a1; 
+    --border-color: #38383e; 
 
     /* Colores de ranking */
     --rank-gold: #ffd700;
     --rank-silver: #c0c0c0;
     --rank-bronze: #cd7f32;
-    --rank-other: #3a3a3f; /* Para rangos más allá del top 3 */
-    --rank-text-dark: #212121; /* Texto para rangos claros */
-    --rank-text-light: #ffffff; /* Texto para rangos oscuros */
+    --rank-other: #3a3a3f; 
+    --rank-text-dark: #212121; 
+    --rank-text-light: #ffffff; 
 
-    /* Colores de región (personalizados para coincidir con estilos MCtiers) */
-    --region-bg-na: #882222; /* Rojo oscuro */
-    --region-bg-eu: #224488; /* Azul oscuro */
-    --region-bg-as: #228844; /* Verde oscuro */
-    --region-bg-br: #662266; /* Morado oscuro */
+    /* Colores de región */
+    --region-bg-na: #882222; 
+    --region-bg-eu: #224488; 
+    --region-bg-as: #228844; 
+    --region-bg-br: #662266; 
 }
 
 /* Estilos Globales */
@@ -31,7 +31,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif; /* Usar Roboto como fuente principal */
+    font-family: 'Roboto', sans-serif; 
 }
 
 body {
@@ -57,68 +57,34 @@ body {
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-
+/* ... (otros estilos de navbar) ... */
 .navbar .logo {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-size: 24px;
     color: var(--color-primary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
-
-.navbar nav {
-    display: flex;
-    gap: 25px;
-}
-
+.navbar nav { display: flex; gap: 25px; }
 .navbar .nav-link {
     color: var(--color-link);
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
-    transition: color 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
-.navbar .nav-link:hover,
-.navbar .nav-link.active {
+.navbar .nav-link:hover, .navbar .nav-link.active {
     color: var(--color-primary);
 }
-
-.navbar .search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.navbar .search-bar i {
-    position: absolute;
-    left: 10px;
-    color: var(--color-link);
-    font-size: 14px;
-}
-
+.navbar .search-bar { position: relative; display: flex; align-items: center; }
+.navbar .search-bar i { position: absolute; left: 10px; color: var(--color-link); }
 .navbar .search-bar input {
     background-color: var(--bg-light);
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    padding: 8px 10px 8px 35px; /* Padding a la izquierda para el icono */
+    padding: 8px 10px 8px 35px;
     color: var(--color-text);
-    font-size: 14px;
-    width: 200px;
-    transition: border-color 0.3s ease;
-}
-
-.navbar .search-bar input::placeholder {
-    color: var(--color-link);
-}
-
-.navbar .search-bar input:focus {
-    outline: none;
-    border-color: var(--color-primary);
 }
 
 /* --- Encabezado de la Sección (RANKINGS) --- */
@@ -130,27 +96,12 @@ body {
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
-
 .leaderboard-header h1 {
     font-family: 'Open Sans', sans-serif;
     font-size: 28px;
-    font-weight: 700;
     color: var(--color-text);
 }
-
-.server-info {
-    display: flex;
-    gap: 25px;
-    font-size: 13px;
-    color: var(--color-link);
-    align-items: center;
-}
-
-.server-info .info-item i,
-.server-info .server-ip i {
-    margin-right: 5px;
-    color: var(--color-primary);
-}
+.server-info { display: flex; gap: 25px; font-size: 13px; color: var(--color-link); }
 
 /* --- Filtros (Botones) --- */
 .filters {
@@ -162,7 +113,6 @@ body {
     gap: 10px;
     border: 1px solid var(--border-color);
 }
-
 .filter-btn {
     background-color: var(--bg-light);
     color: var(--color-text);
@@ -177,18 +127,13 @@ body {
     align-items: center;
     gap: 8px;
 }
-
-.filter-btn:hover {
-    background-color: lighten(var(--bg-light), 5%); /* Simula un hover más claro */
-}
-
 .filter-btn.active {
     background-color: var(--color-primary);
-    color: var(--bg-dark); /* Texto oscuro para contraste */
+    color: var(--bg-dark);
     font-weight: 700;
 }
 
-/* --- Tarjeta de la Tabla (Leaderboard Card) --- */
+/* --- Tarjeta de la Tabla --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
@@ -200,7 +145,6 @@ body {
 /* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    /* Columnas: # | JUGADOR | REGIÓN | TIERS */
     grid-template-columns: 80px 3fr 120px 1.5fr; 
     padding: 12px 10px;
     font-size: 13px;
@@ -214,37 +158,24 @@ body {
 /* --- Filas de Jugadores --- */
 .player-row {
     background-color: var(--bg-main); 
-    border-bottom: 1px solid var(--border-color); /* Separador entre filas */
+    border-bottom: 1px solid var(--border-color); 
     display: grid;
-    grid-template-columns: 80px 3fr 120px 1.5fr; /* MISMO QUE EL ENCABEZADO */
+    grid-template-columns: 80px 3fr 120px 1.5fr; 
     align-items: center;
-    min-height: 70px; /* Altura mínima para cada fila */
-    transition: background-color 0.2s ease;
+    min-height: 70px; 
 }
-
-.player-row:last-child {
-    border-bottom: none; /* Eliminar el borde inferior de la última fila */
-}
-
-.player-row:hover {
-    background-color: var(--bg-light); /* Efecto hover en las filas */
-}
-
-.player-row > div {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px; 
-}
+.player-row:last-child { border-bottom: none; }
+.player-row:hover { background-color: var(--bg-light); }
+.player-row > div { display: flex; align-items: center; padding: 8px 10px; }
 
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) --- */
+/* --- COLUMNA # (PLACA DE RANKING) - CORREGIDO --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
     overflow: hidden; 
-    height: 100%; /* Asegura que la columna ocupe toda la altura de la fila */
+    height: 100%; 
 }
-
 .rank-placa {
     width: 100%;
     height: 100%;
@@ -255,15 +186,13 @@ body {
     font-weight: 700;
     position: relative;
     z-index: 2;
-    /* Forma trapezoidal similar a MCtiers */
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
 }
 
-/* Colores de placa para TOP 3 */
-.rank-1 .rank-placa { background-color: var(--rank-gold); color: var(--rank-text-dark); }
-.rank-2 .rank-placa { background-color: var(--rank-silver); color: var(--rank-text-dark); }
-.rank-3 .rank-placa { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
-/* Color para el resto */
+/* CORRECCIÓN: Los selectores de color para Top 3 */
+.rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
+.rank-placa.rank-2 { background-color: var(--rank-silver); color: var(--rank-text-dark); }
+.rank-placa.rank-3 { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
     background-color: var(--rank-other); 
     color: var(--rank-text-light);
@@ -274,20 +203,11 @@ body {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
-
 .col-rank-placa.top-player .rank-placa::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.25) 50%, /* Ligeramente más visible */
-        rgba(255, 255, 255, 0) 100%
-    );
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
     background-size: 200% 100%;
     animation: shine 3s infinite linear;
     z-index: 0; 
@@ -298,18 +218,8 @@ body {
 /* ======================================================= */
 /* --- COLUMNA JUGADOR --- */
 /* ======================================================= */
-.col-player {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.player-details {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+.col-player { gap: 15px; }
+.player-details { display: flex; align-items: center; gap: 10px; }
 .player-details img {
     width: 40px;
     height: 40px;
@@ -317,60 +227,43 @@ body {
     border: 2px solid var(--border-color);
     object-fit: cover;
 }
-
-.player-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.player-name {
-    font-weight: 600;
-    font-size: 15px;
-    color: var(--color-text);
-}
-
-.player-title {
-    font-size: 12px;
-    color: var(--color-link);
-}
+.player-info { display: flex; flex-direction: column; }
+.player-name { font-weight: 600; font-size: 15px; color: var(--color-text); }
+.player-title { font-size: 12px; color: var(--color-link); }
 
 /* ======================================================= */
-/* --- COLUMNA REGIÓN (CENTRADa) --- */
+/* --- COLUMNA REGIÓN (CENTRADa) - CORREGIDO --- */
 /* ======================================================= */
 .col-region {
     display: flex;
-    justify-content: center; /* CENTRADO HORIZONTAL */
+    justify-content: center; 
     align-items: center;
-    padding: 0 10px; /* Padding reducido para centrar mejor la píldora */
+    padding: 0 10px; 
 }
-
-/* Estilo de la píldora de región */
 .region-pill {
-    color: white;
+    color: white; /* <-- AÑADIDO: Asegura que el texto sea blanco */
     padding: 6px 10px;
-    border-radius: 5px; /* Bordes ligeramente redondeados */
+    border-radius: 5px; 
     font-size: 12px;
     font-weight: 600;
     text-align: center;
-    min-width: 45px; /* Ancho mínimo para la píldora */
+    min-width: 45px; 
 }
-
-/* Colores de región específicos */
-.region-NA .region-pill { background-color: var(--region-bg-na); }
-.region-EU .region-pill { background-color: var(--region-bg-eu); }
-.region-AS .region-pill { background-color: var(--region-bg-as); }
-.region-BR .region-pill { background-color: var(--region-bg-br); }
+/* CORRECCIÓN: Selectores de color para Región */
+.region-pill.region-NA { background-color: var(--region-bg-na); }
+.region-pill.region-EU { background-color: var(--region-bg-eu); }
+.region-pill.region-AS { background-color: var(--region-bg-as); }
+.region-pill.region-BR { background-color: var(--region-bg-br); }
 
 /* ======================================================= */
 /* --- COLUMNA TIERS (UN SOLO TIER) --- */
 /* ======================================================= */
 .col-tiers {
     display: flex;
-    justify-content: flex-start; /* Alineado a la izquierda */
+    justify-content: flex-start; 
     align-items: center;
     padding: 0 10px;
 }
-
 .tier-pill {
     font-size: 13px;
     font-weight: 600;
@@ -380,77 +273,4 @@ body {
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
     white-space: nowrap;
-}
-
-/* --- Responsive Básico --- */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
-    }
-    .navbar nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .leaderboard-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    .server-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    .filters {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .table-header, .player-row {
-        grid-template-columns: 60px 2fr 100px 1fr; /* Ajustar columnas en pantallas pequeñas */
-        font-size: 11px;
-    }
-    .col-player .player-details img {
-        width: 30px;
-        height: 30px;
-    }
-    .player-name {
-        font-size: 13px;
-    }
-    .player-title {
-        font-size: 11px;
-    }
-    .rank-placa {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar .search-bar input {
-        width: 150px;
-    }
-    .table-header, .player-row {
-        grid-template-columns: 50px 1.5fr 80px 1fr; 
-    }
-    .col-rank-placa, .col-region, .col-tiers {
-        padding: 0 5px;
-    }
-    .player-details img {
-        width: 25px;
-        height: 25px;
-    }
-    .player-name {
-        font-size: 12px;
-    }
-    .player-title {
-        display: none; /* Ocultar el título en pantallas muy pequeñas */
-    }
-    .rank-placa {
-        font-size: 14px;
-    }
-    .region-pill, .tier-pill {
-        font-size: 11px;
-        padding: 4px 6px;
-    }
 }
