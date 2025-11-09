@@ -3,7 +3,7 @@
 // =======================================================
 
 function getAvatarUrl(playerName) {
-    // URL simulada de avatar. Debes reemplazarla con tu propio servicio.
+    // URL simulada de avatar. Reemplazar si tienes un servicio propio.
     return `https://avatar.vercel.sh/${playerName}.png`; 
 }
 
@@ -24,7 +24,7 @@ const leaderboardData = [
 
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
-    leaderboardBody.innerHTML = ''; // Limpiar la tabla
+    leaderboardBody.innerHTML = ''; 
 
     data.forEach((player) => { 
         const row = document.createElement('div');
@@ -60,8 +60,9 @@ function renderLeaderboard(data = leaderboardData) {
         
         // 3. Columna de la Región (Centrada)
         const regionCol = document.createElement('div');
-        regionCol.classList.add('col-region'); // Solo col-region aquí, el centrado está en el CSS
-        regionCol.innerHTML = `<span class="region-${player.region}">${player.region}</span>`;
+        regionCol.classList.add('col-region');
+        // Importante: Envolviendo la región en un span para aplicar el estilo centrado
+        regionCol.innerHTML = `<span class="region-${player.region}">${player.region}</span>`; 
         
         // 4. Columna del Tier (UN SOLO TIER)
         const tiersCol = document.createElement('div');

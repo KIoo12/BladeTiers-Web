@@ -47,7 +47,7 @@ body {
 }
 /* ... otros estilos de navegación y filtros ... */
 
-/* --- Encabezado de la Tabla (GRID DEFINITION) --- */
+/* --- Encabezado de la Tabla (DEFINICIÓN DE GRID CRÍTICA) --- */
 .table-header {
     display: grid;
     /* # | JUGADOR | REGIÓN | TIERS */
@@ -61,13 +61,13 @@ body {
     align-items: center;
 }
 
-/* --- Estilo de la Fila del Jugador (GRID DEFINITION) --- */
+/* --- Estilo de la Fila del Jugador (DEFINICIÓN DE GRID CRÍTICA) --- */
 .player-row {
     background-color: var(--bg-main); 
     border-radius: 8px;
     margin-bottom: 10px; 
     display: grid;
-    grid-template-columns: 80px 2.5fr 100px 1fr; /* DEBE COINCIDIR CON EL HEADER */
+    grid-template-columns: 80px 2.5fr 100px 1fr; /* DEBE COINCIDIR EXACTAMENTE CON EL HEADER */
     align-items: center;
     overflow: hidden; 
     height: 65px; 
@@ -83,7 +83,7 @@ body {
 }
 
 /* ======================================================= */
-/* --- PLACA (RANKING) Y ANIMACIÓN (CORREGIDO) --- */
+/* --- PLACA (RANKING) Y ANIMACIÓN --- */
 /* ======================================================= */
 
 .col-rank-placa {
@@ -142,10 +142,14 @@ body {
 }
 
 
-/* --- Estilo de la Región (CORREGIDO: CENTRADO) --- */
+/* ======================================================= */
+/* --- ESTILOS CORREGIDOS: REGIÓN Y TIER --- */
+/* ======================================================= */
+
+/* Centrado de Región (Asegurado) */
 .col-region {
     display: flex; 
-    justify-content: center; /* Centrado horizontal del contenido */
+    justify-content: center; /* CENTRADO HORIZONTAL */
     align-items: center; 
     padding: 0; 
 }
@@ -156,7 +160,6 @@ body {
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
-    text-align: center; 
     width: 50px; 
     
     /* Asignación de colores */
@@ -166,8 +169,7 @@ body {
     &.region-BR { background-color: var(--region-bg-br); }
 }
 
-
-/* --- Columna de un solo Tier --- */
+/* Columna de un solo Tier */
 .col-tiers {
     display: flex;
     justify-content: flex-start;
