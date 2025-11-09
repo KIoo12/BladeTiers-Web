@@ -10,29 +10,32 @@ const tierNames = {
 };
 
 // =======================================================
-// FUNCIÓN PARA OBTENER AVATAR POR NOMBRE DE USUARIO (USANDO MINOTAR)
-// Es la solución más estable sin IDs de Roblox.
+// FUNCIÓN PARA OBTENER AVATAR DE ROBLOX POR NOMBRE DE USUARIO
 // =======================================================
-function getAvatarUrl(avatarName) {
-    // Si no pones nombre, usa un skin por defecto de MC
-    const name = avatarName || 'Steve'; 
-    return `https://minotar.net/avatar/${name}/40.png`;
+function getAvatarUrl(robloxName) {
+    if (!robloxName) {
+        // Fallback: avatar genérico de Roblox si el nombre no existe
+        return 'https://tr.rbxcdn.com/f02e1c3144a0b27b4946777651a24d27/150/150/AvatarHeadshot/Png'; 
+    }
+    // URL que intenta cargar el avatar de la cabeza por nombre.
+    return `https://www.roblox.com/headshot-thumbnail/image?username=${robloxName}&width=150&height=150&format=png`;
 }
 
 // =======================================================
-// DATOS DEL JUEGO (AHORA CON avatarName)
-// ⚠️ Usa el nombre de usuario del avatar que quieras mostrar.
+// DATOS DEL JUEGO (Kioo en Top 1, resto reordenado)
 // =======================================================
 const leaderboardData = [
-    { rank: 1, name: 'Kioo', avatarName: 'Aitor92960O', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
-    { rank: 2, name: 'ItzRealMe', avatarName: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
-    { rank: 3, name: 'Swight', avatarName: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
-    { rank: 4, name: 'coldified', avatarName: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' },
-    { rank: 5, name: 'Kylaz', avatarName: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' },
-    { rank: 6, name: 'BlvckWlf', avatarName: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' },
-    // Si 'Kioo' tiene un nombre de usuario de MC/Roblox que funciona en Minotar, ponlo aquí
-    { rank: 7, name: 'Kioo', avatarName: 'Kioo12', title: 'Admin (Creator)', region: 'BR', tier: 'HT5' },
-    { rank: 8, name: 'Mystic', avatarName: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', tier: 'LT5' },
+    // CAMBIO SOLICITADO: Kioo en Top 1 con usuario de Roblox Aitor92960O
+    { rank: 1, name: 'Kioo', robloxName: 'Aitor92960O', title: 'Admin (Creator)', region: 'BR', tier: 'HT1' },
+
+    // Datos restantes, ajustando el rank. 'KillerPro' ahora es rank 2.
+    { rank: 2, name: 'KillerPro', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'LT1' },
+    { rank: 3, name: 'ItzRealMe', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Master (330 points)', region: 'NA', tier: 'HT2' },
+    { rank: 4, name: 'Swight', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Master (270 points)', region: 'NA', tier: 'LT2' },
+    { rank: 5, name: 'coldified', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Ace (246 points)', region: 'EU', tier: 'HT3' },
+    { rank: 6, name: 'Kylaz', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Ace (222 points)', region: 'NA', tier: 'LT3' },
+    { rank: 7, name: 'BlvckWlf', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Ace (206 points)', region: 'EU', tier: 'HT5' },
+    { rank: 8, name: 'Mystic', robloxName: 'NOMBRE_DE_USUARIO_AQUI', title: 'Combat Ace (13 points)', region: 'BR', tier: 'LT5' },
 ];
 
 // =======================================================
@@ -57,11 +60,11 @@ function renderLeaderboard(data = leaderboardData) {
         `;
         row.appendChild(rankCol);
 
-        // 2. Columna JUGADOR (CON AVATAR POR NOMBRE)
+        // 2. Columna JUGADOR (CON AVATAR DE ROBLOX)
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         
-        const avatarUrl = getAvatarUrl(player.avatarName);
+        const avatarUrl = getAvatarUrl(player.robloxName); 
         
         playerCol.innerHTML = `
             <div class="player-details">
@@ -91,7 +94,9 @@ function renderLeaderboard(data = leaderboardData) {
     });
 }
 
-// ... (El resto de funciones de tiers y filtros se mantienen) ...
+// =======================================================
+// RESTO DE FUNCIONES (Mantenidas)
+// =======================================================
 
 function renderTiersDisplay() {
     const ranksDisplay = document.getElementById('ranks-display');
