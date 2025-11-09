@@ -45,7 +45,7 @@ async function getUserIdsFromUsernames(usernames) {
 // DATOS DEL JUEGO (USANDO USERNAME)
 // =======================================================
 const leaderboardData = [
-    { rank: 1, name: 'Shedletsky', robloxName: 'Shedletsky', title: 'Admin (Creator)', region: 'NA', tier: 'HT1' },
+    { rank: 1, name: 'Kioo', robloxName: 'Aitor92960O', title: 'Admin (Creator)', region: 'NA', tier: 'HT1' },
     { rank: 2, name: 'KreekCraft', robloxName: 'KreekCraft', title: 'Star Creator (YouTuber)', region: 'NA', tier: 'LT1' },
     { rank: 3, name: 'Linkmon99', robloxName: 'Linkmon99', title: 'Collector (Rich)', region: 'NA', tier: 'HT2' },
     { rank: 4, name: 'Coldified', robloxName: 'Coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' }, 
