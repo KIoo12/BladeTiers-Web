@@ -2,15 +2,15 @@
 // DATOS Y LOGICA
 // =======================================================
 
-// --- DATOS DE LA CLASIFICACIÓN ---
+// --- DATOS DE LA CLASIFICACIÓN (CON ICONOS) ---
 const leaderboardData = [
-    { rank: 1, name: 'KillerPro', title: 'Creador Supremo (1300 KOs)', region: 'NA', stats: ['450 Wins', '1300 KDs', 'DMG:55k'] },
-    { rank: 2, name: 'RobloxChamp', title: 'Pro Player (1150 KOs)', region: 'EU', stats: ['350 Wins', '1150 KDs', 'DMG:45k'] },
-    { rank: 3, name: 'BlockBlade', title: 'Ace Defender (980 KOs)', region: 'AS', stats: ['300 Wins', '980 KDs', 'DMG:40k'] },
-    { rank: 4, name: 'TheBaller', title: 'Rising Star (850 KOs)', region: 'NA', stats: ['250 Wins', '850 KDs', 'DMG:39k'] },
-    { rank: 5, name: 'NoScopePro', title: 'Newbie (500 KOs)', region: 'EU', stats: ['100 Wins', '500 KDs', 'DMG:20k'] },
-    { rank: 6, name: 'BladeWiz', title: 'El Magico (480 KOs)', region: 'EU', stats: ['80 Wins', '480 KDs', 'DMG:18k'] },
-    { rank: 7, name: 'Mystic', title: 'noob (13 KOs)', region: 'BR', stats: ['46 Wins', '13 KDs', 'DMG:5k'] }
+    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT1', '<i class="fas fa-sword"></i> LT1', '<i class="fas fa-trophy"></i> LT1'] },
+    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT1', '<i class="fas fa-trophy"></i> HT1'] },
+    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT2', '<i class="fas fa-flask"></i> LT3', '<i class="fas fa-sword"></i> HT1'] },
+    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', stats: ['<i class="fas fa-gem"></i> HT2', '<i class="fas fa-heart"></i> LT2', '<i class="fas fa-flask"></i> LT2', '<i class="fas fa-sword"></i> LT2'] },
+    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> LT3', '<i class="fas fa-sword"></i> HT1'] },
+    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', stats: ['<i class="fas fa-gem"></i> HT3', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT2'] },
+    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', stats: ['<i class="fas fa-gem"></i> HT3', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT2'] }
 ];
 
 // --- FUNCIÓN PARA OBTENER AVATAR ---
@@ -77,18 +77,24 @@ function renderLeaderboard(data = leaderboardData) {
         });
         
         // =======================================================
-        // AÑADIR LAS COLUMNAS EN EL ORDEN FINAL: #, JUGADOR, TIERS, REGIÓN
+        // AÑADIR LAS COLUMNAS EN EL ORDEN FINAL: #, JUGADOR, REGIÓN, TIERS
         // =======================================================
 
+        // 1. Ranking Placa
         row.appendChild(rankCol);
+
+        // 2. Jugador
         row.appendChild(playerCol);
-        row.appendChild(tiersCol); // Tiers va antes de Región
-        row.appendChild(regionCol); 
+
+        // 3. Región
+        row.appendChild(regionCol); // <-- REGIÓN VA AHORA ANTES DE TIERS
+
+        // 4. Tiers/Estadísticas
+        row.appendChild(tiersCol); 
 
         leaderboardBody.appendChild(row);
-    }); // Cierra el bucle forEach
+    }); // Cierra el bucle forEach de los jugadores
 } // Cierra la función renderLeaderboard
-
 
 // =======================================================
 // BUSQUEDA Y FILTROS

@@ -1,19 +1,30 @@
-/* Variables para colores (Adaptadas a MCtiers) */
+/* --- Fuentes de Google Fonts (Opcional, si quieres la fuente de MCtiers) --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+/* Variables para colores (Adaptadas a MCtiers exacto) */
 :root {
-    --bg-dark: #1a1b1e; /* Fondo principal más oscuro */
-    --bg-main: #272a30; /* Fondo de tarjetas y contenedores */
-    --color-primary: #f7a83d; /* Naranja/Dorado original */
+    --bg-dark: #12161b; /* Fondo principal más oscuro */
+    --bg-main: #1a1f26; /* Fondo de tarjetas y contenedores (MCtiers Dark) */
+    --bg-light: #22272e; /* Fondo para elementos interactivos */
+
+    --color-primary: #f7a83d; /* Naranja/Dorado original (MCtiers) */
     --color-text: #e0e0e0; /* Texto principal */
     --color-link: #a1a1a1; /* Enlaces y texto secundario */
-    --color-rank-1: #ffd700; /* Dorado brillante */
-    --color-rank-2: #c0c0c0; /* Plata */
-    --color-rank-3: #cd7f32; /* Bronce */
-    --border-color: #383a42; /* Bordes sutiles */
-    --card-border: #33363d; /* Borde para las cards */
-    --region-bg-na: #9d1a33; /* Fondo para región NA */
-    --region-bg-eu: #3a539b; /* Fondo para región EU */
-    --region-bg-as: #3c8d2f; /* Fondo para región AS */
-    --region-bg-br: #7b297b; /* Fondo para región BR */
+    --color-rank-1-bg: #e6b301; /* Dorado BG de placa (MCtiers) */
+    --color-rank-1-text: #212121; /* Texto oscuro para dorado */
+    --color-rank-2-bg: #808080; /* Plata BG de placa (MCtiers) */
+    --color-rank-3-bg: #cd7f32; /* Bronce BG de placa (MCtiers) */
+    --color-rank-other-bg: #3d4a5c; /* BG de placa para otros (MCtiers) */
+    --color-rank-other-text: #ffffff; /* Texto blanco para otros */
+
+    --border-color: #2e3640; /* Bordes sutiles */
+    --card-border: #2e3640; /* Borde para las cards */
+
+    /* Colores de región de MCtiers */
+    --region-bg-na: #9d1a33; /* NA */
+    --region-bg-eu: #3a539b; /* EU */
+    --region-bg-as: #3c8d2f; /* AS */
+    --region-bg-br: #7b297b; /* BR */
 }
 
 /* Estilos Globales */
@@ -21,7 +32,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Usamos una fuente similar a MCtiers */
+    font-family: 'Open Sans', 'Roboto', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -76,7 +88,7 @@ nav a {
 }
 
 .search-bar {
-    background-color: #1e2024;
+    background-color: var(--bg-light); /* Más oscuro */
     padding: 8px 15px;
     border-radius: 5px;
     display: flex;
@@ -104,7 +116,7 @@ nav a {
 }
 
 .filter-btn {
-    background-color: #383a42;
+    background-color: var(--bg-light); /* Más oscuro */
     color: var(--color-text);
     border: none;
     padding: 8px 15px;
@@ -118,12 +130,12 @@ nav a {
 }
 
 .filter-btn:hover {
-    background-color: #4a4d55;
+    background-color: #383e4a;
 }
 
 .filter-btn.active {
     background-color: var(--color-primary);
-    color: var(--bg-dark);
+    color: var(--bg-dark); /* Texto oscuro para el botón activo */
     font-weight: bold;
 }
 
@@ -148,7 +160,7 @@ nav a {
 }
 
 .server-ip {
-    color: #4CAF50;
+    color: #4CAF50; /* Verde de IP */
     display: flex;
     align-items: center;
     gap: 5px;
@@ -157,7 +169,8 @@ nav a {
 /* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    grid-template-columns: 50px 2fr 100px 3fr;
+    /* Ajuste para las nuevas columnas: Placa(pequeño), Jugador(grande), Región(mediano), Tiers(el resto) */
+    grid-template-columns: 80px 2.5fr 100px 3fr; 
     padding: 10px 0;
     font-size: 12px;
     color: var(--color-link);
@@ -167,23 +180,19 @@ nav a {
     align-items: center;
 }
 
-/* --- Estilo de la Fila del Jugador (Nueva estructura de tarjeta) --- */
+/* --- Estilo de la Fila del Jugador (Tarjeta) --- */
 .player-row {
-    position: relative; /* Necesario para la animación del brillo */
-    background-color: var(--bg-main); /* Fondo de la tarjeta del jugador */
+    background-color: var(--bg-main); 
     border-radius: 8px;
-    margin-bottom: 10px; /* Espacio entre tarjetas */
-    padding: 15px 0; /* Ajustamos padding para que no se pegue */
-
-    /* Quitamos el borde inferior que era de la tabla clásica */
-    border-bottom: none; 
-
-    /* Usamos display grid dentro de la tarjeta */
+    margin-bottom: 10px; 
     display: grid;
-    grid-template-columns: 50px 2fr 100px 3fr; /* Mismas columnas que el header */
+    /* Ajuste para las nuevas columnas: Placa(pequeño), Jugador(grande), Región(mediano), Tiers(el resto) */
+    grid-template-columns: 80px 2.5fr 100px 3fr;
     align-items: center;
-    overflow: hidden; /* Asegura que el brillo no se salga */
-    z-index: 1; /* Para que el contenido esté sobre el brillo */
+    overflow: hidden; 
+    z-index: 1; 
+    height: 65px; /* Altura fija para la fila/tarjeta, como MCtiers */
+    border: 1px solid var(--card-border); /* Borde para cada tarjeta */
 }
 
 /* Ocultar el último border-bottom, si es necesario */
@@ -191,14 +200,77 @@ nav a {
     margin-bottom: 0;
 }
 
+/* Aseguramos que el contenido esté centrado verticalmente */
+.player-row > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px; /* Padding interno para el contenido */
+}
 
-/* --- Animación de Brillo para el Top 3 --- */
+
+/* ======================================================= */
+/* --- ESTILO DE PLACA (RANKING) MCtiers --- */
+/* ======================================================= */
+
+.col-rank-placa {
+    padding: 0; /* Quitamos padding aquí para que la placa ocupe todo */
+    display: flex; /* Asegura centrado */
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Para la animación de brillo */
+    overflow: hidden; /* Para que el brillo no se salga */
+}
+
+.rank-placa {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    z-index: 2; /* Para que el número esté sobre el brillo */
+    
+    /* Forma de la placa con corte similar a MCtiers */
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); /* Ajuste para el corte */
+}
+
+.rank-number {
+    z-index: 3; /* Asegura que el número esté siempre visible */
+    padding-left: 10px; /* Espacio para que el número no se pegue al borde izquierdo */
+}
+
+/* Colores de placa - TOP 3 exactos a MCtiers */
+.rank-1 .rank-placa {
+    background-color: var(--color-rank-1-bg); /* Dorado brillante */
+    color: var(--color-rank-1-text);
+}
+.rank-2 .rank-placa {
+    background-color: var(--color-rank-2-bg); /* Plata */
+    color: var(--color-rank-1-text); /* Texto oscuro para plata también */
+}
+.rank-3 .rank-placa {
+    background-color: var(--color-rank-3-bg); /* Bronce */
+    color: var(--color-rank-1-text); /* Texto oscuro para bronce también */
+}
+
+/* Placa - DISEÑO RESTO DE JUGADORES (Gris de MCtiers) */
+.rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
+    background-color: var(--color-rank-other-bg); /* Color gris/azul de MCtiers */
+    color: var(--color-rank-other-text);
+}
+
+
+/* --- Animación de Brillo para el Top 3 (Solo en la Placa) --- */
 @keyframes shine {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
 
-.player-row.top-player::before {
+/* El pseudo-elemento before se aplica directamente a la placa para que solo ella brille */
+.col-rank-placa.top-player .rank-placa::before {
     content: '';
     position: absolute;
     top: 0;
@@ -208,43 +280,29 @@ nav a {
     background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.1) 50%, /* Brillo más sutil */
+        rgba(255, 255, 255, 0.2) 50%, /* Brillo más sutil y centrado */
         rgba(255, 255, 255, 0) 100%
     );
     background-size: 200% 100%;
     animation: shine 3s infinite linear;
-    z-index: 0; /* Debe estar debajo del contenido */
-    pointer-events: none; /* Asegura que no bloquee interacciones */
-    opacity: 0.6; /* Hacemos el brillo un poco menos intenso */
+    z-index: 0; /* Debe estar debajo del número */
+    pointer-events: none;
+    opacity: 0.7; /* Hacemos el brillo un poco más notorio */
 }
-
-/* Estilo para el Ranking */
-.col-rank {
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    position: relative; /* Para asegurar que el número esté sobre el brillo */
-    z-index: 2;
-}
-
-/* Colores para Top 3 */
-.rank-1 { color: var(--color-rank-1); }
-.rank-2 { color: var(--color-rank-2); }
-.rank-3 { color: var(--color-rank-3); }
 
 
 /* --- Detalles del Jugador (Nombre + Título) --- */
 .player-details {
     display: flex;
     align-items: center;
-    position: relative; /* Para que esté sobre el brillo */
+    position: relative; 
     z-index: 2;
 }
 
 .player-details img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%; /* Avatares circulares */
+    width: 40px; /* Tamaño de avatar MCtiers */
+    height: 40px;
+    border-radius: 50%; 
     margin-right: 15px;
     border: 2px solid var(--card-border);
     object-fit: cover;
@@ -254,33 +312,33 @@ nav a {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 2px; /* Espacio entre nombre y título */
 }
 
 .player-name {
-    font-weight: bold;
-    font-size: 16px;
+    font-weight: 600; /* Un poco más de peso */
+    font-size: 15px; /* Un poco más pequeño */
     color: var(--color-text);
-    margin-bottom: 2px;
 }
 
 .player-title {
-    font-size: 12px;
+    font-size: 11px; /* Título más pequeño */
     color: var(--color-link);
     display: block;
 }
 
-/* Estilo de la Región (píldora) */
+/* Estilo de la Región (píldora MCtiers) */
 .col-region {
     background-color: var(--region-bg-na); /* Color por defecto */
     color: white;
     padding: 5px 8px;
-    border-radius: 4px;
+    border-radius: 4px; /* Bordes menos redondeados para píldoras */
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    width: 50px;
-    margin: 0 auto;
-    position: relative; /* Para que esté sobre el brillo */
+    width: 50px; /* Ancho fijo para la píldora de región */
+    margin: 0 auto; /* Centrar */
+    position: relative; 
     z-index: 2;
 }
 
@@ -291,14 +349,14 @@ nav a {
 .region-BR { background-color: var(--region-bg-br); }
 
 
-/* --- Cajas de Tiers/Estadísticas (Píldoras) --- */
+/* --- Cajas de Tiers/Estadísticas (Píldoras MCtiers) --- */
 .col-tiers {
     display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
+    flex-wrap: wrap; /* Para que las píldoras se ajusten */
+    gap: 5px; /* Espacio entre píldoras */
     justify-content: flex-start;
     padding-left: 10px;
-    position: relative; /* Para que esté sobre el brillo */
+    position: relative; 
     z-index: 2;
 }
 
@@ -308,104 +366,16 @@ nav a {
     align-items: center;
     font-size: 12px;
     font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 15px;
-    color: var(--color-text); /* Texto blanco para las píldoras */
-    background-color: #383a42; /* Fondo oscuro para las píldoras */
+    padding: 4px 6px; /* Padding ajustado para iconos */
+    border-radius: 4px; /* Bordes menos redondeados */
+    color: var(--color-text); 
+    background-color: var(--bg-light); /* Fondo más claro para píldoras */
     border: 1px solid var(--card-border);
     white-space: nowrap;
-}
 
-/* Estilo específico para las cajas de estadísticas (KOs, Wins, DMG) */
-.tier-icon.stat-box {
-    background-color: #383a42; /* Fondo más oscuro para las estadísticas */
-    color: var(--color-text);
-    font-size: 11px;
-    font-weight: normal;
-}
-
-/* ======================================================= */
-/* --- ESTILO DE PLACA (RANKING) --- */
-/* ======================================================= */
-
-/* Aseguramos que la columna de ranking tome el espacio para la placa */
-.col-rank-placa {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-}
-
-.rank-placa {
-    width: 100%; /* Ocupa el espacio de su columna */
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--bg-dark); /* Texto oscuro para que resalte en el fondo de color */
-    position: relative;
-    overflow: hidden;
-}
-
-.rank-number {
-    z-index: 3;
-    color: var(--bg-dark); /* Asegura que el número sea oscuro */
-    padding-left: 10px;
-}
-
-/* Placa - TOP 3 DISEÑO (Background de color solido) */
-.rank-1 {
-    background-color: var(--color-rank-1); /* Dorado brillante */
-    /* Forma de la placa (similar a MCtiers) */
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
-    color: var(--bg-dark);
-}
-.rank-2 {
-    background-color: var(--color-rank-2); /* Plata */
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
-    color: var(--bg-dark);
-}
-.rank-3 {
-    background-color: var(--color-rank-3); /* Bronce */
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
-    color: var(--bg-dark);
-}
-
-/* Placa - DISEÑO RESTO DE JUGADORES (Background de color link) */
-.rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
-    background-color: var(--color-link); /* Color gris/secundario para el resto */
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
-    color: var(--bg-dark);
-}
-
-/* Sobreescribir el padding de .player-row para que la placa funcione bien */
-.player-row {
-    padding: 0; /* Quitamos el padding para que la placa ocupe todo el alto */
-    height: 65px; /* Altura fija para la fila/placa */
-}
-/* Aseguramos que el contenido esté centrado verticalmente */
-.player-row > div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 10px; /* Padding interno para el contenido */
-}
-.col-rank-placa {
-    padding: 0; /* Quitamos el padding de la columna de la placa */
-}
-
-/* Ajuste fino de la cuadrícula para el nuevo orden (#, JUGADOR, TIERS, REGIÓN) */
-.table-header, .player-row {
-    grid-template-columns: 80px 2fr 3fr 100px; /* Ajuste para dar más espacio a Tiers */
-}
-
-/* Hacemos el contenido interno del jugador un poco más pequeño para caber mejor */
-.col-player {
-    padding-left: 15px;
-}
-.player-details img {
-    width: 40px;
-    height: 40px;
+    /* Estilo para los iconos dentro de las píldoras */
+    & i {
+        margin-right: 4px;
+        color: var(--color-link); /* Color sutil para los iconos */
+    }
 }
