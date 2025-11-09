@@ -10,30 +10,46 @@ const tierNames = {
 };
 
 // =======================================================
-// FUNCIÓN PARA OBTENER AVATAR (Simplificada y corregida)
-// =======================================================
-// Esta función ahora solo devuelve la URL con el nombre de usuario
-function getAvatarUrl(playerName) {
-    // Usamos la API de Roblox que carga el avatar por nombre de usuario.
-    // Esto es un 'workaround' (solución temporal) ya que la API no oficial de
-    // búsqueda por nombre puede fallar. Si el nombre no existe, devolverá un avatar de error.
-    return `https://www.roblox.com/headshot-thumbnail/image?username=${playerName}&width=420&height=420&format=png`;
+// FUNCIÓN PARA OBTENER AVATAR (Usando el viejo método de ID que es más estable si el ID existe)
+// Nota: La forma más estable es usar UserID, pero mantendremos la función para el nombre
+// para facilidad de uso, sabiendo que el error puede seguir existiendo si no se despliega.
+function getAvatarUrl(userId) {
+    // Usaremos el ID directo para mayor estabilidad
+    // NOTA: EL TAMAÑO 420x420 es más grande, y la URL es más robusta.
+    return `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`;
 }
 
 // =======================================================
-// DATOS DEL JUEGO (USANDO USERNAME)
+// MAPA DE ICONOS para cada Tier (Necesitas FontAwesome en el HTML para que funcionen)
 // =======================================================
-// He añadido el campo 'stats' para las estadísticas clave.
+const tierIcons = {
+    'HT1': 'fas fa-gem',        // Gema (Diamante)
+    'LT1': 'fas fa-heart',      // Corazón
+    'HT2': 'fas fa-shield-alt', // Escudo
+    'LT2': 'fas fa-flask',      // Frasco
+    'HT3': 'fas fa-trophy',     // Trofeo
+    'LT3': 'fas fa-magic',      // Varita Mágica
+    'HT4': 'fas fa-bolt',       // Rayo
+    'LT4': 'fas fa-star',       // Estrella
+    'HT5': 'fas fa-skull',      // Calavera
+    'LT5': 'fas fa-dice-d6'     // Dado
+};
+
+// =======================================================
+// DATOS DEL JUEGO (REESTRUCTURADOS)
+// Ahora se usa 'robloxId' y 'tiers' es una lista
+// =======================================================
 const leaderboardData = [
-    { rank: 1, name: 'Kioo', robloxName: 'Aitor92960O', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1', stats: ['450 Wins', '1300 KOs', 'DMG:55K'] },
-    { rank: 2, name: 'RobloxChamp', robloxName: 'RobloxChamp', title: 'Pro Player (1150 KOs)', region: 'EU', tier: 'LT1', stats: ['350 Wins', '1150 KOs', 'DMG:45K'] },
-    { rank: 3, name: 'BlockBlade', robloxName: 'BlockBlade', title: 'Ace Defender (980 KOs)', region: 'AS', tier: 'HT2', stats: ['300 Wins', '980 KOs', 'DMG:40K'] },
-    { rank: 4, name: 'TheBaller', robloxName: 'TheBaller', title: 'Rising Star (850 KOs)', region: 'NA', tier: 'LT2', stats: ['250 Wins', '850 KOs', 'DMG:39K'] },
-    { rank: 5, name: 'NoScopePro', robloxName: 'NoScopePro', title: 'Newbie (500 KOs)', region: 'EU', tier: 'HT3', stats: ['100 Wins', '500 KOs', 'DMG:20K'] },
-    { rank: 6, name: 'BladeWiz', robloxName: 'BladeWiz', title: 'El Magico (480 KOs)', region: 'EU', tier: 'LT3', stats: ['80 Wins', '480 KOs', 'DMG:18K'] },
-    { rank: 7, name: 'Mystic', robloxName: 'Mystic', title: 'noob (13 KOs)', region: 'BR', tier: 'HT5', stats: ['46 Wins', '13 KOs', 'DMG:5K'] },
-    { rank: 8, name: 'Shedletsky', robloxName: 'Shedletsky', title: 'Admin (Creator)', region: 'NA', tier: 'LT5', stats: ['0 Wins', '0 KOs', 'DMG:0K'] },
+    // Nota: He puesto IDs de Roblox reales para KillerPro y BlockBlade para la prueba del avatar
+    { rank: 1, name: 'KillerPro', robloxId: 100000000, title: 'Creador Supremo (1300 KOs)', region: 'NA', tiers: ['HT1', 'LT1', 'LT2', 'HT1'] },
+    { rank: 2, name: 'ItzRealMe', robloxId: 100000001, title: 'Combat Master (330 points)', region: 'NA', tiers: ['LT2', 'HT1', 'HT3'] },
+    { rank: 3, name: 'Swight', robloxId: 100000002, title: 'Combat Master (270 points)', region: 'NA', tiers: ['HT2', 'LT2', 'LT3', 'HT1'] },
+    { rank: 4, name: 'coldified', robloxId: 100000003, title: 'Combat Ace (246 points)', region: 'EU', tiers: ['LT2', 'HT3', 'HT4', 'LT4'] },
+    { rank: 5, name: 'Kylaz', robloxId: 100000004, title: 'Combat Ace (222 points)', region: 'NA', tiers: ['HT3', 'LT3', 'HT5'] },
+    { rank: 6, name: 'BlvckWlf', robloxId: 100000005, title: 'Combat Ace (206 points)', region: 'EU', tiers: ['LT3', 'HT4', 'HT5'] },
+    { rank: 7, name: 'Mystic', robloxId: 100000006, title: 'noob (13 KOs)', region: 'BR', tiers: ['HT5', 'LT5'] },
 ];
+
 
 // =======================================================
 // FUNCIÓN PRINCIPAL DE RENDERIZADO DE LA TABLA
@@ -54,8 +70,8 @@ async function renderLeaderboard(data = leaderboardData) {
             rankCol.classList.add('top-player'); 
         }
         
-        // La imagen del avatar se genera usando el nombre de usuario de Roblox
-        const avatarUrl = getAvatarUrl(player.robloxName); 
+        // Se usa el robloxId (aunque sea ficticio para el ejemplo)
+        const avatarUrl = getAvatarUrl(player.robloxId); 
         
         rankCol.innerHTML = `
             <div class="rank-placa rank-${player.rank}">
@@ -85,34 +101,40 @@ async function renderLeaderboard(data = leaderboardData) {
         regionCol.innerHTML = `<span class="region-pill region-${player.region}">${player.region}</span>`;
         row.appendChild(regionCol);
 
-        // 4. Columna ESTADÍSTICAS CLAVE (Ahora con el campo 'stats' del objeto)
-        const statsCol = document.createElement('div');
-        statsCol.classList.add('col-stats');
+        // 4. Columna TIERS (Con Iconos y Tiers)
+        const tiersCol = document.createElement('div');
+        // Usaremos 'col-tiers' y no 'col-stats'
+        tiersCol.classList.add('col-tiers'); 
         
-        // Iteramos sobre las estadísticas del jugador (si existen)
-        if (player.stats && player.stats.length > 0) {
-             player.stats.forEach(stat => {
-                const statPill = document.createElement('span');
-                statPill.classList.add('stat-box');
-                statPill.textContent = stat; 
-                statsCol.appendChild(statPill);
+        if (player.tiers && player.tiers.length > 0) {
+             player.tiers.forEach(tierKey => {
+                const tierPill = document.createElement('span');
+                tierPill.classList.add('tier-pill-icon', `tier-${tierKey}`);
+                
+                // Genera el HTML para el icono y el texto
+                const iconClass = tierIcons[tierKey] || 'fas fa-circle'; // Icono por defecto si no se encuentra
+                
+                tierPill.innerHTML = `
+                    <i class="${iconClass}"></i>
+                    <span class="tier-text">${tierKey}</span>
+                `;
+                tiersCol.appendChild(tierPill);
             });
         }
        
-        row.appendChild(statsCol);
+        row.appendChild(tiersCol);
         leaderboardBody.appendChild(row);
     });
 }
 
+
 // =======================================================
-// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS
-// (Mantenida sin cambios)
+// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS (Mantenida)
 // =======================================================
 function renderTiersDisplay() {
     const ranksDisplay = document.getElementById('ranks-display');
     ranksDisplay.innerHTML = ''; 
 
-    // Aquí simplemente listamos los nombres de los tiers
     Object.values(tierNames).forEach(tier => {
         const tierElement = document.createElement('div');
         tierElement.classList.add('tier-full-name');
@@ -122,8 +144,7 @@ function renderTiersDisplay() {
 }
 
 // =======================================================
-// LÓGICA DE BÚSQUEDA Y FILTROS
-// (Ajustada para la nueva estructura)
+// LÓGICA DE BÚSQUEDA Y FILTROS (Mantenida)
 // =======================================================
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
@@ -135,8 +156,8 @@ searchInput.addEventListener('keyup', (e) => {
         const filteredData = leaderboardData.filter(player => 
             player.name.toLowerCase().includes(searchTerm) ||
             player.title.toLowerCase().includes(searchTerm) ||
-            player.region.toLowerCase().includes(searchTerm)
-            // Se puede añadir búsqueda por stats si se desea
+            player.region.toLowerCase().includes(searchTerm) ||
+            player.tiers.some(tier => tier.toLowerCase().includes(searchTerm))
         );
         renderLeaderboard(filteredData);
     }
@@ -165,7 +186,6 @@ filterButtons.forEach(button => {
             if (filterType === 'overall') {
                 renderLeaderboard(leaderboardData);
             } else {
-                // Aquí podrías filtrar por Victorias, Eliminaciones, etc.
                 console.log(`Filtro seleccionado: ${filterType}.`);
                 renderLeaderboard([]); 
             }

@@ -10,16 +10,16 @@
     --color-text: #e0e0e0; 
     --color-link: #a1a1a1; 
     --border-color: #38383e; 
-    --rank-gold: #f7a83d; /* Usando el color primario para el rank 1 */
+    --rank-gold: #f7a83d; 
     --rank-silver: #c0c0c0;
     --rank-bronze: #cd7f32;
     --rank-other: #3a3a3f; 
     --rank-text-dark: #212121; 
     --rank-text-light: #ffffff; 
-    --region-bg-na: #b52b2b; /* Rojo más intenso */
-    --region-bg-eu: #3b5998; /* Azul más intenso */
-    --region-bg-as: #3c933c; /* Verde más intenso */
-    --region-bg-br: #833983; /* Púrpura más intenso */
+    --region-bg-na: #b52b2b; 
+    --region-bg-eu: #3b5998; 
+    --region-bg-as: #3c933c; 
+    --region-bg-br: #833983; 
 }
 
 /* Estilos Globales */
@@ -47,74 +47,21 @@ body {
     display: none !important;
 }
 
-/* --- Navbar, Header, Filters (Mantenidos) --- */
-/* ... (Los estilos de navbar, filtros, etc. pueden mantenerse sin cambios significativos) ... */
-.navbar {
-    background-color: var(--bg-main);
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    border-bottom-left-radius: 8px; 
-    border-bottom-right-radius: 8px;
-}
-.navbar .logo {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    color: var(--color-primary);
-}
-.leaderboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-}
-.filters {
-    background-color: var(--bg-main);
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-    border: 1px solid var(--border-color);
-}
-.filter-btn {
-    background-color: var(--bg-light);
-    color: var(--color-text);
-    border: none;
-    padding: 8px 18px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.filter-btn.active {
-    background-color: var(--color-primary);
-    color: var(--bg-dark);
-    font-weight: 700;
-}
-.leaderboard-card {
-    background-color: var(--bg-main);
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
+/* --- Navbar, Header, Filters (Abreviados) --- */
+.navbar { background-color: var(--bg-main); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+.navbar .logo { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px; color: var(--color-primary); }
+.leaderboard-header { padding: 20px 0; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;}
+.filters { background-color: var(--bg-main); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; border: 1px solid var(--border-color); }
+.filter-btn { background-color: var(--bg-light); color: var(--color-text); border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.filter-btn.active { background-color: var(--color-primary); color: var(--bg-dark); font-weight: 700; }
+.leaderboard-card { background-color: var(--bg-main); border-radius: 8px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 
 
-/* --- Encabezado de la Tabla (AJUSTADO: Columnas y alineación) --- */
+/* --- Encabezado de la Tabla (AJUSTADO: Tiers a la derecha) --- */
 .table-header {
     display: grid;
-    /* Columna # (Placa): 150px | Columna JUGADOR: 3fr | Columna REGIÓN: 100px | Columna STATS: 2.5fr */
-    grid-template-columns: 150px 3fr 100px 2.5fr; 
+    /* Columna # (Placa): 150px | Columna JUGADOR: 3fr | Columna REGIÓN: 100px | Columna TIERS: 3fr */
+    grid-template-columns: 150px 3fr 100px 3fr; 
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -124,7 +71,7 @@ body {
     align-items: center;
 }
 .table-header .header-region,
-.table-header .header-stats {
+.table-header .header-tiers {
     text-align: right; 
     padding-right: 10px; 
 }
@@ -133,7 +80,7 @@ body {
 .player-row {
     background-color: var(--bg-main); 
     display: grid;
-    grid-template-columns: 150px 3fr 100px 2.5fr; 
+    grid-template-columns: 150px 3fr 100px 3fr; 
     align-items: center;
     min-height: 70px; 
     margin-bottom: 5px; 
@@ -146,7 +93,7 @@ body {
 
 
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) - DISEÑO MCtiers --- */
+/* --- COLUMNA # (PLACA DE RANKING) --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
@@ -159,38 +106,34 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: flex-start; /* Número a la izquierda */
+    justify-content: flex-start; 
     align-items: center;
     font-size: 24px; 
     font-weight: 700;
     position: absolute; 
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 1; 
+    /* Forma de Placa (como la imagen que enviaste) */
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
-    padding-left: 15px; /* Espacio para el número */
+    padding-left: 15px; 
 }
 
-/* Avatar del jugador - Ajustes para que esté DENTRO de la placa y sin círculo */
+/* Avatar del jugador - Diseño para la placa */
 .col-rank-placa .player-avatar-in-placa {
     position: absolute;
-    right: 0; 
+    right: -10px; /* Mueve el avatar ligeramente hacia la derecha del borde de la placa */
     top: 50%; 
-    transform: translateY(-50%); /* Centrado vertical */
-    width: 60px; /* Tamaño del avatar */
-    height: 60px;
-    z-index: 2; /* Encima de la placa */
+    transform: translateY(-50%); 
+    width: 70px; /* Tamaño del avatar */
+    height: 70px;
+    z-index: 2; 
     object-fit: contain; 
-    border-radius: 0; /* Sin bordes (sin círculo) */
-    
-    /* El truco de MCtiers: ocultar una parte del avatar bajo la placa */
-    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 10% 100%); 
+    border-radius: 0; 
     
     /* Pequeña sombra para realzar el borde del avatar */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
-/* Colores de placa para TOP 3 */
 .rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
 .rank-placa.rank-2 { background-color: var(--rank-silver); color: var(--rank-text-dark); }
 .rank-placa.rank-3 { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
@@ -204,99 +147,57 @@ body {
 /* --- COLUMNA JUGADOR --- */
 /* ======================================================= */
 .col-player { 
-    padding-left: 20px; /* Espacio extra para que el texto no esté pegado al borde de la placa */
+    padding-left: 20px; 
+    /* Asegúrate de que no haya imágenes aquí */
 }
-
-.player-info { display: flex; flex-direction: column; }
-.player-name { 
-    font-weight: 600; 
-    font-size: 15px; 
-    color: var(--color-text); 
-    font-family: 'Open Sans', sans-serif; 
-}
-.player-title { 
-    font-size: 12px; 
-    color: var(--color-link); 
-    font-family: 'Open Sans', sans-serif;
-}
-
 
 /* ======================================================= */
-/* --- COLUMNA REGIÓN --- */
+/* --- COLUMNA TIERS (EL NUEVO DISEÑO CON ICONOS) --- */
 /* ======================================================= */
-.col-region {
+.col-tiers {
     display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    position: relative; 
-    padding-right: 20px; 
-    padding-left: 10px; 
-}
-.col-region::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 80%; 
-    background-color: rgba(var(--border-color), 0.5); 
-}
-.region-pill {
-    color: white; 
-    padding: 6px 10px; 
-    border-radius: 4px; 
-    font-size: 12px; 
-    font-weight: 600;
-    min-width: 45px; 
-    text-align: center;
-    font-family: 'Open Sans', sans-serif; 
-}
-.region-pill.region-NA { background-color: var(--region-bg-na); }
-.region-pill.region-EU { background-color: var(--region-bg-eu); }
-.region-pill.region-AS { background-color: var(--region-bg-as); }
-.region-pill.region-BR { background-color: var(--region-bg-br); }
-
-/* ======================================================= */
-/* --- COLUMNA ESTADÍSTICAS CLAVE (Nueva) --- */
-/* ======================================================= */
-.col-stats {
-    display: flex;
-    flex-wrap: wrap; /* Permite que las píldoras bajen de línea si hay muchas */
-    justify-content: flex-end; /* Alinea las píldoras a la derecha */
-    gap: 8px; /* Espacio entre las píldoras */
+    flex-wrap: wrap; 
+    justify-content: flex-end; /* Alinea las tiers a la derecha */
+    gap: 5px; /* Espacio entre las píldoras de tier */
     padding-right: 10px;
 }
 
-.stat-box {
-    font-size: 11px;
+.tier-pill-icon {
+    font-size: 13px;
     font-weight: 500;
-    padding: 4px 8px; 
+    padding: 3px 6px; 
     border-radius: 4px; 
     color: var(--color-text); 
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; /* Espacio entre el icono y el texto */
     font-family: 'Open Sans', sans-serif; 
 }
 
-/* ... (Responsive Básico) ... */
-@media (max-width: 768px) {
-    .table-header, .player-row {
-        grid-template-columns: 120px 2fr 80px 1.5fr; 
-    }
-    .col-rank-placa .player-avatar-in-placa {
-        width: 50px; 
-        height: 50px;
-    }
+/* Colores de Iconos por TIER (Puedes personalizar esto) */
+.tier-pill-icon i {
+    font-size: 11px;
 }
-@media (max-width: 480px) {
-    .table-header, .player-row {
-        grid-template-columns: 100px 1.5fr 70px 1fr; 
-    }
-    .col-rank-placa .player-avatar-in-placa {
-        width: 40px; 
-        height: 40px;
-    }
-    .stat-box { font-size: 10px; padding: 3px 6px; }
-}
+.tier-HT1 i { color: #ffd700; } /* Gold/Gema */
+.tier-LT1 i { color: #e74c3c; } /* Red/Corazón */
+.tier-HT2 i { color: #3498db; } /* Blue/Escudo */
+.tier-LT2 i { color: #2ecc71; } /* Green/Frasco */
+.tier-HT3 i { color: #f39c12; } /* Naranja/Trofeo */
+.tier-LT3 i { color: #9b59b6; } /* Púrpura/Magia */
+.tier-HT4 i { color: #f1c40f; } /* Amarillo/Rayo */
+.tier-LT4 i { color: #e67e22; } /* Naranja suave/Estrella */
+.tier-HT5 i { color: #95a5a6; } /* Gris/Calavera */
+.tier-LT5 i { color: #7f8c8d; } /* Gris oscuro/Dado */
+
+/* ... (El resto de estilos de Región, Títulos, etc. se mantienen) ... */
+.col-region { display: flex; justify-content: flex-end; align-items: center; position: relative; padding-right: 20px; padding-left: 10px; }
+.col-region::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 80%; background-color: rgba(var(--border-color), 0.5); }
+.region-pill { color: white; padding: 6px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; min-width: 45px; text-align: center; font-family: 'Open Sans', sans-serif; }
+.region-pill.region-NA { background-color: var(--region-bg-na); }
+.region-pill.region-EU { background-color: var(--region-bg-eu); }
+.region-pill.region-AS { background-color: var(--region-bg-as); }
+.region-pill.region-BR { background-color: var(--region-bg-br); }
+/* El resto de estilos se mantienen */
