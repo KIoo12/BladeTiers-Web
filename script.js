@@ -1,23 +1,27 @@
-// Función simulada para obtener el avatar (solo un placeholder visual)
-function getAvatarUrl(player) {
-    return `https://www.roblox.com/headshot-thumbnail/image?userId=1234567&width=420&height=420&format=png`;
-}
+// =======================================================
+// DATOS Y LOGICA
+// =======================================================
 
-// Datos de ejemplo imitando estadísticas de Blade Ball
+// --- DATOS DE LA CLASIFICACIÓN ---
 const leaderboardData = [
-    { rank: 1, name: "KillerPro", title: "🏆 Creador Supremo (1300 KOs)", region: "NA", stats: ["450 Wins", "1300 KOs", "DMG: 55k"], tiers: ["Legend", "Diamond"] },
-    { rank: 2, name: "RobloxChamp", title: "Pro Player (1150 KOs)", region: "EU", stats: ["350 Wins", "1150 KOs", "DMG: 45k"], tiers: ["Diamond", "Gold"] },
-    { rank: 3, name: "BlockBlade", title: "Ace Defender (980 KOs)", region: "AS", stats: ["300 Wins", "980 KOs", "DMG: 40k"], tiers: ["Gold", "Silver"] },
-    { rank: 4, name: "TheBaller", title: "Rising Star (850 KOs)", region: "NA", stats: ["250 Wins", "850 KOs", "DMG: 35k"], tiers: ["Silver"] },
-    { rank: 5, name: "NoScopePro", title: "Newbie (500 KOs)", region: "EU", stats: ["100 Wins", "500 KOs", "DMG: 20k"], tiers: ["Bronze"] },
-    { rank: 6, name: "BladeWiz", title: "El Magico (480 KOs)", region: "EU", stats: ["80 Wins", "480 KOs", "DMG: 18k"], tiers: ["Bronze"] },
-     { rank: 7, name: "Mystic", title: "noob (13 KOs)", region: "br", stats: ["46 Wins", "13 KOs", "DMG: 5k"], tiers: ["silver"] }, // ¡Jugador añadido!
+    { rank: 1, name: 'KillerPro', title: 'Creador Supremo (1300 KOs)', region: 'NA', stats: ['450 Wins', '1300 KDs', 'DMG:55k'] },
+    { rank: 2, name: 'RobloxChamp', title: 'Pro Player (1150 KOs)', region: 'EU', stats: ['350 Wins', '1150 KDs', 'DMG:45k'] },
+    { rank: 3, name: 'BlockBlade', title: 'Ace Defender (980 KOs)', region: 'AS', stats: ['300 Wins', '980 KDs', 'DMG:40k'] },
+    { rank: 4, name: 'TheBaller', title: 'Rising Star (850 KOs)', region: 'NA', stats: ['250 Wins', '850 KDs', 'DMG:39k'] },
+    { rank: 5, name: 'NoScopePro', title: 'Newbie (500 KOs)', region: 'EU', stats: ['100 Wins', '500 KDs', 'DMG:20k'] },
+    { rank: 6, name: 'BladeWiz', title: 'El Magico (480 KOs)', region: 'EU', stats: ['80 Wins', '480 KDs', 'DMG:18k'] },
+    { rank: 7, name: 'Mystic', title: 'noob (13 KOs)', region: 'BR', stats: ['46 Wins', '13 KDs', 'DMG:5k'] }
 ];
 
-const tableBody = document.getElementById('leaderboard-table');
-const searchInput = document.getElementById('player-search');
+// --- FUNCIÓN PARA OBTENER AVATAR ---
+function getAvatarUrl(playerName) {
+    return `https://avatar.vercel.sh/${playerName}.png`; 
+}
 
-// Función principal para renderizar la tabla
+// =======================================================
+// RENDERIZADO DE LA TABLA
+// =======================================================
+
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = ''; // Limpiar la tabla
@@ -25,6 +29,11 @@ function renderLeaderboard(data = leaderboardData) {
     data.forEach((player, index) => {
         const row = document.createElement('div');
         row.classList.add('player-row');
+
+        // Añadir clase 'top-player' para la animación de brillo
+        if (player.rank <= 3) {
+            row.classList.add('top-player');
+        }
 
         // 1. Columna del Ranking
         const rankCol = document.createElement('div');
@@ -35,7 +44,7 @@ function renderLeaderboard(data = leaderboardData) {
         if (player.rank === 3) rankCol.classList.add('rank-3');
         row.appendChild(rankCol);
 
-        // 2. Columna del Jugador y Título (Estructura MCtiers)
+        // 2. Columna del Jugador y Título
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         playerCol.innerHTML = `
@@ -49,18 +58,17 @@ function renderLeaderboard(data = leaderboardData) {
         `;
         row.appendChild(playerCol);
 
-
         // 3. Columna de la Región
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
+        regionCol.classList.add(`region-${player.region}`); 
         regionCol.textContent = player.region;
         row.appendChild(regionCol);
 
-        // 4. Columna de las Estadísticas (Tiers/Píldoras)
+        // 4. Columna de las Estadísticas (Píldoras)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
 
-        // Crea las píldoras de estadísticas
         player.stats.forEach(stat => {
             const statPill = document.createElement('span');
             statPill.classList.add('tier-icon', 'stat-box');
@@ -73,18 +81,41 @@ function renderLeaderboard(data = leaderboardData) {
     });
 }
 
-// ------------------------------------
-// Búsqueda (Filtra la tabla)
-// ------------------------------------
-searchInput.addEventListener('keyup', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    
-    const filteredData = leaderboardData.filter(player => 
-        player.name.toLowerCase().includes(searchTerm)
-    );
+// =======================================================
+// BUSQUEDA Y FILTROS
+// =======================================================
 
-    renderTable(filteredData);
+// Lógica de Búsqueda
+const searchInput = document.getElementById('player-search');
+
+if (searchInput) {
+    searchInput.addEventListener('keyup', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        const filteredData = leaderboardData.filter(player => 
+            player.name.toLowerCase().includes(searchTerm) || 
+            player.title.toLowerCase().includes(searchTerm) ||
+            player.region.toLowerCase().includes(searchTerm)
+        );
+        renderLeaderboard(filteredData);
+    });
+}
+
+// Lógica de Filtros (Categorías)
+const filterButtons = document.querySelectorAll('.filter-btn');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remover 'active' de todos los botones
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Añadir 'active' al botón clickeado
+        button.classList.add('active');
+        
+        // Nota: Si quieres que el filtro haga algo, deberías implementar la lógica aquí,
+        // por ahora solo cambia la apariencia del botón.
+        
+        // Para fines de prueba, siempre renderizamos la lista completa al cambiar de filtro
+        renderLeaderboard(leaderboardData);
+    });
 });
-
-// Inicializar la tabla al cargar la página
-renderTable(leaderboardData);

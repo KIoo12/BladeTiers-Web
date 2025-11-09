@@ -1,15 +1,19 @@
-/* Variables para colores */
+/* Variables para colores (Adaptadas a MCtiers) */
 :root {
-    --bg-dark: #1e2024;
-    --bg-main: #272a30;
-    --color-primary: #FFC300; /* Dorado/Amarillo LIMPIO */
-    --color-text: #e0e0e0;
-    --color-link: #a1a1a1;
-    --color-rank-1: #ffd700;
-    --color-rank-2: #c0c0c0;
-    --color-rank-3: #cd7f32;
-    --border-color: #383a42;
-    --card-border: #4a4d55; /* Borde más visible para las cards */
+    --bg-dark: #1a1b1e; /* Fondo principal más oscuro */
+    --bg-main: #272a30; /* Fondo de tarjetas y contenedores */
+    --color-primary: #f7a83d; /* Naranja/Dorado original */
+    --color-text: #e0e0e0; /* Texto principal */
+    --color-link: #a1a1a1; /* Enlaces y texto secundario */
+    --color-rank-1: #ffd700; /* Dorado brillante */
+    --color-rank-2: #c0c0c0; /* Plata */
+    --color-rank-3: #cd7f32; /* Bronce */
+    --border-color: #383a42; /* Bordes sutiles */
+    --card-border: #33363d; /* Borde para las cards */
+    --region-bg-na: #9d1a33; /* Fondo para región NA */
+    --region-bg-eu: #3a539b; /* Fondo para región EU */
+    --region-bg-as: #3c8d2f; /* Fondo para región AS */
+    --region-bg-br: #7b297b; /* Fondo para región BR */
 }
 
 /* Estilos Globales */
@@ -58,10 +62,17 @@ a:hover {
     font-weight: bold;
 }
 
+nav {
+    display: flex;
+    gap: 15px;
+}
+
 nav a {
-    margin: 0 15px;
     font-size: 14px;
     color: var(--color-link);
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .search-bar {
@@ -84,12 +95,12 @@ nav a {
 .filters {
     background-color: var(--bg-main);
     padding: 10px;
-    border-radius: 8px; /* Ligeramente más redondeado */
+    border-radius: 8px;
     margin-bottom: 20px;
     display: flex;
-    flex-wrap: wrap; /* Permite que los botones se envuelvan */
+    flex-wrap: wrap;
     gap: 10px;
-    border: 1px solid var(--card-border); /* Borde para el contenedor de filtros */
+    border: 1px solid var(--card-border);
 }
 
 .filter-btn {
@@ -97,13 +108,13 @@ nav a {
     color: var(--color-text);
     border: none;
     padding: 8px 15px;
-    border-radius: 20px; /* MUCHOS MÁS REDONDEADOS (estilo píldora) */
+    border-radius: 20px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s, color 0.3s;
-    display: flex; /* Para alinear ícono y texto */
+    display: flex;
     align-items: center;
-    gap: 5px; /* Espacio entre ícono y texto */
+    gap: 5px;
 }
 
 .filter-btn:hover {
@@ -112,22 +123,22 @@ nav a {
 
 .filter-btn.active {
     background-color: var(--color-primary);
-    color: var(--bg-dark); /* Texto oscuro en botón activo */
+    color: var(--bg-dark);
     font-weight: bold;
 }
 
 /* --- Info del Servidor --- */
 .leaderboard-card {
     background-color: var(--bg-main);
-    border-radius: 8px; /* Ligeramente más redondeado */
+    border-radius: 8px;
     padding: 20px;
-    border: 1px solid var(--card-border); /* Borde para la card principal */
+    border: 1px solid var(--card-border);
 }
 
 .server-info {
     display: flex;
-    justify-content: flex-end; /* Alineado a la derecha */
-    align-items: center; /* Alineación vertical */
+    justify-content: flex-end;
+    align-items: center;
     gap: 20px;
     font-size: 14px;
     padding-bottom: 10px;
@@ -137,21 +148,16 @@ nav a {
 }
 
 .server-ip {
-    color: #4CAF50; /* Color verde para la IP */
-    display: flex; /* Para alinear ícono y texto */
+    color: #4CAF50;
+    display: flex;
     align-items: center;
     gap: 5px;
 }
-.server-ip .fab { /* Ajuste del ícono de Discord */
-    font-size: 18px;
-}
-
 
 /* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    /* Ajuste de columnas: Rank | Jugador (más ancho) | Región | Estadísticas */
-    grid-template-columns: 50px 2fr 100px 3fr; 
+    grid-template-columns: 50px 2fr 100px 3fr;
     padding: 10px 0;
     font-size: 12px;
     color: var(--color-link);
@@ -161,18 +167,55 @@ nav a {
     align-items: center;
 }
 
-/* --- Filas de la Tabla (Jugador) --- */
+/* --- Estilo de la Fila del Jugador (Nueva estructura de tarjeta) --- */
 .player-row {
+    position: relative; /* Necesario para la animación del brillo */
+    background-color: var(--bg-main); /* Fondo de la tarjeta del jugador */
+    border-radius: 8px;
+    margin-bottom: 10px; /* Espacio entre tarjetas */
+    padding: 15px 0; /* Ajustamos padding para que no se pegue */
+
+    /* Quitamos el borde inferior que era de la tabla clásica */
+    border-bottom: none; 
+
+    /* Usamos display grid dentro de la tarjeta */
     display: grid;
-    /* Mismas columnas que el header */
-    grid-template-columns: 50px 2fr 100px 3fr;
+    grid-template-columns: 50px 2fr 100px 3fr; /* Mismas columnas que el header */
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border-color);
+    overflow: hidden; /* Asegura que el brillo no se salga */
+    z-index: 1; /* Para que el contenido esté sobre el brillo */
 }
 
-.player-row:last-child {
-    border-bottom: none;
+/* Ocultar el último border-bottom, si es necesario */
+#leaderboard-body .player-row:last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- Animación de Brillo para el Top 3 --- */
+@keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.player-row.top-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%, /* Brillo más sutil */
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shine 3s infinite linear;
+    z-index: 0; /* Debe estar debajo del contenido */
+    pointer-events: none; /* Asegura que no bloquee interacciones */
+    opacity: 0.6; /* Hacemos el brillo un poco menos intenso */
 }
 
 /* Estilo para el Ranking */
@@ -180,6 +223,8 @@ nav a {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+    position: relative; /* Para asegurar que el número esté sobre el brillo */
+    z-index: 2;
 }
 
 /* Colores para Top 3 */
@@ -187,32 +232,35 @@ nav a {
 .rank-2 { color: var(--color-rank-2); }
 .rank-3 { color: var(--color-rank-3); }
 
-/* --- NUEVO ESTILO: Detalles del Jugador (Nombre + Título) --- */
+
+/* --- Detalles del Jugador (Nombre + Título) --- */
 .player-details {
     display: flex;
-    align-items: center; /* Centra verticalmente avatar y texto */
+    align-items: center;
+    position: relative; /* Para que esté sobre el brillo */
+    z-index: 2;
 }
 
 .player-details img {
-    width: 45px; /* Ligeramente más grande */
+    width: 45px;
     height: 45px;
-    border-radius: 6px; /* Bordes suaves para el avatar */
+    border-radius: 50%; /* Avatares circulares */
     margin-right: 15px;
-    border: 2px solid var(--card-border); /* Borde sutil */
-    object-fit: cover; /* Asegura que la imagen no se distorsione */
+    border: 2px solid var(--card-border);
+    object-fit: cover;
 }
 
-.player-info { /* Contenedor para Nombre y Título */
+.player-info {
     display: flex;
-    flex-direction: column; /* Apila nombre y título */
-    justify-content: center; /* Centra verticalmente si hay espacio */
+    flex-direction: column;
+    justify-content: center;
 }
 
 .player-name {
     font-weight: bold;
     font-size: 16px;
     color: var(--color-text);
-    margin-bottom: 2px; /* Pequeño espacio entre nombre y título */
+    margin-bottom: 2px;
 }
 
 .player-title {
@@ -221,40 +269,51 @@ nav a {
     display: block;
 }
 
-/* Estilo de la Región (mantenido) */
+/* Estilo de la Región (píldora) */
 .col-region {
-    background-color: #9d1a33; /* Un rojo oscuro */
+    background-color: var(--region-bg-na); /* Color por defecto */
     color: white;
     padding: 5px 8px;
-    border-radius: 4px; /* Ligeramente más redondeado */
+    border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    width: 50px; /* Un poco más ancho */
-    margin: 0 auto; /* Centrar la píldora de región */
+    width: 50px;
+    margin: 0 auto;
+    position: relative; /* Para que esté sobre el brillo */
+    z-index: 2;
 }
 
-/* --- NUEVO ESTILO: Cajas de Tiers/Estadísticas (Píldoras como MCtiers) --- */
+/* Colores específicos para regiones */
+.region-NA { background-color: var(--region-bg-na); }
+.region-EU { background-color: var(--region-bg-eu); }
+.region-AS { background-color: var(--region-bg-as); }
+.region-BR { background-color: var(--region-bg-br); }
+
+
+/* --- Cajas de Tiers/Estadísticas (Píldoras) --- */
 .col-tiers {
     display: flex;
-    flex-wrap: wrap; /* Permite que las píldoras se envuelvan */
-    gap: 7px; /* Espacio entre las píldoras */
-    justify-content: flex-start; /* Alinea a la izquierda */
-    padding-left: 10px; /* Un poco de sangría */
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: flex-start;
+    padding-left: 10px;
+    position: relative; /* Para que esté sobre el brillo */
+    z-index: 2;
 }
 
-.tier-icon { /* Base para cualquier ícono/píldora */
+.tier-icon {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     font-size: 12px;
     font-weight: bold;
-    padding: 4px 8px; /* Relleno para que se vea como píldora */
-    border-radius: 15px; /* Forma de píldora */
-    color: var(--bg-dark); /* Texto oscuro por defecto */
-    background-color: #5a5d66; /* Fondo gris para las píldoras */
-    border: 1px solid var(--card-border); /* Borde sutil */
-    white-space: nowrap; /* Evita que el texto se rompa */
+    padding: 4px 8px;
+    border-radius: 15px;
+    color: var(--color-text); /* Texto blanco para las píldoras */
+    background-color: #383a42; /* Fondo oscuro para las píldoras */
+    border: 1px solid var(--card-border);
+    white-space: nowrap;
 }
 
 /* Estilo específico para las cajas de estadísticas (KOs, Wins, DMG) */
@@ -264,9 +323,3 @@ nav a {
     font-size: 11px;
     font-weight: normal;
 }
-
-/* Iconos específicos para los tiers/medallas (ej. HT1, LT1 en MCtiers) */
-/* Puedes definir aquí colores o estilos para tus propios "tiers" si los implementas */
-.tier-icon.tier-legend { background-color: #ffd700; } /* Dorado */
-.tier-icon.tier-diamond { background-color: #b9f2ff; } /* Azul claro */
-/* Añade más clases para diferentes tiers si quieres colores específicos */
