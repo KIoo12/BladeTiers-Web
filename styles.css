@@ -1,7 +1,4 @@
-/* --- Fuentes de Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
-
-/* Variables para colores (Adaptadas al estilo Dark) */
+/* --- Variables para colores --- */
 :root {
     --bg-dark: #12161b; 
     --bg-main: #1a1f26; 
@@ -12,13 +9,12 @@
     --color-rank-1-bg: #e6b301; /* Dorado */
     --color-rank-2-bg: #808080; /* Plata */
     --color-rank-3-bg: #cd7f32; /* Bronce */
-    --color-rank-text-dark: #212121; /* Texto oscuro para metales */
-    --color-rank-other-bg: #3d4a5c; /* Gris/Azul para el resto */
-    --color-rank-other-text: #ffffff; 
+    --color-rank-text-dark: #212121; 
+    --color-rank-other-bg: #3d4a5c; 
     --border-color: #2e3640; 
     --card-border: #2e3640; 
 
-    /* Colores de región de MCtiers */
+    /* Colores de región */
     --region-bg-na: #9d1a33; 
     --region-bg-eu: #3a539b; 
     --region-bg-as: #3c8d2f; 
@@ -30,7 +26,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', 'Roboto', Helvetica, Arial, sans-serif;
+    font-family: sans-serif; /* Usar fuente por defecto para evitar problemas */
 }
 
 body {
@@ -45,72 +41,35 @@ body {
     padding: 0 20px;
 }
 
-/* --- Navegación --- */
-.navbar {
+.navbar, .filters {
     background-color: var(--bg-main);
+    border: 1px solid var(--card-border);
+}
+.navbar {
     padding: 15px 40px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    border-radius: 0;
-    margin-bottom: 20px;
 }
-/* ... otros estilos de navegación ... */
-
-/* --- Filtros (Botones) --- */
 .filters {
-    background-color: var(--bg-main);
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 20px;
     display: flex;
     gap: 10px;
-    border: 1px solid var(--card-border);
 }
-.filter-btn {
-    background-color: var(--bg-light);
-    color: var(--color-text);
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-.filter-btn.active {
-    background-color: var(--color-primary);
-    color: var(--bg-dark); 
-    font-weight: bold;
-}
-
-/* --- Info del Servidor --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
     padding: 20px;
     border: 1px solid var(--card-border);
 }
-.server-info {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
-    font-size: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 10px;
-    color: var(--color-link);
-}
 
-
-/* --- Encabezado de la Tabla --- */
+/* --- Encabezado de la Tabla (GRID DEFINITION) --- */
 .table-header {
     display: grid;
-    /* Ajuste de columnas: Placa(80px), Jugador(2.5fr), Región(100px), Tiers(1fr) */
+    /* # | JUGADOR | REGIÓN | TIERS */
     grid-template-columns: 80px 2.5fr 100px 1fr; 
     padding: 10px 0;
     font-size: 12px;
@@ -121,19 +80,20 @@ body {
     align-items: center;
 }
 
-/* --- Estilo de la Fila del Jugador --- */
+/* --- Estilo de la Fila del Jugador (GRID DEFINITION) --- */
 .player-row {
     background-color: var(--bg-main); 
     border-radius: 8px;
     margin-bottom: 10px; 
     display: grid;
-    grid-template-columns: 80px 2.5fr 100px 1fr; /* Mismo que el header */
+    grid-template-columns: 80px 2.5fr 100px 1fr; /* DEBE COINCIDIR CON EL HEADER */
     align-items: center;
     overflow: hidden; 
     height: 65px; 
     border: 1px solid var(--card-border); 
 }
 
+/* --- Estilos Comunes de Columna --- */
 .player-row > div {
     height: 100%;
     display: flex;
@@ -141,16 +101,12 @@ body {
     padding: 0 10px; 
 }
 
-
 /* ======================================================= */
-/* --- PLACA (RANKING) Y ANIMACIÓN (CORREGIDA) --- */
+/* --- PLACA (RANKING) Y ANIMACIÓN (Asegurado) --- */
 /* ======================================================= */
 
 .col-rank-placa {
     padding: 0; 
-    display: flex; 
-    justify-content: center;
-    align-items: center;
     position: relative; 
     overflow: hidden; 
 }
@@ -175,7 +131,7 @@ body {
 
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
     background-color: var(--color-rank-other-bg); 
-    color: var(--color-rank-other-text);
+    color: white;
 }
 
 /* Animación de Brillo (Solo en la Placa del Top 3) */
@@ -204,26 +160,26 @@ body {
     opacity: 0.7; 
 }
 
+
 /* --- Estilo de la Región (CORREGIDO: CENTRADO) --- */
 .col-region {
-    display: flex; /* Contenedor flex para centrar contenido */
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical */
-    padding: 0; /* Quitar padding para que el centrado sea preciso */
+    display: flex; 
+    justify-content: center; /* Centrado horizontal del contenido */
+    align-items: center; 
+    padding: 0; 
 }
 
-/* Estilo de la píldora de Región (se mantiene el centrado del texto interno) */
+/* Estilo de la píldora de Región */
 .region-NA, .region-EU, .region-AS, .region-BR {
     color: white;
     padding: 5px 8px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
-    text-align: center; /* Texto interno centrado */
-    width: 50px; 
-    position: relative; 
-    z-index: 2;
-    /* Colores */
+    text-align: center; 
+    width: 50px; /* Ancho fijo para centrar bien */
+    
+    /* Asignación de colores */
     &.region-NA { background-color: var(--region-bg-na); }
     &.region-EU { background-color: var(--region-bg-eu); }
     &.region-AS { background-color: var(--region-bg-as); }
@@ -236,15 +192,10 @@ body {
     display: flex;
     justify-content: flex-start;
     padding-left: 10px;
-    position: relative; 
-    z-index: 2;
 }
 
 .tier-icon {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px; /* Un poco más grande para ser el único */
+    font-size: 14px; 
     font-weight: bold;
     padding: 4px 8px; 
     border-radius: 4px; 

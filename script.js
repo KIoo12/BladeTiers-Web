@@ -1,15 +1,13 @@
 // =======================================================
-// DATOS DEL JUEGO (CORREGIDO: UN SOLO TIER POR JUGADOR)
+// DATOS DEL JUEGO (UN SOLO TIER POR JUGADOR)
 // =======================================================
 
 function getAvatarUrl(playerName) {
-    // URL simulada de avatar. Se puede cambiar o modificar.
+    // URL simulada de avatar. Debes reemplazarla con tu propio servicio.
     return `https://avatar.vercel.sh/${playerName}.png`; 
 }
 
-// --- DATOS DE LA CLASIFICACIÓN (CON UN SOLO TIER) ---
 const leaderboardData = [
-    // El campo 'stats' ahora solo contiene un string (el Tier principal)
     { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
     { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
     { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
@@ -20,18 +18,18 @@ const leaderboardData = [
 ];
 
 // =======================================================
-// FUNCIÓN PRINCIPAL DE RENDERIZADO (CORREGIDA)
+// FUNCIÓN PRINCIPAL DE RENDERIZADO
 // =======================================================
 
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = ''; // Limpiar la tabla
 
-    data.forEach((player, index) => {
+    data.forEach((player) => { // Eliminado 'index' ya que no se usa
         const row = document.createElement('div');
         row.classList.add('player-row');
 
-        // 1. CREACIÓN: Columna del Ranking (La Placa)
+        // 1. Columna del Ranking (La Placa)
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
         
@@ -40,14 +38,13 @@ function renderLeaderboard(data = leaderboardData) {
             rankCol.classList.add('top-player'); 
         }
         
-        // Contenido interno de la placa (con el punto al final)
         rankCol.innerHTML = `
             <div class="rank-placa rank-${player.rank}">
                 <span class="rank-number">${player.rank}.</span>
             </div>
         `;
 
-        // 2. CREACIÓN: Columna del Jugador y Título
+        // 2. Columna del Jugador y Título
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         playerCol.innerHTML = `
@@ -60,26 +57,22 @@ function renderLeaderboard(data = leaderboardData) {
             </div>
         `;
         
-        // 3. CREACIÓN: Columna de la Región
+        // 3. Columna de la Región
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
         regionCol.classList.add(`region-${player.region}`); 
         regionCol.textContent = player.region;
 
-        // 4. CREACIÓN: Columna del Tier (UN SOLO TIER)
+        // 4. Columna del Tier (UN SOLO TIER)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
 
-        // Crear solo una píldora con el Tier
         const statPill = document.createElement('span');
         statPill.classList.add('tier-icon', 'stat-box');
-        statPill.textContent = player.tier; // Usamos el nuevo campo 'tier'
+        statPill.textContent = player.tier; // Usamos el campo 'tier'
         tiersCol.appendChild(statPill);
         
-        // =======================================================
-        // AÑADIR LAS COLUMNAS EN EL ORDEN FINAL: #, JUGADOR, REGIÓN, TIERS
-        // =======================================================
-
+        // ORDEN FINAL DE LAS COLUMNAS: #, JUGADOR, REGIÓN, TIERS
         row.appendChild(rankCol);
         row.appendChild(playerCol);
         row.appendChild(regionCol); 
@@ -94,21 +87,18 @@ function renderLeaderboard(data = leaderboardData) {
 // LÓGICA DE BUSQUEDA E INICIALIZACIÓN
 // =======================================================
 
-// Lógica de Búsqueda
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
     const searchTerm = e.target.value.toLowerCase();
     
-    // Filtrar los datos
     const filteredData = leaderboardData.filter(player => 
         player.name.toLowerCase().includes(searchTerm)
     );
 
-    // Renderizar con los datos filtrados
     renderLeaderboard(filteredData);
 });
 
-// Inicialización: Asegúrate de que la función se llama al cargar la página
+// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     renderLeaderboard();
 });
