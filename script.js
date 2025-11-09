@@ -1,5 +1,13 @@
+// =======================================================
+// DATOS DEL JUEGO
+// =======================================================
+
+function getAvatarUrl(playerName) {
+    // URL simulada de avatar. Debes reemplazarla con tu propio servicio.
+    return `https://avatar.vercel.sh/${playerName}.png`; 
+}
+
 // --- DATOS DE LA CLASIFICACIÓN (CON NUEVOS TIERS) ---
-// Asegúrate de que esta sección esté antes de la función renderLeaderboard
 const leaderboardData = [
     { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', stats: ['HT1', 'LT1', 'HT2', 'LT2'] },
     { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', stats: ['HT1', 'HT1', 'HT3', 'LT3'] },
@@ -10,6 +18,19 @@ const leaderboardData = [
     { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', stats: ['HT5', 'LT5', 'HT5', 'LT5'] }
 ];
 
+// Lista de todos los Tiers para el sidebar
+const allTiers = [
+    'HT1', 'LT1', 
+    'HT2', 'LT2', 
+    'HT3', 'LT3', 
+    'HT4', 'LT4', 
+    'HT5', 'LT5'
+];
+
+
+// =======================================================
+// FUNCIÓN PRINCIPAL DE RENDERIZADO
+// =======================================================
 
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
@@ -78,41 +99,54 @@ function renderLeaderboard(data = leaderboardData) {
     }); // Cierra el bucle forEach
 } // Cierra la función renderLeaderboard
 
+
 // =======================================================
-// BUSQUEDA Y FILTROS
+// LÓGICA DE RANKINGS Y BUSQUEDA
 // =======================================================
 
-// Lógica de Búsqueda
-const searchInput = document.getElementById('player-search');
+function renderTierList() {
+    const container = document.getElementById('tier-list-container');
+    container.innerHTML = ''; // Limpiar
 
-if (searchInput) {
-    searchInput.addEventListener('keyup', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+    allTiers.forEach(tier => {
+        const tierItem = document.createElement('div');
+        tierItem.classList.add('tier-item');
         
-        const filteredData = leaderboardData.filter(player => 
-            player.name.toLowerCase().includes(searchTerm) || 
-            player.title.toLowerCase().includes(searchTerm) ||
-            player.region.toLowerCase().includes(searchTerm)
-        );
-        renderLeaderboard(filteredData);
+        const tierLabel = document.createElement('span');
+        tierLabel.classList.add('tier-label');
+        
+        // Separar High/Low del número (ej: HT1 -> T1)
+        const tierNumber = tier.substring(tier.length - 1); // 1, 2, 3, etc.
+        const tierPrefix = tier.substring(0, tier.length - 1); // HT o LT
+        
+        tierLabel.textContent = `Tier ${tierNumber}`;
+        
+        const tierValue = document.createElement('span');
+        tierValue.textContent = tierPrefix;
+
+        tierItem.appendChild(tierLabel);
+        tierItem.appendChild(tierValue);
+        container.appendChild(tierItem);
     });
 }
 
-// Lógica de Filtros (Categorías)
-const filterButtons = document.querySelectorAll('.filter-btn');
 
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remover 'active' de todos los botones
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        
-        // Añadir 'active' al botón clickeado
-        button.classList.add('active');
-        
-        // Nota: Si quieres que el filtro haga algo, deberías implementar la lógica aquí,
-        // por ahora solo cambia la apariencia del botón.
-        
-        // Para fines de prueba, siempre renderizamos la lista completa al cambiar de filtro
-        renderLeaderboard(leaderboardData);
-    });
+// Lógica de Búsqueda
+const searchInput = document.getElementById('player-search');
+searchInput.addEventListener('keyup', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    // Filtrar los datos
+    const filteredData = leaderboardData.filter(player => 
+        player.name.toLowerCase().includes(searchTerm)
+    );
+
+    // Renderizar con los datos filtrados
+    renderLeaderboard(filteredData);
+});
+
+// Inicialización: Asegúrate de que las funciones se llamen al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    renderLeaderboard();
+    renderTierList(); // Llama a la función para dibujar el cuadro de Tiers
 });
