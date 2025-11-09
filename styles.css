@@ -31,7 +31,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif; /* APLICAR TIPOGRAFÍA ROBOTO */
+    font-family: 'Roboto', sans-serif; 
 }
 
 body {
@@ -40,14 +40,16 @@ body {
     min-height: 100vh;
     line-height: 1.6;
 }
-/* ... (el resto de body, .container, .hidden, .navbar, .leaderboard-header, .filters, .leaderboard-card) ... */
-/* ... (los estilos de navbar, filtros, etc. de la respuesta anterior están bien) ... */
+
 .container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
 }
-.hidden { display: none !important; }
+
+.hidden {
+    display: none !important;
+}
 
 /* --- Barra de Navegación (Navbar) --- */
 .navbar {
@@ -58,11 +60,11 @@ body {
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    border-bottom-left-radius: 8px; /* Bordes redondeados */
+    border-bottom-left-radius: 8px; 
     border-bottom-right-radius: 8px;
 }
 .navbar .logo {
-    font-family: 'Open Sans', sans-serif; /* Tipografía para el Logo */
+    font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-size: 24px;
     color: var(--color-primary);
@@ -104,6 +106,7 @@ body {
     background-color: var(--border-color); 
     margin: 0 5px; 
 }
+
 /* --- Encabezado de la Sección (RANKINGS) --- */
 .leaderboard-header {
     display: flex;
@@ -114,7 +117,7 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 .leaderboard-header h1 {
-    font-family: 'Open Sans', sans-serif; /* Tipografía para Títulos */
+    font-family: 'Open Sans', sans-serif;
     font-size: 28px;
     color: var(--color-text);
 }
@@ -161,8 +164,8 @@ body {
 /* --- Encabezado de la Tabla (AJUSTADO PARA PLACA) --- */
 .table-header {
     display: grid;
-    /* CAMBIO: Placa más ancha (120px) */
-    grid-template-columns: 120px 3fr 120px 1.5fr; 
+    /* Ancho de placa más grande para el avatar */
+    grid-template-columns: 140px 3fr 120px 1.5fr; 
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -181,11 +184,11 @@ body {
 .player-row {
     background-color: var(--bg-main); 
     display: grid;
-    /* CAMBIO: Placa más ancha (120px) */
-    grid-template-columns: 120px 3fr 120px 1.5fr; 
+    /* Ancho de placa más grande para el avatar */
+    grid-template-columns: 140px 3fr 120px 1.5fr; 
     align-items: center;
     min-height: 70px; 
-    margin-bottom: 5px; /* Separación entre filas */
+    margin-bottom: 5px; 
     border-radius: 8px; 
     overflow: hidden; 
     border: 1px solid var(--border-color); 
@@ -194,31 +197,52 @@ body {
 .player-row:hover { background-color: var(--bg-light); }
 .player-row > div { display: flex; align-items: center; padding: 8px 10px; }
 
+
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) - AJUSTADA --- */
+/* --- COLUMNA # (PLACA DE RANKING) - AHORA CON AVATAR --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
     overflow: hidden; 
     height: 100%; 
     padding: 0; 
+    display: flex; /* Para controlar la posición del número y la imagen */
+    align-items: center;
 }
 .rank-placa {
     width: 100%;
     height: 100%;
     display: flex;
-    /* CAMBIO: Alineado a la izquierda */
-    justify-content: flex-start; 
+    justify-content: flex-start; /* Número a la izquierda */
     align-items: center;
     font-size: 24px; 
     font-weight: 700;
-    position: relative;
-    z-index: 2;
+    position: absolute; /* Para que quede detrás del avatar */
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1; /* Para que el número y la placa estén detrás del avatar */
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
     text-shadow: 2px 2px 3px rgba(0,0,0,0.4); 
-    /* CAMBIO: Padding para el número a la izquierda */
     padding-left: 20px; 
 }
+
+/* El número del rank dentro de la placa */
+.rank-placa .rank-number {
+    position: relative; /* Para que el z-index funcione en el número */
+    z-index: 2; /* Para que el número esté por encima del avatar si se superpone */
+}
+
+/* Avatar del jugador dentro de la placa */
+.col-rank-placa .player-avatar-in-placa {
+    position: absolute;
+    right: 15px; /* Ajusta la posición a la derecha de la placa */
+    width: 50px; /* Tamaño del avatar */
+    height: 50px;
+    z-index: 3; /* Para que el avatar esté encima de la placa y el número */
+    object-fit: contain; /* Asegura que la imagen no se recorte y mantenga proporciones */
+    image-rendering: pixelated; /* Si la imagen es pixel art, lo mantiene nítido */
+    border-radius: 0; /* Sin bordes redondeados (sin círculo) */
+}
+
 
 /* Colores de placa para TOP 3 */
 .rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
@@ -248,32 +272,39 @@ body {
 }
 
 /* ======================================================= */
-/* --- COLUMNA JUGADOR (CON TIPOGRAFÍA) --- */
+/* --- COLUMNA JUGADOR (ELIMINAR IMAGEN DE AQUÍ) --- */
 /* ======================================================= */
-.col-player { gap: 15px; }
-.player-details { display: flex; align-items: center; gap: 10px; }
-.player-details img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid var(--border-color);
-    object-fit: cover;
+.col-player { 
+    gap: 15px; 
+    /* Eliminar el avatar de aquí si se movió a la placa */
+    /* .player-details img ya no debería estar aquí */
 }
+.player-details { display: flex; align-items: center; gap: 10px; }
+/* Si el avatar está en la placa, este ya no es necesario o debe ser genérico */
+.player-details img {
+    /* display: none; */ /* Ocultar si el avatar está en la placa */
+    width: 0; /* Eliminar el espacio que ocuparía */
+    height: 0;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
 .player-info { display: flex; flex-direction: column; }
 .player-name { 
     font-weight: 600; 
     font-size: 15px; 
     color: var(--color-text); 
-    font-family: 'Open Sans', sans-serif; /* APLICAR TIPOGRAFÍA */
+    font-family: 'Open Sans', sans-serif; 
 }
 .player-title { 
     font-size: 12px; 
     color: var(--color-link); 
-    font-family: 'Open Sans', sans-serif; /* APLICAR TIPOGRAFÍA */
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* ======================================================= */
-/* --- COLUMNA REGIÓN (CON TIPOGRAFÍA Y LÍNEA) --- */
+/* --- COLUMNA REGIÓN --- */
 /* ======================================================= */
 .col-region {
     display: flex;
@@ -301,7 +332,7 @@ body {
     font-weight: 600;
     text-align: center;
     min-width: 55px; 
-    font-family: 'Open Sans', sans-serif; /* APLICAR TIPOGRAFÍA */
+    font-family: 'Open Sans', sans-serif; 
 }
 .region-pill.region-NA { background-color: var(--region-bg-na); }
 .region-pill.region-EU { background-color: var(--region-bg-eu); }
@@ -309,7 +340,7 @@ body {
 .region-pill.region-BR { background-color: var(--region-bg-br); }
 
 /* ======================================================= */
-/* --- COLUMNA TIERS (CON TIPOGRAFÍA) --- */
+/* --- COLUMNA TIERS --- */
 /* ======================================================= */
 .col-tiers {
     display: flex;
@@ -326,7 +357,7 @@ body {
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
     white-space: nowrap;
-    font-family: 'Open Sans', sans-serif; /* APLICAR TIPOGRAFÍA */
+    font-family: 'Open Sans', sans-serif; 
 }
 
 /* ======================================================= */
@@ -363,11 +394,21 @@ body {
 /* --- Responsive Básico --- */
 @media (max-width: 768px) {
     .table-header, .player-row {
-        grid-template-columns: 80px 2fr 100px 1fr; 
+        grid-template-columns: 100px 2fr 100px 1fr; /* Ajustar el ancho de la placa en móvil */
+    }
+    .col-rank-placa .player-avatar-in-placa {
+        width: 40px; 
+        height: 40px;
+        right: 10px;
     }
 }
 @media (max-width: 480px) {
     .table-header, .player-row {
-        grid-template-columns: 60px 1.5fr 80px 1fr; 
+        grid-template-columns: 80px 1.5fr 80px 1fr; 
+    }
+    .col-rank-placa .player-avatar-in-placa {
+        width: 30px; 
+        height: 30px;
+        right: 5px;
     }
 }

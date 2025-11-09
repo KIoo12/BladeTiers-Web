@@ -12,14 +12,8 @@ const tierNames = {
 // =======================================================
 // FUNCIÓN DE CONVERSIÓN: Username a UserID
 // =======================================================
-/* Esta función hace la llamada crucial a la API de Roblox
-    para obtener los UserIDs a partir de los Usernames.
-*/
 async function getUserIdsFromUsernames(usernames) {
-    // API de conversión oficial de Roblox
     const url = 'https://users.roblox.com/v1/usernames/users';
-    
-    // Objeto que se enviará a la API
     const body = {
         usernames: usernames,
         excludeBannedUsers: true
@@ -28,14 +22,11 @@ async function getUserIdsFromUsernames(usernames) {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         });
         const json = await response.json();
         
-        // Crea un mapa (diccionario) de Username -> UserID
         let idMap = {};
         if (json.data) {
             json.data.forEach(user => {
@@ -51,17 +42,19 @@ async function getUserIdsFromUsernames(usernames) {
 
 
 // =======================================================
-// DATOS DEL JUEGO (AHORA USANDO SOLO USERNAME EN 'robloxName')
+// DATOS DEL JUEGO (USANDO USERNAME)
 // =======================================================
 const leaderboardData = [
-    // CAMBIO: Ahora usamos 'robloxName' (el string) en lugar de 'robloxId' (el número)
-    { rank: 1, name: 'Kioo', robloxName: 'Aitor92960O', title: 'good', region: 'NA', tier: 'HT1' },
+    { rank: 1, name: 'Shedletsky', robloxName: 'Shedletsky', title: 'Admin (Creator)', region: 'NA', tier: 'HT1' },
     { rank: 2, name: 'KreekCraft', robloxName: 'KreekCraft', title: 'Star Creator (YouTuber)', region: 'NA', tier: 'LT1' },
     { rank: 3, name: 'Linkmon99', robloxName: 'Linkmon99', title: 'Collector (Rich)', region: 'NA', tier: 'HT2' },
-    { rank: 4, name: 'coldified', robloxName: 'Guest', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' }, 
-    { rank: 5, name: 'Kylaz', robloxName: 'JohnDoe', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' }, 
-    { rank: 6, name: 'BlvckWlf', robloxName: 'JaneDoe', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' }, 
-    { rank: 7, name: 'Mystic', robloxName: 'Roblox', title: 'Combat Ace (13 points)', region: 'BR', tier: 'HT5' } 
+    { rank: 4, name: 'Coldified', robloxName: 'Coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' }, 
+    { rank: 5, name: 'Kylaz', robloxName: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' }, 
+    { rank: 6, name: 'BlvckWlf', robloxName: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' }, 
+    { rank: 7, name: 'Mystic', robloxName: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', tier: 'HT5' },
+    { rank: 8, name: 'BladeLord', robloxName: 'Roblox', title: 'Combat Veteran (90 points)', region: 'EU', tier: 'LT4' },
+    { rank: 9, name: 'ShadowPVP', robloxName: 'JohnDoe', title: 'Warrior (50 points)', region: 'AS', tier: 'HT5' },
+    { rank: 10, name: 'ProGamerX', robloxName: 'JaneDoe', title: 'Newbie (10 points)', region: 'NA', tier: 'LT5' }
 ];
 
 
@@ -73,20 +66,19 @@ async function renderLeaderboard(data = leaderboardData) {
     leaderboardBody.innerHTML = ''; 
 
     // PASO 1: Obtener todos los Usernames y convertirlos a UserIDs
-    const usernames = data.map(player => player.robloxName);
-    const idMap = await getUserIdsFromUsernames(usernames);
+    const usernamesToFetch = data.map(player => player.robloxName);
+    const idMap = await getUserIdsFromUsernames(usernamesToFetch);
 
     // PASO 2: Obtener todos los UserIDs resultantes para la llamada de avatares
-    const userIds = Object.values(idMap);
+    const userIdsToFetchAvatars = Object.values(idMap);
     
     let avatarMap = {};
-    if (userIds.length > 0) {
+    if (userIdsToFetchAvatars.length > 0) {
         try {
-            // API oficial de Roblox para avatares
-            const response = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userIds.join(',')}&size=48x48&format=Png&isCircular=true`);
+            // Tamaño 60x60, formato PNG, NO circular (isCircular=false)
+            const response = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userIdsToFetchAvatars.join(',')}&size=60x60&format=Png&isCircular=false`);
             const json = await response.json();
             
-            // Crear un mapa (diccionario) de Id -> UrlDeImagen
             json.data.forEach(avatar => {
                 avatarMap[avatar.targetId] = avatar.imageUrl;
             });
@@ -104,8 +96,9 @@ async function renderLeaderboard(data = leaderboardData) {
         // Buscar el UserID usando el nombre de usuario
         const userId = idMap[player.robloxName.toLowerCase()];
         
-        // Obtener la URL del avatar del mapa, o usar una imagen por defecto
-        const avatarUrl = userId ? avatarMap[userId] : 'default_avatar.png';
+        // Obtener la URL del avatar del mapa. Si no hay, usar una imagen por defecto.
+        // Asegúrate de que 'default_avatar.png' exista en la raíz de tu proyecto
+        const avatarUrl = userId && avatarMap[userId] ? avatarMap[userId] : 'https://www.roblox.com/headshot-thumbnail/image?userId=1&width=48&height=48&format=png'; // Default de Roblox si falla
         
         // 1. Columna # (Placa de Ranking)
         const rankCol = document.createElement('div');
@@ -119,16 +112,16 @@ async function renderLeaderboard(data = leaderboardData) {
             <div class="rank-placa rank-${player.rank}">
                 <span class="rank-number">${player.rank}.</span>
             </div>
+            <img class="player-avatar-in-placa" src="${avatarUrl}" alt="${player.name} avatar">
         `;
         row.appendChild(rankCol);
 
-        // 2. Columna JUGADOR
+        // 2. Columna JUGADOR (Ya no necesita la imagen del avatar)
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         
         playerCol.innerHTML = `
             <div class="player-details">
-                <img src="${avatarUrl}" alt="${player.name} avatar">
                 <div class="player-info">
                     <span class="player-name">${player.name}</span>
                     <span class="player-title">${player.title}</span>
@@ -158,7 +151,6 @@ async function renderLeaderboard(data = leaderboardData) {
 
 // =======================================================
 // FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS
-// (Sin cambios)
 // =======================================================
 function renderTiersDisplay() {
     const ranksDisplay = document.getElementById('ranks-display');
@@ -184,7 +176,6 @@ function renderTiersDisplay() {
 
 // =======================================================
 // LÓGICA DE BÚSQUEDA Y FILTROS
-// (Llamará a la función de renderizado con los nuevos datos)
 // =======================================================
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
