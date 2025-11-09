@@ -10,32 +10,58 @@ const tierNames = {
 };
 
 // =======================================================
-// DATOS DEL JUEGO
+// DATOS DEL JUEGO (AHORA CON ROBLOX USER ID)
 // =======================================================
-function getAvatarUrl(playerName) {
-    return `https://avatar.vercel.sh/${playerName}.png?size=40`; 
+
+/*
+    NOTA IMPORTANTE SOBRE EL AVATAR DE ROBLOX:
+    La API de Roblox necesita el 'UserID', no el 'username'.
+    He puesto UserIDs de ejemplo. 
+    Para encontrar el UserID de un jugador, puedes usar sitios como "roblox.id"
+    o buscar en su perfil de Roblox.
+*/
+function getRobloxAvatarUrl(userId) {
+    // Esta es la API oficial de Roblox para avatares
+    // Usamos 48x48 (tamaño pequeño) y circular (IsCircular)
+    return `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=48x48&format=Png&isCircular=true`;
 }
 
 const leaderboardData = [
-    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
-    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
-    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
-    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' },
-    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' },
-    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' },
-    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', tier: 'HT5' },
-    { rank: 8, name: 'BladeLord', title: 'Combat Veteran (90 points)', region: 'EU', tier: 'LT4' },
-    { rank: 9, name: 'ShadowPVP', title: 'Warrior (50 points)', region: 'AS', tier: 'HT5' },
-    { rank: 10, name: 'ProGamerX', title: 'Newbie (10 points)', region: 'NA', tier: 'LT5' }
+    // CAMBIO: Añadido 'robloxId' y actualizado el nombre
+    { rank: 1, name: 'Shedletsky', title: 'Admin (Creator)', robloxId: 261, region: 'NA', tier: 'HT1' },
+    { rank: 2, name: 'KreekCraft', title: 'Star Creator (YouTuber)', robloxId: 14025239, region: 'NA', tier: 'LT1' },
+    { rank: 3, name: 'Linkmon99', title: 'Collector (Rich)', robloxId: 4423489, region: 'NA', tier: 'HT2' },
+    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', robloxId: 1234567, region: 'EU', tier: 'LT2' }, // ID de ejemplo
+    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', robloxId: 7654321, region: 'NA', tier: 'HT3' }, // ID de ejemplo
+    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', robloxId: 1111111, region: 'EU', tier: 'LT3' }, // ID de ejemplo
+    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', robloxId: 2222222, region: 'BR', tier: 'HT5' } // ID de ejemplo
 ];
 
 // =======================================================
 // FUNCIÓN PRINCIPAL DE RENDERIZADO DE LA TABLA
 // =======================================================
-function renderLeaderboard(data = leaderboardData) {
+async function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = ''; 
 
+    // 1. Obtener todos los UserIDs para una sola llamada a la API
+    const userIds = data.map(player => player.robloxId);
+    
+    // 2. Llamar a la API de Roblox
+    let avatarMap = {};
+    try {
+        const response = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userIds.join(',')}&size=48x48&format=Png&isCircular=true`);
+        const json = await response.json();
+        
+        // Crear un mapa (diccionario) de Id -> UrlDeImagen
+        json.data.forEach(avatar => {
+            avatarMap[avatar.targetId] = avatar.imageUrl;
+        });
+    } catch (error) {
+        console.error("Error al cargar avatares de Roblox:", error);
+    }
+
+    // 3. Renderizar la tabla
     data.forEach((player) => {
         const row = document.createElement('div');
         row.classList.add('player-row');
@@ -44,7 +70,6 @@ function renderLeaderboard(data = leaderboardData) {
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
         
-        // Aplica la clase 'top-player' para el brillo si está en el top 3
         if (player.rank <= 3) {
             rankCol.classList.add('top-player'); 
         }
@@ -59,9 +84,13 @@ function renderLeaderboard(data = leaderboardData) {
         // 2. Columna JUGADOR
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
+        
+        // Obtener la URL del avatar del mapa, o usar una imagen por defecto
+        const avatarUrl = avatarMap[player.robloxId] || 'default_avatar.png'; // Asegúrate de tener una imagen por defecto si falla
+        
         playerCol.innerHTML = `
             <div class="player-details">
-                <img src="${getAvatarUrl(player.name)}" alt="${player.name} avatar">
+                <img src="${avatarUrl}" alt="${player.name} avatar">
                 <div class="player-info">
                     <span class="player-name">${player.name}</span>
                     <span class="player-title">${player.title}</span>
