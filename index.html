@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BladeTiers | Clasificación</title>
+    <title>BladeTiers | Clasificación de Jugadores</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -13,9 +13,9 @@
         <div class="logo">BLADETIERS</div>
         <nav>
             <a href="#"><i class="fas fa-home"></i> Home</a>
-            <a href="#"><i class="fas fa-medal"></i> Rankings</a>
-            <a href="#"><i class="fas fa-comments"></i> Discords <i class="fas fa-caret-down"></i></a>
-            <a href="#"><i class="fas fa-file-alt"></i> Docs</a>
+            <a href="#"><i class="fas fa-trophy"></i> Rankings</a>
+            <a href="#"><i class="fab fa-discord"></i> Discords</a>
+            <a href="#"><i class="fas fa-book"></i> Docs</a>
         </nav>
         <div class="search-bar">
             <i class="fas fa-search"></i>
@@ -23,32 +23,39 @@
         </div>
     </header>
 
-    <main class="container">
+    <div class="container">
         <div class="filters">
-            <button class="filter-btn active"><i class="fas fa-trophy"></i> Overall</button>
-            <button class="filter-btn">Eliminaciones</button>
-            <button class="filter-btn">Victorias</button>
-            <button class="filter-btn">Tiendas</button>
-        </div>
+            <button class="filter-btn active" data-filter="overall"><i class="fas fa-globe"></i> Overall</button>
+            <button class="filter-btn" data-filter="eliminations"><i class="fas fa-skull"></i> Eliminaciones</button>
+            <button class="filter-btn" data-filter="victories"><i class="fas fa-medal"></i> Victorias</button>
+            <button class="filter-btn" data-filter="shop"><i class="fas fa-store"></i> Tiendas</button>
+            </div>
 
         <div class="leaderboard-card">
+            
             <div class="server-info">
-                <span><i class="fas fa-info-circle"></i> Estadísticas simuladas</span>
-                <span class="server-ip">DATOS DE BLADE BALL <i class="fab fa-discord"></i></span>
+                <i class="fas fa-info-circle"></i> Estadísticas simuladas
+                <span class="server-ip"><i class="fab fa-discord"></i> DATOS DE BLADE BALL</span>
             </div>
 
             <div class="table-header">
-                <div class="col-rank">#</div>
-                <div class="col-player">JUGADOR</div>
-                <div class="col-region">REGIÓN</div>
-                <div class="col-tiers">ESTADÍSTICAS CLAVE</div>
+                <div>#</div>
+                <div>JUGADOR</div>
+                <div>REGIÓN</div>
+                <div>ESTADÍSTICAS CLAVE</div>
             </div>
 
-            <div class="table-body" id="leaderboard-table">
+            <div id="leaderboard-body">
                 </div>
+
         </div>
-    </main>
+
+    </div>
 
     <script src="script.js"></script>
+    <script>
+        // Inicializa la tabla al cargar la página
+        document.addEventListener('DOMContentLoaded', renderLeaderboard);
+    </script>
 </body>
 </html>
