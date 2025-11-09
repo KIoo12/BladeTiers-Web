@@ -10,51 +10,35 @@ const tierNames = {
 };
 
 // =======================================================
-// FUNCIÓN PARA OBTENER AVATAR (Usando el viejo método de ID que es más estable si el ID existe)
-// Nota: La forma más estable es usar UserID, pero mantendremos la función para el nombre
-// para facilidad de uso, sabiendo que el error puede seguir existiendo si no se despliega.
-function getAvatarUrl(userId) {
-    // Usaremos el ID directo para mayor estabilidad
-    // NOTA: EL TAMAÑO 420x420 es más grande, y la URL es más robusta.
-    return `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`;
+// FUNCIÓN PARA OBTENER AVATAR POR NOMBRE DE USUARIO (USANDO MINOTAR)
+// Es la solución más estable sin IDs de Roblox.
+// =======================================================
+function getAvatarUrl(avatarName) {
+    // Si no pones nombre, usa un skin por defecto de MC
+    const name = avatarName || 'Steve'; 
+    return `https://minotar.net/avatar/${name}/40.png`;
 }
 
 // =======================================================
-// MAPA DE ICONOS para cada Tier (Necesitas FontAwesome en el HTML para que funcionen)
-// =======================================================
-const tierIcons = {
-    'HT1': 'fas fa-gem',        // Gema (Diamante)
-    'LT1': 'fas fa-heart',      // Corazón
-    'HT2': 'fas fa-shield-alt', // Escudo
-    'LT2': 'fas fa-flask',      // Frasco
-    'HT3': 'fas fa-trophy',     // Trofeo
-    'LT3': 'fas fa-magic',      // Varita Mágica
-    'HT4': 'fas fa-bolt',       // Rayo
-    'LT4': 'fas fa-star',       // Estrella
-    'HT5': 'fas fa-skull',      // Calavera
-    'LT5': 'fas fa-dice-d6'     // Dado
-};
-
-// =======================================================
-// DATOS DEL JUEGO (REESTRUCTURADOS)
-// Ahora se usa 'robloxId' y 'tiers' es una lista
+// DATOS DEL JUEGO (AHORA CON avatarName)
+// ⚠️ Usa el nombre de usuario del avatar que quieras mostrar.
 // =======================================================
 const leaderboardData = [
-    // Nota: He puesto IDs de Roblox reales para KillerPro y BlockBlade para la prueba del avatar
-    { rank: 1, name: 'KillerPro', robloxId: 100000000, title: 'Creador Supremo (1300 KOs)', region: 'NA', tiers: ['HT1', 'LT1', 'LT2', 'HT1'] },
-    { rank: 2, name: 'ItzRealMe', robloxId: 100000001, title: 'Combat Master (330 points)', region: 'NA', tiers: ['LT2', 'HT1', 'HT3'] },
-    { rank: 3, name: 'Swight', robloxId: 100000002, title: 'Combat Master (270 points)', region: 'NA', tiers: ['HT2', 'LT2', 'LT3', 'HT1'] },
-    { rank: 4, name: 'coldified', robloxId: 100000003, title: 'Combat Ace (246 points)', region: 'EU', tiers: ['LT2', 'HT3', 'HT4', 'LT4'] },
-    { rank: 5, name: 'Kylaz', robloxId: 100000004, title: 'Combat Ace (222 points)', region: 'NA', tiers: ['HT3', 'LT3', 'HT5'] },
-    { rank: 6, name: 'BlvckWlf', robloxId: 100000005, title: 'Combat Ace (206 points)', region: 'EU', tiers: ['LT3', 'HT4', 'HT5'] },
-    { rank: 7, name: 'Mystic', robloxId: 100000006, title: 'noob (13 KOs)', region: 'BR', tiers: ['HT5', 'LT5'] },
+    { rank: 1, name: 'Kioo', avatarName: 'Aitor92960O', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
+    { rank: 2, name: 'ItzRealMe', avatarName: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
+    { rank: 3, name: 'Swight', avatarName: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
+    { rank: 4, name: 'coldified', avatarName: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' },
+    { rank: 5, name: 'Kylaz', avatarName: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' },
+    { rank: 6, name: 'BlvckWlf', avatarName: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' },
+    // Si 'Kioo' tiene un nombre de usuario de MC/Roblox que funciona en Minotar, ponlo aquí
+    { rank: 7, name: 'Kioo', avatarName: 'Kioo12', title: 'Admin (Creator)', region: 'BR', tier: 'HT5' },
+    { rank: 8, name: 'Mystic', avatarName: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', tier: 'LT5' },
 ];
 
-
 // =======================================================
-// FUNCIÓN PRINCIPAL DE RENDERIZADO DE LA TABLA
+// FUNCIÓN PRINCIPAL DE RENDERIZADO
 // =======================================================
-async function renderLeaderboard(data = leaderboardData) {
+function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = ''; 
 
@@ -62,31 +46,26 @@ async function renderLeaderboard(data = leaderboardData) {
         const row = document.createElement('div');
         row.classList.add('player-row');
 
-        // 1. Columna # (Placa de Ranking con Avatar)
+        // 1. Columna # (Placa de Ranking)
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
-        
-        if (player.rank <= 3) {
-            rankCol.classList.add('top-player'); 
-        }
-        
-        // Se usa el robloxId (aunque sea ficticio para el ejemplo)
-        const avatarUrl = getAvatarUrl(player.robloxId); 
         
         rankCol.innerHTML = `
             <div class="rank-placa rank-${player.rank}">
                 <span class="rank-number">${player.rank}.</span>
-                <img class="player-avatar-in-placa" src="${avatarUrl}" alt="${player.name} avatar">
             </div>
         `;
         row.appendChild(rankCol);
 
-        // 2. Columna JUGADOR
+        // 2. Columna JUGADOR (CON AVATAR POR NOMBRE)
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         
+        const avatarUrl = getAvatarUrl(player.avatarName);
+        
         playerCol.innerHTML = `
             <div class="player-details">
+                <img class="player-avatar-image" src="${avatarUrl}" alt="${player.name} avatar">
                 <div class="player-info">
                     <span class="player-name">${player.name}</span>
                     <span class="player-title">${player.title}</span>
@@ -94,43 +73,26 @@ async function renderLeaderboard(data = leaderboardData) {
             </div>
         `;
         row.appendChild(playerCol);
-
+        
         // 3. Columna REGIÓN
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
         regionCol.innerHTML = `<span class="region-pill region-${player.region}">${player.region}</span>`;
         row.appendChild(regionCol);
-
-        // 4. Columna TIERS (Con Iconos y Tiers)
-        const tiersCol = document.createElement('div');
-        // Usaremos 'col-tiers' y no 'col-stats'
-        tiersCol.classList.add('col-tiers'); 
         
-        if (player.tiers && player.tiers.length > 0) {
-             player.tiers.forEach(tierKey => {
-                const tierPill = document.createElement('span');
-                tierPill.classList.add('tier-pill-icon', `tier-${tierKey}`);
-                
-                // Genera el HTML para el icono y el texto
-                const iconClass = tierIcons[tierKey] || 'fas fa-circle'; // Icono por defecto si no se encuentra
-                
-                tierPill.innerHTML = `
-                    <i class="${iconClass}"></i>
-                    <span class="tier-text">${tierKey}</span>
-                `;
-                tiersCol.appendChild(tierPill);
-            });
-        }
+        // 4. Columna TIER (Nombre Completo)
+        const tierCol = document.createElement('div');
+        tierCol.classList.add('col-tier'); 
+        const tierFullName = tierNames[player.tier] || player.tier;
+        tierCol.textContent = tierFullName;
        
-        row.appendChild(tiersCol);
+        row.appendChild(tierCol);
         leaderboardBody.appendChild(row);
     });
 }
 
+// ... (El resto de funciones de tiers y filtros se mantienen) ...
 
-// =======================================================
-// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS (Mantenida)
-// =======================================================
 function renderTiersDisplay() {
     const ranksDisplay = document.getElementById('ranks-display');
     ranksDisplay.innerHTML = ''; 
@@ -143,9 +105,6 @@ function renderTiersDisplay() {
     });
 }
 
-// =======================================================
-// LÓGICA DE BÚSQUEDA Y FILTROS (Mantenida)
-// =======================================================
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -157,7 +116,7 @@ searchInput.addEventListener('keyup', (e) => {
             player.name.toLowerCase().includes(searchTerm) ||
             player.title.toLowerCase().includes(searchTerm) ||
             player.region.toLowerCase().includes(searchTerm) ||
-            player.tiers.some(tier => tier.toLowerCase().includes(searchTerm))
+            (tierNames[player.tier] && tierNames[player.tier].toLowerCase().includes(searchTerm))
         );
         renderLeaderboard(filteredData);
     }
@@ -193,9 +152,6 @@ filterButtons.forEach(button => {
     });
 });
 
-// =======================================================
-// INICIALIZACIÓN AL CARGAR LA PÁGINA
-// =======================================================
 document.addEventListener('DOMContentLoaded', () => {
     renderLeaderboard(); 
 });

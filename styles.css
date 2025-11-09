@@ -1,5 +1,5 @@
-/* --- Fuentes de Google Fonts (MCtiers usa Roboto y Open Sans) --- */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
+/* --- Fuentes de Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght{400;500;700}&display=swap');
 
 /* Variables para colores */
 :root {
@@ -10,12 +10,15 @@
     --color-text: #e0e0e0; 
     --color-link: #a1a1a1; 
     --border-color: #38383e; 
+    
+    /* Colores de Ranks */
     --rank-gold: #f7a83d; 
-    --rank-silver: #c0c0c0;
+    --rank-silver: #7f8c8d; 
     --rank-bronze: #cd7f32;
-    --rank-other: #3a3a3f; 
     --rank-text-dark: #212121; 
     --rank-text-light: #ffffff; 
+    
+    /* Colores de Región */
     --region-bg-na: #b52b2b; 
     --region-bg-eu: #3b5998; 
     --region-bg-as: #3c933c; 
@@ -47,21 +50,82 @@ body {
     display: none !important;
 }
 
-/* --- Navbar, Header, Filters (Abreviados) --- */
-.navbar { background-color: var(--bg-main); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
-.navbar .logo { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px; color: var(--color-primary); }
-.leaderboard-header { padding: 20px 0; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;}
-.filters { background-color: var(--bg-main); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; border: 1px solid var(--border-color); }
-.filter-btn { background-color: var(--bg-light); color: var(--color-text); border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-.filter-btn.active { background-color: var(--color-primary); color: var(--bg-dark); font-weight: 700; }
-.leaderboard-card { background-color: var(--bg-main); border-radius: 8px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+/* --- Navbar --- */
+.navbar {
+    background-color: var(--bg-main);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-bottom-left-radius: 8px; 
+    border-bottom-right-radius: 8px;
+}
+.navbar .logo {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--color-primary);
+}
+.search-container input {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-light);
+    color: var(--color-text);
+    width: 250px;
+    transition: border-color 0.3s;
+}
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+.filters {
+    background-color: var(--bg-main);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+}
+.filter-btn {
+    background-color: var(--bg-light);
+    color: var(--color-text);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--bg-dark);
+    font-weight: 700;
+}
+.leaderboard-card {
+    background-color: var(--bg-main);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
 
 
-/* --- Encabezado de la Tabla (AJUSTADO: Tiers a la derecha) --- */
+/* --- Encabezado de la Tabla (Orden y Ancho) --- */
 .table-header {
     display: grid;
-    /* Columna # (Placa): 150px | Columna JUGADOR: 3fr | Columna REGIÓN: 100px | Columna TIERS: 3fr */
-    grid-template-columns: 150px 3fr 100px 3fr; 
+    /* Columna # (Placa): 80px | Columna JUGADOR: 4fr | Columna REGIÓN: 100px | Columna TIER: 2fr */
+    grid-template-columns: 80px 4fr 100px 2fr; 
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -70,26 +134,30 @@ body {
     border-bottom: 1px solid var(--border-color);
     align-items: center;
 }
-.table-header .header-region,
-.table-header .header-tiers {
-    text-align: right; 
-    padding-right: 10px; 
-}
+.table-header .header-region { text-align: center; } 
+.table-header .header-tier { text-align: right; } 
 
-/* --- Filas de Jugadores (Ajuste de Grid) --- */
+
+/* --- Filas de Jugadores (Brillo y Grid) --- */
 .player-row {
     background-color: var(--bg-main); 
     display: grid;
-    grid-template-columns: 150px 3fr 100px 3fr; 
+    grid-template-columns: 80px 4fr 100px 2fr; 
     align-items: center;
     min-height: 70px; 
     margin-bottom: 5px; 
     border-radius: 8px; 
     overflow: hidden; 
     border: 1px solid var(--border-color); 
+    transition: box-shadow 0.3s;
 }
 .player-row:hover { background-color: var(--bg-light); }
 .player-row > div { display: flex; align-items: center; padding: 8px 10px; }
+
+/* BRILLO (GLOW) para el TOP 3 */
+.player-row:nth-child(1) { box-shadow: 0 0 10px rgba(247, 168, 61, 0.4); } 
+.player-row:nth-child(2) { box-shadow: 0 0 8px rgba(127, 140, 141, 0.4); } 
+.player-row:nth-child(3) { box-shadow: 0 0 6px rgba(205, 127, 50, 0.4); } 
 
 
 /* ======================================================= */
@@ -106,98 +174,104 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: center; 
     align-items: center;
     font-size: 24px; 
     font-weight: 700;
     position: absolute; 
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 1; 
-    /* Forma de Placa (como la imagen que enviaste) */
-    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
+}
+.rank-number {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
-    padding-left: 15px; 
 }
 
-/* Avatar del jugador - Diseño para la placa */
-.col-rank-placa .player-avatar-in-placa {
-    position: absolute;
-    right: -10px; /* Mueve el avatar ligeramente hacia la derecha del borde de la placa */
-    top: 50%; 
-    transform: translateY(-50%); 
-    width: 70px; /* Tamaño del avatar */
-    height: 70px;
-    z-index: 2; 
-    object-fit: contain; 
-    border-radius: 0; 
-    
-    /* Pequeña sombra para realzar el borde del avatar */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+/* Colores de placa para TOP 3 */
 .rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
 .rank-placa.rank-2 { background-color: var(--rank-silver); color: var(--rank-text-dark); }
 .rank-placa.rank-3 { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
-    background-color: var(--rank-other); 
-    color: var(--rank-text-light);
+    background-color: transparent; 
+    color: var(--color-link);
+    font-size: 18px;
 }
 
 
 /* ======================================================= */
-/* --- COLUMNA JUGADOR --- */
+/* --- COLUMNA JUGADOR (CON AVATAR DE ROBLOX) --- */
 /* ======================================================= */
 .col-player { 
-    padding-left: 20px; 
-    /* Asegúrate de que no haya imágenes aquí */
-}
-
-/* ======================================================= */
-/* --- COLUMNA TIERS (EL NUEVO DISEÑO CON ICONOS) --- */
-/* ======================================================= */
-.col-tiers {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: flex-end; /* Alinea las tiers a la derecha */
-    gap: 5px; /* Espacio entre las píldoras de tier */
-    padding-right: 10px;
-}
-
-.tier-pill-icon {
-    font-size: 13px;
-    font-weight: 500;
-    padding: 3px 6px; 
-    border-radius: 4px; 
-    color: var(--color-text); 
-    background-color: var(--bg-light); 
-    border: 1px solid var(--border-color);
-    white-space: nowrap;
-    display: inline-flex;
+    display: flex; 
     align-items: center;
-    gap: 4px; /* Espacio entre el icono y el texto */
+    gap: 15px; 
+    padding-left: 0; 
+}
+
+.player-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilo para la imagen del avatar - La esfera con borde */
+.player-avatar-image {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; /* Forma de esfera/círculo */
+    border: 2px solid white; /* Borde de la esfera */
+    object-fit: cover; 
+    flex-shrink: 0; 
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); 
+    /* Fondo para avatar de fallback si la imagen falla */
+    background-color: #333; 
+}
+
+.player-info { display: flex; flex-direction: column; }
+.player-name { 
+    font-weight: 600; 
+    font-size: 15px; 
+    color: var(--color-text); 
     font-family: 'Open Sans', sans-serif; 
 }
-
-/* Colores de Iconos por TIER (Puedes personalizar esto) */
-.tier-pill-icon i {
-    font-size: 11px;
+.player-title { 
+    font-size: 12px; 
+    color: var(--color-link); 
+    font-family: 'Open Sans', sans-serif;
 }
-.tier-HT1 i { color: #ffd700; } /* Gold/Gema */
-.tier-LT1 i { color: #e74c3c; } /* Red/Corazón */
-.tier-HT2 i { color: #3498db; } /* Blue/Escudo */
-.tier-LT2 i { color: #2ecc71; } /* Green/Frasco */
-.tier-HT3 i { color: #f39c12; } /* Naranja/Trofeo */
-.tier-LT3 i { color: #9b59b6; } /* Púrpura/Magia */
-.tier-HT4 i { color: #f1c40f; } /* Amarillo/Rayo */
-.tier-LT4 i { color: #e67e22; } /* Naranja suave/Estrella */
-.tier-HT5 i { color: #95a5a6; } /* Gris/Calavera */
-.tier-LT5 i { color: #7f8c8d; } /* Gris oscuro/Dado */
 
-/* ... (El resto de estilos de Región, Títulos, etc. se mantienen) ... */
-.col-region { display: flex; justify-content: flex-end; align-items: center; position: relative; padding-right: 20px; padding-left: 10px; }
-.col-region::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 80%; background-color: rgba(var(--border-color), 0.5); }
-.region-pill { color: white; padding: 6px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; min-width: 45px; text-align: center; font-family: 'Open Sans', sans-serif; }
+
+/* ======================================================= */
+/* --- COLUMNA REGIÓN (Centrada) --- */
+/* ======================================================= */
+.col-region {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding: 0 10px;
+}
+.region-pill {
+    color: white; 
+    padding: 6px 10px; 
+    border-radius: 4px; 
+    font-size: 12px; 
+    font-weight: 600;
+    min-width: 45px; 
+    text-align: center;
+    font-family: 'Open Sans', sans-serif; 
+}
 .region-pill.region-NA { background-color: var(--region-bg-na); }
 .region-pill.region-EU { background-color: var(--region-bg-eu); }
 .region-pill.region-AS { background-color: var(--region-bg-as); }
 .region-pill.region-BR { background-color: var(--region-bg-br); }
-/* El resto de estilos se mantienen */
+
+
+/* ======================================================= */
+/* --- COLUMNA TIER (Nombre Completo, A la derecha) --- */
+/* ======================================================= */
+.col-tier {
+    display: flex;
+    justify-content: flex-end; 
+    font-size: 14px;
+    font-weight: 500;
+    padding-right: 15px;
+}
