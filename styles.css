@@ -1,0 +1,233 @@
+/* Variables para colores */
+:root {
+    --bg-dark: #1e2024;
+    --bg-main: #272a30;
+    --color-primary: #f7a83d;
+    --color-text: #e0e0e0;
+    --color-link: #a1a1a1;
+    --color-rank-1: #ffd700;
+    --color-rank-2: #c0c0c0;
+    --color-rank-3: #cd7f32;
+    --border-color: #383a42;
+}
+
+/* Estilos Globales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--color-text);
+    min-height: 100vh;
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-text);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* --- Navegación (Header) --- */
+.navbar {
+    background-color: var(--bg-main);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    color: var(--color-primary);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav a {
+    margin: 0 15px;
+    font-size: 14px;
+    color: var(--color-link);
+}
+
+.search-bar {
+    background-color: #1e2024;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    color: var(--color-text);
+    outline: none;
+    margin-left: 10px;
+}
+
+/* --- Filtros (Botones) --- */
+.filters {
+    background-color: var(--bg-main);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.filter-btn {
+    background-color: #383a42;
+    color: var(--color-text);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #4a4d55;
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--bg-dark);
+    font-weight: bold;
+}
+
+/* --- Info del Servidor --- */
+.leaderboard-card {
+    background-color: var(--bg-main);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.server-info {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    font-size: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    color: var(--color-link);
+}
+
+.server-ip {
+    color: #4CAF50; /* Color verde para la IP */
+}
+
+/* --- Encabezado de la Tabla --- */
+.table-header {
+    display: grid;
+    grid-template-columns: 50px 1fr 100px 3fr;
+    padding: 10px 0;
+    font-size: 12px;
+    color: var(--color-link);
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Filas de la Tabla (Jugador) --- */
+.player-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 100px 3fr;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.player-row:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para el Ranking */
+.col-rank {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Colores para Top 3 */
+.rank-1 { color: var(--color-rank-1); }
+.rank-2 { color: var(--color-rank-2); }
+.rank-3 { color: var(--color-rank-3); }
+
+/* Estilo del Jugador */
+.player-details {
+    display: flex;
+    align-items: center;
+}
+
+.player-details img {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.player-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.player-title {
+    font-size: 12px;
+    color: var(--color-link);
+    display: block;
+    margin-top: 2px;
+}
+
+/* Estilo de la Región */
+.col-region {
+    background-color: #9d1a33;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    width: 40px;
+}
+
+/* Estilo de las cajas de Tiers/Estadísticas */
+.col-tiers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tier-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+    color: var(--bg-dark);
+}
+
+/* Estilo para las cajas de estadísticas de Blade Ball */
+.tier-icon.stat-box {
+    background-color: #555555;
+    color: white;
+    font-size: 11px;
+    padding: 3px 6px;
+}
