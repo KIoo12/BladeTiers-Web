@@ -18,27 +18,24 @@ const tableBody = document.getElementById('leaderboard-table');
 const searchInput = document.getElementById('player-search');
 
 // Función principal para renderizar la tabla
-function renderTable(data) {
-    tableBody.innerHTML = '';
+function renderLeaderboard(data = leaderboardData) {
+    const leaderboardBody = document.getElementById('leaderboard-body');
+    leaderboardBody.innerHTML = ''; // Limpiar la tabla
 
-    if (data.length === 0) {
-        tableBody.innerHTML = '<div style="padding: 20px; text-align: center; color: #a1a1a1;">No se encontraron jugadores que coincidan con la búsqueda.</div>';
-        return;
-    }
-
-    data.forEach(player => {
+    data.forEach((player, index) => {
         const row = document.createElement('div');
         row.classList.add('player-row');
 
         // 1. Columna del Ranking
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank');
-        if (player.rank <= 3) {
-            rankCol.classList.add(`rank-${player.rank}`);
-        }
-        rankCol.textContent = player.rank + '.';
+        rankCol.textContent = player.rank;
+        if (player.rank === 1) rankCol.classList.add('rank-1');
+        if (player.rank === 2) rankCol.classList.add('rank-2');
+        if (player.rank === 3) rankCol.classList.add('rank-3');
+        row.appendChild(rankCol);
 
-        // 2. Columna del Jugador y Título
+        // 2. Columna del Jugador y Título (Estructura MCtiers)
         const playerCol = document.createElement('div');
         playerCol.classList.add('col-player');
         playerCol.innerHTML = `
@@ -50,28 +47,29 @@ function renderTable(data) {
                 </div>
             </div>
         `;
+        row.appendChild(playerCol);
+
 
         // 3. Columna de la Región
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
         regionCol.textContent = player.region;
-
-        // 4. Columna de las Estadísticas
-        const statsCol = document.createElement('div');
-        statsCol.classList.add('col-tiers');
-
-        player.stats.forEach(stat => {
-            const statBox = document.createElement('span');
-            statBox.classList.add('tier-icon', 'stat-box');
-            statBox.textContent = stat;
-            statsCol.appendChild(statBox);
-        });
-
-        row.appendChild(rankCol);
-        row.appendChild(playerCol);
         row.appendChild(regionCol);
-        row.appendChild(statsCol);
-        tableBody.appendChild(row);
+
+        // 4. Columna de las Estadísticas (Tiers/Píldoras)
+        const tiersCol = document.createElement('div');
+        tiersCol.classList.add('col-tiers');
+
+        // Crea las píldoras de estadísticas
+        player.stats.forEach(stat => {
+            const statPill = document.createElement('span');
+            statPill.classList.add('tier-icon', 'stat-box');
+            statPill.textContent = stat;
+            tiersCol.appendChild(statPill);
+        });
+        row.appendChild(tiersCol);
+
+        leaderboardBody.appendChild(row);
     });
 }
 
