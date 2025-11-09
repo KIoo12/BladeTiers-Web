@@ -323,3 +323,89 @@ nav a {
     font-size: 11px;
     font-weight: normal;
 }
+
+/* ======================================================= */
+/* --- ESTILO DE PLACA (RANKING) --- */
+/* ======================================================= */
+
+/* Aseguramos que la columna de ranking tome el espacio para la placa */
+.col-rank-placa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.rank-placa {
+    width: 100%; /* Ocupa el espacio de su columna */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--bg-dark); /* Texto oscuro para que resalte en el fondo de color */
+    position: relative;
+    overflow: hidden;
+}
+
+.rank-number {
+    z-index: 3;
+    color: var(--bg-dark); /* Asegura que el número sea oscuro */
+    padding-left: 10px;
+}
+
+/* Placa - TOP 3 DISEÑO (Background de color solido) */
+.rank-1 {
+    background-color: var(--color-rank-1); /* Dorado brillante */
+    /* Forma de la placa (similar a MCtiers) */
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+    color: var(--bg-dark);
+}
+.rank-2 {
+    background-color: var(--color-rank-2); /* Plata */
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+    color: var(--bg-dark);
+}
+.rank-3 {
+    background-color: var(--color-rank-3); /* Bronce */
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+    color: var(--bg-dark);
+}
+
+/* Placa - DISEÑO RESTO DE JUGADORES (Background de color link) */
+.rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
+    background-color: var(--color-link); /* Color gris/secundario para el resto */
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+    color: var(--bg-dark);
+}
+
+/* Sobreescribir el padding de .player-row para que la placa funcione bien */
+.player-row {
+    padding: 0; /* Quitamos el padding para que la placa ocupe todo el alto */
+    height: 65px; /* Altura fija para la fila/placa */
+}
+/* Aseguramos que el contenido esté centrado verticalmente */
+.player-row > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px; /* Padding interno para el contenido */
+}
+.col-rank-placa {
+    padding: 0; /* Quitamos el padding de la columna de la placa */
+}
+
+/* Ajuste fino de la cuadrícula para el nuevo orden (#, JUGADOR, TIERS, REGIÓN) */
+.table-header, .player-row {
+    grid-template-columns: 80px 2fr 3fr 100px; /* Ajuste para dar más espacio a Tiers */
+}
+
+/* Hacemos el contenido interno del jugador un poco más pequeño para caber mejor */
+.col-player {
+    padding-left: 15px;
+}
+.player-details img {
+    width: 40px;
+    height: 40px;
+}

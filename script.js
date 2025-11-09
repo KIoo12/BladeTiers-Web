@@ -30,10 +30,65 @@ function renderLeaderboard(data = leaderboardData) {
         const row = document.createElement('div');
         row.classList.add('player-row');
 
+        // ----------------------------------------------------
         // Añadir clase 'top-player' para la animación de brillo
+        // ----------------------------------------------------
         if (player.rank <= 3) {
             row.classList.add('top-player');
         }
+
+        // 1. Columna del Ranking (¡Ahora con Placa!)
+        const rankCol = document.createElement('div');
+        rankCol.classList.add('col-rank-placa'); // Nueva clase para el diseño de placa
+        
+        // Contenido interno de la placa
+        rankCol.innerHTML = `
+            <div class="rank-placa rank-${player.rank}">
+                <span class="rank-number">${player.rank}.</span>
+            </div>
+        `;
+        row.appendChild(rankCol);
+
+        // 2. Columna del Jugador y Título (se mantiene igual)
+        const playerCol = document.createElement('div');
+        playerCol.classList.add('col-player');
+        playerCol.innerHTML = `
+            <div class="player-details">
+                <img src="${getAvatarUrl(player.name)}" alt="${player.name} avatar">
+                <div class="player-info">
+                    <span class="player-name">${player.name}</span>
+                    <span class="player-title">${player.title}</span>
+                </div>
+            </div>
+        `;
+        row.appendChild(playerCol);
+
+        // ----------------------------------------------------
+        // 3. Columna de las Estadísticas (TIERS) - ¡Movida a la posición 3!
+        // ----------------------------------------------------
+        const tiersCol = document.createElement('div');
+        tiersCol.classList.add('col-tiers'); // Se mantiene la clase de diseño
+        
+        player.stats.forEach(stat => {
+            const statPill = document.createElement('span');
+            statPill.classList.add('tier-icon', 'stat-box');
+            statPill.textContent = stat;
+            tiersCol.appendChild(statPill);
+        });
+        row.appendChild(tiersCol);
+
+
+        // 4. Columna de la Región - ¡Movida a la última posición!
+        const regionCol = document.createElement('div');
+        regionCol.classList.add('col-region');
+        regionCol.classList.add(`region-${player.region}`); 
+        regionCol.textContent = player.region;
+        row.appendChild(regionCol);
+
+
+        leaderboardBody.appendChild(row);
+    });
+}
 
         // 1. Columna del Ranking
         const rankCol = document.createElement('div');
@@ -78,8 +133,7 @@ function renderLeaderboard(data = leaderboardData) {
         row.appendChild(tiersCol);
 
         leaderboardBody.appendChild(row);
-    });
-}
+
 
 // =======================================================
 // BUSQUEDA Y FILTROS
