@@ -10,7 +10,8 @@ const leaderboardData = [
     { rank: 3, name: "BlockBlade", title: "Ace Defender (980 KOs)", region: "AS", stats: ["300 Wins", "980 KOs", "DMG: 40k"], tiers: ["Gold", "Silver"] },
     { rank: 4, name: "TheBaller", title: "Rising Star (850 KOs)", region: "NA", stats: ["250 Wins", "850 KOs", "DMG: 35k"], tiers: ["Silver"] },
     { rank: 5, name: "NoScopePro", title: "Newbie (500 KOs)", region: "EU", stats: ["100 Wins", "500 KOs", "DMG: 20k"], tiers: ["Bronze"] },
-    { rank: 6, name: "BladeWiz", title: "El Magico (480 KOs)", region: "EU", stats: ["80 Wins", "480 KOs", "DMG: 18k"], tiers: ["Bronze"] }, // ¡Jugador añadido!
+    { rank: 6, name: "BladeWiz", title: "El Magico (480 KOs)", region: "EU", stats: ["80 Wins", "480 KOs", "DMG: 18k"], tiers: ["Bronze"] },
+     { rank: 7, name: "Mystic", title: "noob (13 KOs)", region: "br", stats: ["46 Wins", "13 KOs", "DMG: 5k"], tiers: ["silver"] }, // ¡Jugador añadido!
 ];
 
 const tableBody = document.getElementById('leaderboard-table');
