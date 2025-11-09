@@ -2,13 +2,14 @@
 :root {
     --bg-dark: #1e2024;
     --bg-main: #272a30;
-    --color-primary: #f7a83d;
+    --color-primary: #f7a83d; /* Naranja/Dorado */
     --color-text: #e0e0e0;
     --color-link: #a1a1a1;
     --color-rank-1: #ffd700;
     --color-rank-2: #c0c0c0;
     --color-rank-3: #cd7f32;
     --border-color: #383a42;
+    --card-border: #4a4d55; /* Borde más visible para las cards */
 }
 
 /* Estilos Globales */
@@ -79,14 +80,16 @@ nav a {
     margin-left: 10px;
 }
 
-/* --- Filtros (Botones) --- */
+/* --- Filtros (Botones - Estilo píldora) --- */
 .filters {
     background-color: var(--bg-main);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px; /* Ligeramente más redondeado */
     margin-bottom: 20px;
     display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan */
     gap: 10px;
+    border: 1px solid var(--card-border); /* Borde para el contenedor de filtros */
 }
 
 .filter-btn {
@@ -94,10 +97,13 @@ nav a {
     color: var(--color-text);
     border: none;
     padding: 8px 15px;
-    border-radius: 5px;
+    border-radius: 20px; /* MUCHOS MÁS REDONDEADOS (estilo píldora) */
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex; /* Para alinear ícono y texto */
+    align-items: center;
+    gap: 5px; /* Espacio entre ícono y texto */
 }
 
 .filter-btn:hover {
@@ -106,20 +112,22 @@ nav a {
 
 .filter-btn.active {
     background-color: var(--color-primary);
-    color: var(--bg-dark);
+    color: var(--bg-dark); /* Texto oscuro en botón activo */
     font-weight: bold;
 }
 
 /* --- Info del Servidor --- */
 .leaderboard-card {
     background-color: var(--bg-main);
-    border-radius: 5px;
+    border-radius: 8px; /* Ligeramente más redondeado */
     padding: 20px;
+    border: 1px solid var(--card-border); /* Borde para la card principal */
 }
 
 .server-info {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Alineado a la derecha */
+    align-items: center; /* Alineación vertical */
     gap: 20px;
     font-size: 14px;
     padding-bottom: 10px;
@@ -130,24 +138,34 @@ nav a {
 
 .server-ip {
     color: #4CAF50; /* Color verde para la IP */
+    display: flex; /* Para alinear ícono y texto */
+    align-items: center;
+    gap: 5px;
 }
+.server-ip .fab { /* Ajuste del ícono de Discord */
+    font-size: 18px;
+}
+
 
 /* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    grid-template-columns: 50px 1fr 100px 3fr;
+    /* Ajuste de columnas: Rank | Jugador (más ancho) | Región | Estadísticas */
+    grid-template-columns: 50px 2fr 100px 3fr; 
     padding: 10px 0;
     font-size: 12px;
     color: var(--color-link);
     text-transform: uppercase;
     font-weight: bold;
     border-bottom: 1px solid var(--border-color);
+    align-items: center;
 }
 
 /* --- Filas de la Tabla (Jugador) --- */
 .player-row {
     display: grid;
-    grid-template-columns: 50px 1fr 100px 3fr;
+    /* Mismas columnas que el header */
+    grid-template-columns: 50px 2fr 100px 3fr;
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid var(--border-color);
@@ -169,75 +187,86 @@ nav a {
 .rank-2 { color: var(--color-rank-2); }
 .rank-3 { color: var(--color-rank-3); }
 
-/* --- CAMBIO: Estilo del Jugador (Más alineado como MCtiers) --- */
+/* --- NUEVO ESTILO: Detalles del Jugador (Nombre + Título) --- */
 .player-details {
     display: flex;
-    align-items: center;
+    align-items: center; /* Centra verticalmente avatar y texto */
 }
 
 .player-details img {
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
+    width: 45px; /* Ligeramente más grande */
+    height: 45px;
+    border-radius: 6px; /* Bordes suaves para el avatar */
     margin-right: 15px;
-    /* CAMBIO: Añadimos un borde sutil al avatar */
-    border: 2px solid #5a5d66; 
+    border: 2px solid var(--card-border); /* Borde sutil */
+    object-fit: cover; /* Asegura que la imagen no se distorsione */
 }
 
-.player-info { /* Nuevo contenedor para Nombre y Título */
+.player-info { /* Contenedor para Nombre y Título */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Apila nombre y título */
+    justify-content: center; /* Centra verticalmente si hay espacio */
 }
 
 .player-name {
     font-weight: bold;
     font-size: 16px;
+    color: var(--color-text);
+    margin-bottom: 2px; /* Pequeño espacio entre nombre y título */
 }
 
 .player-title {
     font-size: 12px;
     color: var(--color-link);
     display: block;
-    margin-top: 2px;
 }
 
-/* Estilo de la Región */
+/* Estilo de la Región (mantenido) */
 .col-region {
-    background-color: #9d1a33;
+    background-color: #9d1a33; /* Un rojo oscuro */
     color: white;
     padding: 5px 8px;
-    border-radius: 3px;
+    border-radius: 4px; /* Ligeramente más redondeado */
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    width: 40px;
+    width: 50px; /* Un poco más ancho */
+    margin: 0 auto; /* Centrar la píldora de región */
 }
 
-/* --- CAMBIO: Estilo de las cajas de Tiers/Estadísticas --- */
+/* --- NUEVO ESTILO: Cajas de Tiers/Estadísticas (Píldoras como MCtiers) --- */
 .col-tiers {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px; /* Aumentamos el espacio entre las cajas */
-    justify-content: flex-start; /* Aseguramos que empiecen a la izquierda */
-    padding-left: 15px; /* Pequeño espaciado a la izquierda */
+    flex-wrap: wrap; /* Permite que las píldoras se envuelvan */
+    gap: 7px; /* Espacio entre las píldoras */
+    justify-content: flex-start; /* Alinea a la izquierda */
+    padding-left: 10px; /* Un poco de sangría */
 }
 
-/* Estilo para las cajas de estadísticas de Blade Ball (las píldoras) */
-.tier-icon.stat-box {
-    background-color: #383a42; /* Cambiamos el color de fondo para que se vea más limpio */
-    color: var(--color-text);
+.tier-icon { /* Base para cualquier ícono/píldora */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 12px; /* Las hacemos más redondeadas */
-    font-weight: normal;
-    /* CAMBIO: Agregamos un borde sutil */
-    border: 1px solid var(--border-color); 
+    font-weight: bold;
+    padding: 4px 8px; /* Relleno para que se vea como píldora */
+    border-radius: 15px; /* Forma de píldora */
+    color: var(--bg-dark); /* Texto oscuro por defecto */
+    background-color: #5a5d66; /* Fondo gris para las píldoras */
+    border: 1px solid var(--card-border); /* Borde sutil */
+    white-space: nowrap; /* Evita que el texto se rompa */
 }
 
-/* Estilo para las cajas de estadísticas de Blade Ball */
+/* Estilo específico para las cajas de estadísticas (KOs, Wins, DMG) */
 .tier-icon.stat-box {
-    background-color: #555555;
-    color: white;
+    background-color: #383a42; /* Fondo más oscuro para las estadísticas */
+    color: var(--color-text);
     font-size: 11px;
-    padding: 3px 6px;
+    font-weight: normal;
 }
+
+/* Iconos específicos para los tiers/medallas (ej. HT1, LT1 en MCtiers) */
+/* Puedes definir aquí colores o estilos para tus propios "tiers" si los implementas */
+.tier-icon.tier-legend { background-color: #ffd700; } /* Dorado */
+.tier-icon.tier-diamond { background-color: #b9f2ff; } /* Azul claro */
+/* Añade más clases para diferentes tiers si quieres colores específicos */
