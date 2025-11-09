@@ -1,29 +1,29 @@
-/* --- Fuentes de Google Fonts --- */
+/* --- Fuentes de Google Fonts (MCtiers usa Roboto y Open Sans) --- */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 /* Variables para colores (Basadas en MCtiers Dark Theme) */
 :root {
-    --bg-dark: #1a1a1c; 
-    --bg-main: #222226; 
-    --bg-light: #2c2c31; 
-    --color-primary: #f7a83d; 
-    --color-text: #e0e0e0; 
-    --color-link: #a1a1a1; 
-    --border-color: #38383e; 
+    --bg-dark: #1a1a1c; /* Fondo general más oscuro */
+    --bg-main: #222226; /* Fondo de tarjetas y navbar */
+    --bg-light: #2c2c31; /* Fondo de botones y elementos interactivos */
+    --color-primary: #f7a83d; /* Naranja/Dorado principal */
+    --color-text: #e0e0e0; /* Color de texto general */
+    --color-link: #a1a1a1; /* Color para enlaces y texto secundario */
+    --border-color: #38383e; /* Bordes sutiles */
 
     /* Colores de ranking */
     --rank-gold: #ffd700;
     --rank-silver: #c0c0c0;
     --rank-bronze: #cd7f32;
-    --rank-other: #3a3a3f; 
-    --rank-text-dark: #212121; 
-    --rank-text-light: #ffffff; 
+    --rank-other: #3a3a3f; /* Para rangos más allá del top 3 */
+    --rank-text-dark: #212121; /* Texto para rangos claros */
+    --rank-text-light: #ffffff; /* Texto para rangos oscuros */
 
-    /* Colores de región */
-    --region-bg-na: #882222; 
-    --region-bg-eu: #224488; 
-    --region-bg-as: #228844; 
-    --region-bg-br: #662266; 
+    /* Colores de región (personalizados para coincidir con estilos MCtiers) */
+    --region-bg-na: #882222; /* Rojo oscuro */
+    --region-bg-eu: #224488; /* Azul oscuro */
+    --region-bg-as: #228844; /* Verde oscuro */
+    --region-bg-br: #662266; /* Morado oscuro */
 }
 
 /* Estilos Globales */
@@ -31,7 +31,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif; /* Usar Roboto como fuente principal */
 }
 
 body {
@@ -51,7 +51,7 @@ body {
     display: none !important;
 }
 
-/* --- Barra de Navegación (Navbar) --- */
+/* --- Barra de Navegación (Navbar) - AJUSTADO PARA BORDES Y BUSQUEDA --- */
 .navbar {
     background-color: var(--bg-main);
     padding: 15px 40px;
@@ -60,35 +60,85 @@ body {
     align-items: center;
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-bottom-left-radius: 8px; /* Bordes redondeados */
+    border-bottom-right-radius: 8px;
 }
+
 .navbar .logo {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif; /* Mantener Open Sans para el logo */
     font-weight: 700;
     font-size: 24px;
     color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
-.navbar nav { display: flex; gap: 25px; }
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
 .navbar .nav-link {
     color: var(--color-link);
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
+    transition: color 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.navbar .nav-link:hover, .navbar .nav-link.active {
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
     color: var(--color-primary);
 }
-.navbar .search-bar { position: relative; display: flex; align-items: center; }
-.navbar .search-bar i { position: absolute; left: 10px; color: var(--color-link); }
-.navbar .search-bar input {
-    background-color: var(--bg-light);
-    border: 1px solid var(--border-color);
+
+.navbar .search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-light); /* Fondo para la barra de búsqueda */
     border-radius: 5px;
-    padding: 8px 10px 8px 35px;
-    color: var(--color-text);
+    padding: 0; /* Eliminar padding para controlar mejor con input */
+    border: 1px solid var(--border-color);
 }
+
+.navbar .search-bar i {
+    position: relative; /* Cambiado de absolute a relative para que sea parte del flow */
+    left: auto;
+    padding: 0 10px; /* Padding a los lados del icono */
+    color: var(--color-link);
+    font-size: 14px;
+}
+
+.navbar .search-bar input {
+    background-color: transparent; /* Transparente para usar el fondo del padre */
+    border: none; /* Eliminar borde del input */
+    padding: 8px 10px; /* Padding para el texto del input */
+    color: var(--color-text);
+    font-size: 14px;
+    width: 200px;
+    transition: border-color 0.3s ease;
+}
+
+.navbar .search-bar input::placeholder {
+    color: var(--color-link);
+}
+
+.navbar .search-bar input:focus {
+    outline: none;
+    /* border-color: var(--color-primary); No necesitamos borde aquí si el padre ya lo tiene */
+}
+
+/* La "barrita" o separador en la barra de búsqueda */
+.search-separator {
+    width: 1px;
+    height: 24px; /* Altura de la barra */
+    background-color: var(--border-color); /* Color del separador */
+    margin: 0 5px; /* Espacio alrededor del separador */
+}
+
 
 /* --- Encabezado de la Sección (RANKINGS) --- */
 .leaderboard-header {
@@ -99,12 +149,27 @@ body {
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
+
 .leaderboard-header h1 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif; /* Usar Open Sans para títulos grandes */
     font-size: 28px;
+    font-weight: 700;
     color: var(--color-text);
 }
-.server-info { display: flex; gap: 25px; font-size: 13px; color: var(--color-link); }
+
+.server-info {
+    display: flex;
+    gap: 25px;
+    font-size: 13px;
+    color: var(--color-link);
+    align-items: center;
+}
+
+.server-info .info-item i,
+.server-info .server-ip i {
+    margin-right: 5px;
+    color: var(--color-primary);
+}
 
 /* --- Filtros (Botones) --- */
 .filters {
@@ -116,6 +181,7 @@ body {
     gap: 10px;
     border: 1px solid var(--border-color);
 }
+
 .filter-btn {
     background-color: var(--bg-light);
     color: var(--color-text);
@@ -130,13 +196,18 @@ body {
     align-items: center;
     gap: 8px;
 }
+
+.filter-btn:hover {
+    background-color: #3a3a40; /* Hover ligeramente más oscuro */
+}
+
 .filter-btn.active {
     background-color: var(--color-primary);
-    color: var(--bg-dark);
+    color: var(--bg-dark); 
     font-weight: 700;
 }
 
-/* --- Contenedor de la Tabla (Leaderboard Card) --- */
+/* --- Tarjeta de la Tabla (Leaderboard Card) --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
@@ -148,8 +219,7 @@ body {
 /* --- Encabezado de la Tabla (AJUSTADO PARA PLACA Y CENTRADO) --- */
 .table-header {
     display: grid;
-    /* Columna # más ancha, Región y Tiers más a la derecha */
-    grid-template-columns: 100px 3fr 120px 1.5fr; 
+    grid-template-columns: 100px 3fr 120px 1.5fr; /* Placa más ancha */
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -161,30 +231,36 @@ body {
 .table-header .header-region,
 .table-header .header-tiers {
     text-align: right; /* Alinea los encabezados a la derecha */
-    padding-right: 10px; /* Pequeño padding para no pegar al borde */
+    padding-right: 10px; 
 }
 
 
-/* --- Filas de Jugadores (AJUSTADO PARA PLACA) --- */
+/* --- Filas de Jugadores (AJUSTADO PARA PLACA Y SEPARACION) --- */
 .player-row {
     background-color: var(--bg-main); 
-    border-bottom: 1px solid var(--border-color); 
+    /* border-bottom: 1px solid var(--border-color); <--- ELIMINADO para el margen */
     display: grid;
-    grid-template-columns: 100px 3fr 120px 1.5fr; /* MISMO QUE EL ENCABEZADO */
+    grid-template-columns: 100px 3fr 120px 1.5fr; 
     align-items: center;
     min-height: 70px; 
+    margin-bottom: 5px; /* Separación entre filas */
+    border-radius: 8px; /* Bordes redondeados para cada fila */
+    overflow: hidden; /* Asegura que la placa no se salga */
+    border: 1px solid var(--border-color); /* Borde individual para cada fila */
 }
-.player-row:last-child { border-bottom: none; }
+.player-row:last-child { margin-bottom: 0; } /* Eliminar margen de la última fila */
+
 .player-row:hover { background-color: var(--bg-light); }
 .player-row > div { display: flex; align-items: center; padding: 8px 10px; }
 
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) --- */
+/* --- COLUMNA # (PLACA DE RANKING) - IDENTICA A MCTIERS --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
     overflow: hidden; 
     height: 100%; 
+    padding: 0; /* Eliminar padding para que la placa ocupe todo */
 }
 .rank-placa {
     width: 100%;
@@ -192,11 +268,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 24px; /* Número más grande */
     font-weight: 700;
     position: relative;
     z-index: 2;
+    /* Ajuste para que se parezca más a la forma de MCtiers */
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
+    /* Sombra del número */
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.4); 
 }
 
 /* Colores de placa para TOP 3 */
@@ -215,7 +294,6 @@ body {
     100% { background-position: 200% 0; }
 }
 
-/* CORREGIDO: Asegura que el brillo se vea */
 .col-rank-placa.top-player .rank-placa::before {
     content: '';
     position: absolute;
@@ -241,26 +319,52 @@ body {
     object-fit: cover;
 }
 .player-info { display: flex; flex-direction: column; }
-.player-name { font-weight: 600; font-size: 15px; color: var(--color-text); }
-.player-title { font-size: 12px; color: var(--color-link); }
+.player-name { 
+    font-weight: 600; 
+    font-size: 15px; 
+    color: var(--color-text); 
+    font-family: 'Open Sans', sans-serif; /* Similar a MCtiers */
+}
+.player-title { 
+    font-size: 12px; 
+    color: var(--color-link); 
+    font-family: 'Open Sans', sans-serif;
+}
 
 /* ======================================================= */
-/* --- COLUMNA REGIÓN (CENTRADA Y AL FINAL) --- */
+/* --- COLUMNA REGIÓN (CUADRADA, GRANDE, DERECHA, EFECTO GRIS) --- */
 /* ======================================================= */
 .col-region {
     display: flex;
     justify-content: flex-end; /* ALINEADO A LA DERECHA */
     align-items: center;
-    padding: 0 10px; 
+    position: relative; /* Para la línea gris */
+    padding-right: 20px; /* Más padding para la píldora */
+    padding-left: 10px; /* Ajuste para el contenido */
 }
+
+/* Línea divisoria gris detrás de la región */
+.col-region::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 80%; /* Altura de la línea */
+    background-color: rgba(var(--border-color), 0.5); /* Color gris tenue */
+}
+
+
 .region-pill {
     color: white; 
-    padding: 6px 10px;
-    border-radius: 5px; 
-    font-size: 12px;
+    padding: 8px 12px; /* Más padding para hacerla más grande */
+    border-radius: 6px; /* Bordes ligeramente más cuadrados */
+    font-size: 13px; /* Tamaño de fuente ligeramente más grande */
     font-weight: 600;
     text-align: center;
-    min-width: 45px; 
+    min-width: 55px; /* Ancho mínimo más grande */
+    font-family: 'Open Sans', sans-serif; /* Fuente para las píldoras */
 }
 .region-pill.region-NA { background-color: var(--region-bg-na); }
 .region-pill.region-EU { background-color: var(--region-bg-eu); }
@@ -268,27 +372,28 @@ body {
 .region-pill.region-BR { background-color: var(--region-bg-br); }
 
 /* ======================================================= */
-/* --- COLUMNA TIERS (CENTRADA Y AL FINAL) --- */
+/* --- COLUMNA TIERS (DERECHA) --- */
 /* ======================================================= */
 .col-tiers {
     display: flex;
     justify-content: flex-end; /* ALINEADO A LA DERECHA */
     align-items: center;
-    padding: 0 10px;
+    padding-right: 10px;
 }
 .tier-pill {
     font-size: 13px;
     font-weight: 600;
-    padding: 5px 10px; 
+    padding: 6px 10px; /* Ajustado para ser consistente */
     border-radius: 5px; 
     color: var(--color-text); 
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
     white-space: nowrap;
+    font-family: 'Open Sans', sans-serif; /* Fuente para las píldoras */
 }
 
 /* ======================================================= */
-/* --- ESTILOS PARA EL CONTENEDOR DE TIERS --- */
+/* --- ESTILOS PARA EL CONTENEDOR DE TIERS (Ranks Display) --- */
 /* ======================================================= */
 .ranks-tiers-display {
     background-color: var(--bg-main);
@@ -296,10 +401,10 @@ body {
     padding: 20px;
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    display: flex; /* Para organizar los tiers en una fila/columna */
-    flex-wrap: wrap; /* Para que los tiers salten de línea */
-    gap: 15px; /* Espacio entre las píldoras de tier */
-    justify-content: center; /* Centrar los tiers si hay pocos */
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15px; 
+    justify-content: center; 
 }
 
 .ranks-tiers-display .tier-full-name {
@@ -312,11 +417,12 @@ body {
     border: 1px solid var(--border-color);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .ranks-tiers-display .tier-full-name:hover {
-    transform: translateY(-3px); /* Efecto hover */
-    background-color: darken(var(--bg-light), 5%); /* Simula un hover más oscuro */
+    transform: translateY(-3px); 
+    background-color: #3a3a40; 
 }
 
 /* --- Responsive Básico --- */
@@ -327,7 +433,7 @@ body {
     .server-info { flex-direction: column; align-items: flex-start; gap: 5px; }
     .filters { flex-wrap: wrap; justify-content: center; }
     .table-header, .player-row {
-        grid-template-columns: 80px 2fr 100px 1fr; /* Ajustar columnas en pantallas pequeñas */
+        grid-template-columns: 80px 2fr 100px 1fr; 
         font-size: 11px;
     }
     .player-details img { width: 30px; height: 30px; }
@@ -348,4 +454,5 @@ body {
     .player-title { display: none; }
     .rank-placa { font-size: 14px; }
     .region-pill, .tier-pill { font-size: 11px; padding: 4px 6px; }
+    .col-region::before { height: 60%; } /* Ajustar línea divisoria en móvil */
 }

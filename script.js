@@ -90,17 +90,15 @@ function renderLeaderboard(data = leaderboardData) {
 }
 
 // =======================================================
-// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS (NUEVA)
+// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS
 // =======================================================
 function renderTiersDisplay() {
     const ranksDisplay = document.getElementById('ranks-display');
-    ranksDisplay.innerHTML = ''; // Limpiar contenido anterior
+    ranksDisplay.innerHTML = ''; 
 
-    // Obtener todos los tiers únicos y ordenarlos
     const uniqueTiers = Array.from(new Set(Object.values(tierNames))).sort((a, b) => {
-        // Ordenar High Tier 1, Low Tier 1, High Tier 2, etc.
         const numA = parseInt(a.match(/\d+/)[0]);
-        const typeA = a.includes('High') ? 0 : 1; // High antes que Low
+        const typeA = a.includes('High') ? 0 : 1; 
         const numB = parseInt(b.match(/\d+/)[0]);
         const typeB = b.includes('High') ? 0 : 1;
 
@@ -125,7 +123,6 @@ searchInput.addEventListener('keyup', (e) => {
     const leaderboardDisplay = document.getElementById('leaderboard-display');
     const ranksDisplay = document.getElementById('ranks-display');
 
-    // Solo filtrar si la tabla está visible
     if (!leaderboardDisplay.classList.contains('hidden')) {
         const filteredData = leaderboardData.filter(player => 
             player.name.toLowerCase().includes(searchTerm) ||
@@ -144,20 +141,16 @@ filterButtons.forEach(button => {
         const leaderboardDisplay = document.getElementById('leaderboard-display');
         const ranksDisplay = document.getElementById('ranks-display');
         
-        // Remover 'active' de todos los botones
         filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Añadir 'active' al botón clickeado
         button.classList.add('active');
 
         const filterType = button.dataset.filter;
         
         if (filterType === 'ranks') {
-            // OCULTAR TABLA, MOSTRAR CUADRADO DE TIERS
             leaderboardDisplay.classList.add('hidden');
             ranksDisplay.classList.remove('hidden');
-            renderTiersDisplay(); // Generar los tiers en el nuevo contenedor
+            renderTiersDisplay(); 
         } else {
-            // MOSTRAR TABLA, OCULTAR CUADRADO DE TIERS
             leaderboardDisplay.classList.remove('hidden');
             ranksDisplay.classList.add('hidden');
 
@@ -165,7 +158,7 @@ filterButtons.forEach(button => {
                 renderLeaderboard(leaderboardData);
             } else {
                 console.log(`Filtro seleccionado: ${filterType}. (No hay datos específicos para este filtro en este ejemplo)`);
-                renderLeaderboard([]); // Vacía la tabla si no es Overall
+                renderLeaderboard([]); 
             }
         }
     });
@@ -175,5 +168,5 @@ filterButtons.forEach(button => {
 // INICIALIZACIÓN AL CARGAR LA PÁGINA
 // =======================================================
 document.addEventListener('DOMContentLoaded', () => {
-    renderLeaderboard(); // Renderizar la tabla inicial
+    renderLeaderboard(); 
 });
