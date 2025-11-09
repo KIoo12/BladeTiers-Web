@@ -12,7 +12,7 @@
         <span class="logo">BLADETIERS</span>
         <nav>
             <a href="#"><i class="fas fa-home"></i> Home</a>
-            <a href="#"><i class="fas fa-chart-line"></i> Rankings</a>
+            <a href="#rankings-section"><i class="fas fa-chart-line"></i> Rankings</a> 
             <a href="#"><i class="fab fa-discord"></i> Discords</a>
             <a href="#"><i class="fas fa-book"></i> Docs</a>
         </nav>
@@ -23,13 +23,11 @@
     </div>
 
     <div class="container">
-        <div class="rankings-sidebar">
-            <h2>Clasificación de Tiers</h2>
-            <div id="tier-list-container" class="tier-list-container">
-                </div>
-        </div>
-        
         <div class="leaderboard-container">
+            <div id="rankings-section" class="rankings-header">
+                <h2>RANKINGS</h2>
+            </div>
+            
             <div class="filters">
                 <button class="filter-btn active" data-filter="overall"><i class="fas fa-globe"></i> Overall</button>
                 <button class="filter-btn" data-filter="eliminaciones"><i class="fas fa-skull"></i> Eliminaciones</button>
@@ -46,7 +44,8 @@
                 <div class="table-header">
                     <div>#</div> 
                     <div>JUGADOR</div> 
-                    <div>REGIÓN</div> <div>TIERS</div> 
+                    <div>REGIÓN</div> 
+                    <div>TIERS</div> 
                 </div>
 
                 <div id="leaderboard-body">

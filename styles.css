@@ -1,4 +1,4 @@
-/* --- Fuentes de Google Fonts (Opcional, si quieres una fuente específica) --- */
+/* --- Fuentes de Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 /* Variables para colores (Adaptadas al estilo Dark) */
@@ -43,77 +43,75 @@ body {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
-    display: flex; /* Para poner el sidebar y la tabla lado a lado */
-    gap: 20px;
 }
 
-/* --- Navegación, Filtros, Info del Servidor (Se asume que ya funcionan) --- */
-.navbar, .filters, .server-info {
-    /* Mantenemos tus estilos anteriores */
-    background-color: var(--bg-main);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-}
+/* --- Navegación --- */
 .navbar {
+    background-color: var(--bg-main);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
     border-radius: 0;
     margin-bottom: 20px;
 }
-.leaderboard-container {
-    flex-grow: 1; /* Permite que la tabla ocupe el espacio restante */
+/* ... otros estilos de navegación ... */
+
+/* --- Filtros (Botones) --- */
+.filters {
+    background-color: var(--bg-main);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    border: 1px solid var(--card-border);
 }
+.filter-btn {
+    background-color: var(--bg-light);
+    color: var(--color-text);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--bg-dark); 
+    font-weight: bold;
+}
+
+/* --- Info del Servidor --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
     padding: 20px;
     border: 1px solid var(--card-border);
 }
-
-/* --- SIDEBAR DE RANKINGS/TIERS --- */
-.rankings-sidebar {
-    width: 250px; /* Ancho fijo para el sidebar */
-    background-color: var(--bg-main);
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-    align-self: flex-start; /* Se mantiene arriba */
-}
-
-.rankings-sidebar h2 {
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: var(--color-primary);
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 8px;
-}
-
-.tier-list-container {
+.server-info {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.tier-item {
-    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
-    padding: 6px 10px;
-    border-radius: 4px;
-    background-color: var(--bg-light);
-    font-size: 13px;
-    font-weight: 600;
+    gap: 20px;
+    font-size: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 10px;
+    color: var(--color-link);
 }
-
-.tier-label {
-    color: var(--color-primary); /* Color para la etiqueta (ej: T5) */
-}
-/* --- FIN SIDEBAR --- */
 
 
 /* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    grid-template-columns: 80px 2.5fr 100px 3fr; 
+    /* Ajuste de columnas: Placa(80px), Jugador(2.5fr), Región(100px), Tiers(1fr) */
+    grid-template-columns: 80px 2.5fr 100px 1fr; 
     padding: 10px 0;
     font-size: 12px;
     color: var(--color-link);
@@ -129,14 +127,13 @@ body {
     border-radius: 8px;
     margin-bottom: 10px; 
     display: grid;
-    grid-template-columns: 80px 2.5fr 100px 3fr;
+    grid-template-columns: 80px 2.5fr 100px 1fr; /* Mismo que el header */
     align-items: center;
     overflow: hidden; 
     height: 65px; 
     border: 1px solid var(--card-border); 
 }
 
-/* Aseguramos que el contenido esté centrado verticalmente */
 .player-row > div {
     height: 100%;
     display: flex;
@@ -144,8 +141,9 @@ body {
     padding: 0 10px; 
 }
 
+
 /* ======================================================= */
-/* --- ESTILO DE PLACA (RANKING) Y ANIMACIÓN --- */
+/* --- PLACA (RANKING) Y ANIMACIÓN (CORREGIDA) --- */
 /* ======================================================= */
 
 .col-rank-placa {
@@ -170,11 +168,6 @@ body {
     clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); 
 }
 
-.rank-number {
-    z-index: 3; 
-    padding-left: 10px; 
-}
-
 /* Colores de placa */
 .rank-1 .rank-placa { background-color: var(--color-rank-1-bg); color: var(--color-rank-text-dark); }
 .rank-2 .rank-placa { background-color: var(--color-rank-2-bg); color: var(--color-rank-text-dark); }
@@ -185,14 +178,12 @@ body {
     color: var(--color-rank-other-text);
 }
 
-
-/* --- Animación de Brillo para el Top 3 (Solo en la Placa) --- */
+/* Animación de Brillo (Solo en la Placa del Top 3) */
 @keyframes shine {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
 
-/* Aplicamos el brillo SOLO cuando la columna tiene la clase 'top-player' */
 .col-rank-placa.top-player .rank-placa::before {
     content: '';
     position: absolute;
@@ -213,21 +204,22 @@ body {
     opacity: 0.7; 
 }
 
-
 /* --- Estilo de la Región (CORREGIDO: CENTRADO) --- */
 .col-region {
-    display: flex; /* Añadido para centrar el contenido */
+    display: flex; /* Contenedor flex para centrar contenido */
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
+    padding: 0; /* Quitar padding para que el centrado sea preciso */
 }
 
+/* Estilo de la píldora de Región (se mantiene el centrado del texto interno) */
 .region-NA, .region-EU, .region-AS, .region-BR {
     color: white;
     padding: 5px 8px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
-    text-align: center;
+    text-align: center; /* Texto interno centrado */
     width: 50px; 
     position: relative; 
     z-index: 2;
@@ -239,11 +231,9 @@ body {
 }
 
 
-/* --- Cajas de Tiers/Estadísticas --- */
+/* --- Columna de un solo Tier --- */
 .col-tiers {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 5px; 
     justify-content: flex-start;
     padding-left: 10px;
     position: relative; 
@@ -254,9 +244,9 @@ body {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    font-size: 12px;
+    font-size: 14px; /* Un poco más grande para ser el único */
     font-weight: bold;
-    padding: 4px 6px; 
+    padding: 4px 8px; 
     border-radius: 4px; 
     color: var(--color-text); 
     background-color: var(--bg-light); 

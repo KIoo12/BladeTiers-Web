@@ -1,35 +1,26 @@
 // =======================================================
-// DATOS DEL JUEGO
+// DATOS DEL JUEGO (CORREGIDO: UN SOLO TIER POR JUGADOR)
 // =======================================================
 
 function getAvatarUrl(playerName) {
-    // URL simulada de avatar. Debes reemplazarla con tu propio servicio.
+    // URL simulada de avatar. Se puede cambiar o modificar.
     return `https://avatar.vercel.sh/${playerName}.png`; 
 }
 
-// --- DATOS DE LA CLASIFICACIÓN (CON NUEVOS TIERS) ---
+// --- DATOS DE LA CLASIFICACIÓN (CON UN SOLO TIER) ---
 const leaderboardData = [
-    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', stats: ['HT1', 'LT1', 'HT2', 'LT2'] },
-    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', stats: ['HT1', 'HT1', 'HT3', 'LT3'] },
-    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', stats: ['HT2', 'LT2', 'LT3', 'HT1'] },
-    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', stats: ['LT2', 'LT3', 'HT4', 'LT4'] },
-    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', stats: ['HT3', 'LT3', 'HT5', 'LT5'] },
-    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', stats: ['LT3', 'HT4', 'LT4', 'HT5'] },
-    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', stats: ['HT5', 'LT5', 'HT5', 'LT5'] }
+    // El campo 'stats' ahora solo contiene un string (el Tier principal)
+    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
+    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
+    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
+    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', tier: 'LT2' },
+    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', tier: 'HT3' },
+    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', tier: 'LT3' },
+    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', tier: 'HT5' }
 ];
-
-// Lista de todos los Tiers para el sidebar
-const allTiers = [
-    'HT1', 'LT1', 
-    'HT2', 'LT2', 
-    'HT3', 'LT3', 
-    'HT4', 'LT4', 
-    'HT5', 'LT5'
-];
-
 
 // =======================================================
-// FUNCIÓN PRINCIPAL DE RENDERIZADO
+// FUNCIÓN PRINCIPAL DE RENDERIZADO (CORREGIDA)
 // =======================================================
 
 function renderLeaderboard(data = leaderboardData) {
@@ -75,16 +66,15 @@ function renderLeaderboard(data = leaderboardData) {
         regionCol.classList.add(`region-${player.region}`); 
         regionCol.textContent = player.region;
 
-        // 4. CREACIÓN: Columna de las Estadísticas (Tiers/Píldoras)
+        // 4. CREACIÓN: Columna del Tier (UN SOLO TIER)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
 
-        player.stats.forEach(stat => {
-            const statPill = document.createElement('span');
-            statPill.classList.add('tier-icon', 'stat-box');
-            statPill.textContent = stat; // Texto HT/LT
-            tiersCol.appendChild(statPill);
-        });
+        // Crear solo una píldora con el Tier
+        const statPill = document.createElement('span');
+        statPill.classList.add('tier-icon', 'stat-box');
+        statPill.textContent = player.tier; // Usamos el nuevo campo 'tier'
+        tiersCol.appendChild(statPill);
         
         // =======================================================
         // AÑADIR LAS COLUMNAS EN EL ORDEN FINAL: #, JUGADOR, REGIÓN, TIERS
@@ -92,44 +82,17 @@ function renderLeaderboard(data = leaderboardData) {
 
         row.appendChild(rankCol);
         row.appendChild(playerCol);
-        row.appendChild(regionCol); // Región va antes de Tiers
+        row.appendChild(regionCol); 
         row.appendChild(tiersCol); 
 
         leaderboardBody.appendChild(row);
-    }); // Cierra el bucle forEach
-} // Cierra la función renderLeaderboard
+    }); 
+} 
 
 
 // =======================================================
-// LÓGICA DE RANKINGS Y BUSQUEDA
+// LÓGICA DE BUSQUEDA E INICIALIZACIÓN
 // =======================================================
-
-function renderTierList() {
-    const container = document.getElementById('tier-list-container');
-    container.innerHTML = ''; // Limpiar
-
-    allTiers.forEach(tier => {
-        const tierItem = document.createElement('div');
-        tierItem.classList.add('tier-item');
-        
-        const tierLabel = document.createElement('span');
-        tierLabel.classList.add('tier-label');
-        
-        // Separar High/Low del número (ej: HT1 -> T1)
-        const tierNumber = tier.substring(tier.length - 1); // 1, 2, 3, etc.
-        const tierPrefix = tier.substring(0, tier.length - 1); // HT o LT
-        
-        tierLabel.textContent = `Tier ${tierNumber}`;
-        
-        const tierValue = document.createElement('span');
-        tierValue.textContent = tierPrefix;
-
-        tierItem.appendChild(tierLabel);
-        tierItem.appendChild(tierValue);
-        container.appendChild(tierItem);
-    });
-}
-
 
 // Lógica de Búsqueda
 const searchInput = document.getElementById('player-search');
@@ -145,8 +108,7 @@ searchInput.addEventListener('keyup', (e) => {
     renderLeaderboard(filteredData);
 });
 
-// Inicialización: Asegúrate de que las funciones se llamen al cargar la página
+// Inicialización: Asegúrate de que la función se llama al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
     renderLeaderboard();
-    renderTierList(); // Llama a la función para dibujar el cuadro de Tiers
 });
