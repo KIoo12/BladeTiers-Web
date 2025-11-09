@@ -47,6 +47,10 @@ body {
     padding: 0 20px;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* --- Barra de Navegación (Navbar) --- */
 .navbar {
     background-color: var(--bg-main);
@@ -57,7 +61,6 @@ body {
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-/* ... (otros estilos de navbar) ... */
 .navbar .logo {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
@@ -133,7 +136,7 @@ body {
     font-weight: 700;
 }
 
-/* --- Tarjeta de la Tabla --- */
+/* --- Contenedor de la Tabla (Leaderboard Card) --- */
 .leaderboard-card {
     background-color: var(--bg-main);
     border-radius: 8px;
@@ -142,10 +145,11 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* --- Encabezado de la Tabla --- */
+/* --- Encabezado de la Tabla (AJUSTADO PARA PLACA Y CENTRADO) --- */
 .table-header {
     display: grid;
-    grid-template-columns: 80px 3fr 120px 1.5fr; 
+    /* Columna # más ancha, Región y Tiers más a la derecha */
+    grid-template-columns: 100px 3fr 120px 1.5fr; 
     padding: 12px 10px;
     font-size: 13px;
     color: var(--color-link);
@@ -154,13 +158,19 @@ body {
     border-bottom: 1px solid var(--border-color);
     align-items: center;
 }
+.table-header .header-region,
+.table-header .header-tiers {
+    text-align: right; /* Alinea los encabezados a la derecha */
+    padding-right: 10px; /* Pequeño padding para no pegar al borde */
+}
 
-/* --- Filas de Jugadores --- */
+
+/* --- Filas de Jugadores (AJUSTADO PARA PLACA) --- */
 .player-row {
     background-color: var(--bg-main); 
     border-bottom: 1px solid var(--border-color); 
     display: grid;
-    grid-template-columns: 80px 3fr 120px 1.5fr; 
+    grid-template-columns: 100px 3fr 120px 1.5fr; /* MISMO QUE EL ENCABEZADO */
     align-items: center;
     min-height: 70px; 
 }
@@ -169,7 +179,7 @@ body {
 .player-row > div { display: flex; align-items: center; padding: 8px 10px; }
 
 /* ======================================================= */
-/* --- COLUMNA # (PLACA DE RANKING) - CORREGIDO --- */
+/* --- COLUMNA # (PLACA DE RANKING) --- */
 /* ======================================================= */
 .col-rank-placa {
     position: relative; 
@@ -189,10 +199,11 @@ body {
     clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
 }
 
-/* CORRECCIÓN: Los selectores de color para Top 3 */
+/* Colores de placa para TOP 3 */
 .rank-placa.rank-1 { background-color: var(--rank-gold); color: var(--rank-text-dark); }
 .rank-placa.rank-2 { background-color: var(--rank-silver); color: var(--rank-text-dark); }
 .rank-placa.rank-3 { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
+/* Color para el resto */
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
     background-color: var(--rank-other); 
     color: var(--rank-text-light);
@@ -203,6 +214,8 @@ body {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
 }
+
+/* CORREGIDO: Asegura que el brillo se vea */
 .col-rank-placa.top-player .rank-placa::before {
     content: '';
     position: absolute;
@@ -232,16 +245,16 @@ body {
 .player-title { font-size: 12px; color: var(--color-link); }
 
 /* ======================================================= */
-/* --- COLUMNA REGIÓN (CENTRADa) - CORREGIDO --- */
+/* --- COLUMNA REGIÓN (CENTRADA Y AL FINAL) --- */
 /* ======================================================= */
 .col-region {
     display: flex;
-    justify-content: center; 
+    justify-content: flex-end; /* ALINEADO A LA DERECHA */
     align-items: center;
     padding: 0 10px; 
 }
 .region-pill {
-    color: white; /* <-- AÑADIDO: Asegura que el texto sea blanco */
+    color: white; 
     padding: 6px 10px;
     border-radius: 5px; 
     font-size: 12px;
@@ -249,18 +262,17 @@ body {
     text-align: center;
     min-width: 45px; 
 }
-/* CORRECCIÓN: Selectores de color para Región */
 .region-pill.region-NA { background-color: var(--region-bg-na); }
 .region-pill.region-EU { background-color: var(--region-bg-eu); }
 .region-pill.region-AS { background-color: var(--region-bg-as); }
 .region-pill.region-BR { background-color: var(--region-bg-br); }
 
 /* ======================================================= */
-/* --- COLUMNA TIERS (UN SOLO TIER) --- */
+/* --- COLUMNA TIERS (CENTRADA Y AL FINAL) --- */
 /* ======================================================= */
 .col-tiers {
     display: flex;
-    justify-content: flex-start; 
+    justify-content: flex-end; /* ALINEADO A LA DERECHA */
     align-items: center;
     padding: 0 10px;
 }
@@ -273,4 +285,67 @@ body {
     background-color: var(--bg-light); 
     border: 1px solid var(--border-color);
     white-space: nowrap;
+}
+
+/* ======================================================= */
+/* --- ESTILOS PARA EL CONTENEDOR DE TIERS --- */
+/* ======================================================= */
+.ranks-tiers-display {
+    background-color: var(--bg-main);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex; /* Para organizar los tiers en una fila/columna */
+    flex-wrap: wrap; /* Para que los tiers salten de línea */
+    gap: 15px; /* Espacio entre las píldoras de tier */
+    justify-content: center; /* Centrar los tiers si hay pocos */
+}
+
+.ranks-tiers-display .tier-full-name {
+    background-color: var(--bg-light);
+    color: var(--color-text);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.ranks-tiers-display .tier-full-name:hover {
+    transform: translateY(-3px); /* Efecto hover */
+    background-color: darken(var(--bg-light), 5%); /* Simula un hover más oscuro */
+}
+
+/* --- Responsive Básico --- */
+@media (max-width: 768px) {
+    .navbar { flex-direction: column; gap: 15px; padding: 15px 20px; }
+    .navbar nav { flex-wrap: wrap; justify-content: center; }
+    .leaderboard-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .server-info { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .filters { flex-wrap: wrap; justify-content: center; }
+    .table-header, .player-row {
+        grid-template-columns: 80px 2fr 100px 1fr; /* Ajustar columnas en pantallas pequeñas */
+        font-size: 11px;
+    }
+    .player-details img { width: 30px; height: 30px; }
+    .player-name { font-size: 13px; }
+    .player-title { font-size: 11px; }
+    .rank-placa { font-size: 16px; }
+    .ranks-tiers-display .tier-full-name { font-size: 14px; padding: 8px 12px; }
+}
+
+@media (max-width: 480px) {
+    .navbar .search-bar input { width: 150px; }
+    .table-header, .player-row {
+        grid-template-columns: 60px 1.5fr 80px 1fr; 
+    }
+    .col-rank-placa, .col-region, .col-tiers { padding: 0 5px; }
+    .player-details img { width: 25px; height: 25px; }
+    .player-name { font-size: 12px; }
+    .player-title { display: none; }
+    .rank-placa { font-size: 14px; }
+    .region-pill, .tier-pill { font-size: 11px; padding: 4px 6px; }
 }

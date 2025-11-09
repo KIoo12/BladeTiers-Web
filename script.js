@@ -10,7 +10,7 @@ const tierNames = {
 };
 
 // =======================================================
-// DATOS DEL JUEGO (PARA REPLICAR MCtiers)
+// DATOS DEL JUEGO
 // =======================================================
 function getAvatarUrl(playerName) {
     return `https://avatar.vercel.sh/${playerName}.png?size=40`; 
@@ -44,6 +44,7 @@ function renderLeaderboard(data = leaderboardData) {
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
         
+        // Aplica la clase 'top-player' para el brillo si está en el top 3
         if (player.rank <= 3) {
             rankCol.classList.add('top-player'); 
         }
@@ -69,19 +70,17 @@ function renderLeaderboard(data = leaderboardData) {
         `;
         row.appendChild(playerCol);
         
-        // 3. Columna REGIÓN (Píldora Centrada)
+        // 3. Columna REGIÓN (Píldora Centrada y al Final)
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
-        // CORRECCIÓN: Añadimos la clase region-X a la píldora
         regionCol.innerHTML = `<span class="region-pill region-${player.region}">${player.region}</span>`;
         row.appendChild(regionCol);
 
-        // 4. Columna TIERS (Con nombre completo)
+        // 4. Columna TIERS (Con nombre completo y al Final)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
         const tierPill = document.createElement('span');
         tierPill.classList.add('tier-pill');
-        // CAMBIO: Usamos el mapa de tierNames para obtener el nombre completo
         tierPill.textContent = tierNames[player.tier] || player.tier; 
         tiersCol.appendChild(tierPill);
         row.appendChild(tiersCol);
@@ -91,39 +90,83 @@ function renderLeaderboard(data = leaderboardData) {
 }
 
 // =======================================================
+// FUNCIÓN PARA RENDERIZAR LA LISTA DE TIERS (NUEVA)
+// =======================================================
+function renderTiersDisplay() {
+    const ranksDisplay = document.getElementById('ranks-display');
+    ranksDisplay.innerHTML = ''; // Limpiar contenido anterior
+
+    // Obtener todos los tiers únicos y ordenarlos
+    const uniqueTiers = Array.from(new Set(Object.values(tierNames))).sort((a, b) => {
+        // Ordenar High Tier 1, Low Tier 1, High Tier 2, etc.
+        const numA = parseInt(a.match(/\d+/)[0]);
+        const typeA = a.includes('High') ? 0 : 1; // High antes que Low
+        const numB = parseInt(b.match(/\d+/)[0]);
+        const typeB = b.includes('High') ? 0 : 1;
+
+        if (numA !== numB) return numA - numB;
+        return typeA - typeB;
+    });
+
+    uniqueTiers.forEach(tier => {
+        const tierElement = document.createElement('div');
+        tierElement.classList.add('tier-full-name');
+        tierElement.textContent = tier;
+        ranksDisplay.appendChild(tierElement);
+    });
+}
+
+// =======================================================
 // LÓGICA DE BÚSQUEDA Y FILTROS
 // =======================================================
 const searchInput = document.getElementById('player-search');
 searchInput.addEventListener('keyup', (e) => {
     const searchTerm = e.target.value.toLowerCase();
-    
-    const filteredData = leaderboardData.filter(player => 
-        player.name.toLowerCase().includes(searchTerm) ||
-        player.title.toLowerCase().includes(searchTerm) ||
-        player.region.toLowerCase().includes(searchTerm) ||
-        player.tier.toLowerCase().includes(searchTerm)
-    );
-    renderLeaderboard(filteredData);
+    const leaderboardDisplay = document.getElementById('leaderboard-display');
+    const ranksDisplay = document.getElementById('ranks-display');
+
+    // Solo filtrar si la tabla está visible
+    if (!leaderboardDisplay.classList.contains('hidden')) {
+        const filteredData = leaderboardData.filter(player => 
+            player.name.toLowerCase().includes(searchTerm) ||
+            player.title.toLowerCase().includes(searchTerm) ||
+            player.region.toLowerCase().includes(searchTerm) ||
+            (tierNames[player.tier] && tierNames[player.tier].toLowerCase().includes(searchTerm))
+        );
+        renderLeaderboard(filteredData);
+    }
 });
+
 
 const filterButtons = document.querySelectorAll('.filter-btn');
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
+        const leaderboardDisplay = document.getElementById('leaderboard-display');
+        const ranksDisplay = document.getElementById('ranks-display');
+        
+        // Remover 'active' de todos los botones
         filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Añadir 'active' al botón clickeado
         button.classList.add('active');
 
         const filterType = button.dataset.filter;
         
         if (filterType === 'ranks') {
-            // Lógica para el botón "Ranks"
-            // Dejamos esto listo para tu próxima petición
-            console.log("Botón Ranks presionado. Mostrando todos los rangos.");
-            renderLeaderboard(leaderboardData); // Por ahora, solo muestra la tabla normal
-        } else if (filterType === 'overall') {
-            renderLeaderboard(leaderboardData);
+            // OCULTAR TABLA, MOSTRAR CUADRADO DE TIERS
+            leaderboardDisplay.classList.add('hidden');
+            ranksDisplay.classList.remove('hidden');
+            renderTiersDisplay(); // Generar los tiers en el nuevo contenedor
         } else {
-            console.log(`Filtro seleccionado: ${filterType}.`);
-            renderLeaderboard([]); // Vacía la tabla si no es Overall o Ranks
+            // MOSTRAR TABLA, OCULTAR CUADRADO DE TIERS
+            leaderboardDisplay.classList.remove('hidden');
+            ranksDisplay.classList.add('hidden');
+
+            if (filterType === 'overall') {
+                renderLeaderboard(leaderboardData);
+            } else {
+                console.log(`Filtro seleccionado: ${filterType}. (No hay datos específicos para este filtro en este ejemplo)`);
+                renderLeaderboard([]); // Vacía la tabla si no es Overall
+            }
         }
     });
 });
