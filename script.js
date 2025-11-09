@@ -1,26 +1,15 @@
-// =======================================================
-// DATOS Y LOGICA
-// =======================================================
-
-// --- DATOS DE LA CLASIFICACIÓN (CON ICONOS) ---
+// --- DATOS DE LA CLASIFICACIÓN (CON NUEVOS TIERS) ---
+// Asegúrate de que esta sección esté antes de la función renderLeaderboard
 const leaderboardData = [
-    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT1', '<i class="fas fa-sword"></i> LT1', '<i class="fas fa-trophy"></i> LT1'] },
-    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT1', '<i class="fas fa-trophy"></i> HT1'] },
-    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT2', '<i class="fas fa-flask"></i> LT3', '<i class="fas fa-sword"></i> HT1'] },
-    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', stats: ['<i class="fas fa-gem"></i> HT2', '<i class="fas fa-heart"></i> LT2', '<i class="fas fa-flask"></i> LT2', '<i class="fas fa-sword"></i> LT2'] },
-    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', stats: ['<i class="fas fa-gem"></i> HT1', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> LT3', '<i class="fas fa-sword"></i> HT1'] },
-    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', stats: ['<i class="fas fa-gem"></i> HT3', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT2'] },
-    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', stats: ['<i class="fas fa-gem"></i> HT3', '<i class="fas fa-heart"></i> LT3', '<i class="fas fa-flask"></i> HT1', '<i class="fas fa-sword"></i> HT2'] }
+    { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', stats: ['HT1', 'LT1', 'HT2', 'LT2'] },
+    { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', stats: ['HT1', 'HT1', 'HT3', 'LT3'] },
+    { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', stats: ['HT2', 'LT2', 'LT3', 'HT1'] },
+    { rank: 4, name: 'coldified', title: 'Combat Ace (246 points)', region: 'EU', stats: ['LT2', 'LT3', 'HT4', 'LT4'] },
+    { rank: 5, name: 'Kylaz', title: 'Combat Ace (222 points)', region: 'NA', stats: ['HT3', 'LT3', 'HT5', 'LT5'] },
+    { rank: 6, name: 'BlvckWlf', title: 'Combat Ace (206 points)', region: 'EU', stats: ['LT3', 'HT4', 'LT4', 'HT5'] },
+    { rank: 7, name: 'Mystic', title: 'Combat Ace (13 points)', region: 'BR', stats: ['HT5', 'LT5', 'HT5', 'LT5'] }
 ];
 
-// --- FUNCIÓN PARA OBTENER AVATAR ---
-function getAvatarUrl(playerName) {
-    return `https://avatar.vercel.sh/${playerName}.png`; 
-}
-
-// =======================================================
-// RENDERIZADO DE LA TABLA
-// =======================================================
 
 function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
@@ -30,14 +19,14 @@ function renderLeaderboard(data = leaderboardData) {
         const row = document.createElement('div');
         row.classList.add('player-row');
 
-        // Añadir clase 'top-player' para la animación de brillo
-        if (player.rank <= 3) {
-            row.classList.add('top-player');
-        }
-
         // 1. CREACIÓN: Columna del Ranking (La Placa)
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
+        
+        // Aplicar la clase 'top-player' SOLO al contenedor de la placa para el brillo
+        if (player.rank <= 3) {
+            rankCol.classList.add('top-player'); 
+        }
         
         // Contenido interno de la placa (con el punto al final)
         rankCol.innerHTML = `
@@ -72,7 +61,7 @@ function renderLeaderboard(data = leaderboardData) {
         player.stats.forEach(stat => {
             const statPill = document.createElement('span');
             statPill.classList.add('tier-icon', 'stat-box');
-            statPill.textContent = stat;
+            statPill.textContent = stat; // Texto HT/LT
             tiersCol.appendChild(statPill);
         });
         
@@ -80,20 +69,13 @@ function renderLeaderboard(data = leaderboardData) {
         // AÑADIR LAS COLUMNAS EN EL ORDEN FINAL: #, JUGADOR, REGIÓN, TIERS
         // =======================================================
 
-        // 1. Ranking Placa
         row.appendChild(rankCol);
-
-        // 2. Jugador
         row.appendChild(playerCol);
-
-        // 3. Región
-        row.appendChild(regionCol); // <-- REGIÓN VA AHORA ANTES DE TIERS
-
-        // 4. Tiers/Estadísticas
+        row.appendChild(regionCol); // Región va antes de Tiers
         row.appendChild(tiersCol); 
 
         leaderboardBody.appendChild(row);
-    }); // Cierra el bucle forEach de los jugadores
+    }); // Cierra el bucle forEach
 } // Cierra la función renderLeaderboard
 
 // =======================================================
