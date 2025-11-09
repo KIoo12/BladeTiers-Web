@@ -50,7 +50,7 @@ function renderTable(data) {
                 </div>
             </div>
         `;
-        
+
         // 3. Columna de la Región
         const regionCol = document.createElement('div');
         regionCol.classList.add('col-region');
