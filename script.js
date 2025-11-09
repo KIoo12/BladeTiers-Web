@@ -44,8 +44,7 @@ function renderTable(data) {
         playerCol.innerHTML = `
             <div class="player-details">
                 <img src="${getAvatarUrl(player.name)}" alt="${player.name} avatar">
-                <div>
-                    <span class="player-name">${player.name}</span>
+                <div class="player-info"> <span class="player-name">${player.name}</span>
                     <span class="player-title">${player.title}</span>
                 </div>
             </div>
