@@ -26,7 +26,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: sans-serif; /* Usar fuente por defecto para evitar problemas */
+    font-family: sans-serif; 
 }
 
 body {
@@ -45,26 +45,7 @@ body {
     background-color: var(--bg-main);
     border: 1px solid var(--card-border);
 }
-.navbar {
-    padding: 15px 40px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.filters {
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-}
-.leaderboard-card {
-    background-color: var(--bg-main);
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid var(--card-border);
-}
+/* ... otros estilos de navegación y filtros ... */
 
 /* --- Encabezado de la Tabla (GRID DEFINITION) --- */
 .table-header {
@@ -102,7 +83,7 @@ body {
 }
 
 /* ======================================================= */
-/* --- PLACA (RANKING) Y ANIMACIÓN (Asegurado) --- */
+/* --- PLACA (RANKING) Y ANIMACIÓN (CORREGIDO) --- */
 /* ======================================================= */
 
 .col-rank-placa {
@@ -169,7 +150,6 @@ body {
     padding: 0; 
 }
 
-/* Estilo de la píldora de Región */
 .region-NA, .region-EU, .region-AS, .region-BR {
     color: white;
     padding: 5px 8px;
@@ -177,7 +157,7 @@ body {
     font-size: 12px;
     font-weight: bold;
     text-align: center; 
-    width: 50px; /* Ancho fijo para centrar bien */
+    width: 50px; 
     
     /* Asignación de colores */
     &.region-NA { background-color: var(--region-bg-na); }

@@ -8,6 +8,7 @@ function getAvatarUrl(playerName) {
 }
 
 const leaderboardData = [
+    // El campo 'tier' contiene un único valor (ej: 'HT1', 'LT3')
     { rank: 1, name: 'KillerPro', title: 'Combat Grandmaster (405 points)', region: 'NA', tier: 'HT1' },
     { rank: 2, name: 'ItzRealMe', title: 'Combat Master (330 points)', region: 'NA', tier: 'LT1' },
     { rank: 3, name: 'Swight', title: 'Combat Master (270 points)', region: 'NA', tier: 'HT2' },
@@ -25,7 +26,7 @@ function renderLeaderboard(data = leaderboardData) {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = ''; // Limpiar la tabla
 
-    data.forEach((player) => { // Eliminado 'index' ya que no se usa
+    data.forEach((player) => { 
         const row = document.createElement('div');
         row.classList.add('player-row');
 
@@ -33,7 +34,7 @@ function renderLeaderboard(data = leaderboardData) {
         const rankCol = document.createElement('div');
         rankCol.classList.add('col-rank-placa');
         
-        // Aplicar la clase 'top-player' SOLO al contenedor de la placa para el brillo
+        // Aplica la clase para el brillo y color
         if (player.rank <= 3) {
             rankCol.classList.add('top-player'); 
         }
@@ -57,22 +58,21 @@ function renderLeaderboard(data = leaderboardData) {
             </div>
         `;
         
-        // 3. Columna de la Región
+        // 3. Columna de la Región (Centrada)
         const regionCol = document.createElement('div');
-        regionCol.classList.add('col-region');
-        regionCol.classList.add(`region-${player.region}`); 
-        regionCol.textContent = player.region;
-
+        regionCol.classList.add('col-region'); // Solo col-region aquí, el centrado está en el CSS
+        regionCol.innerHTML = `<span class="region-${player.region}">${player.region}</span>`;
+        
         // 4. Columna del Tier (UN SOLO TIER)
         const tiersCol = document.createElement('div');
         tiersCol.classList.add('col-tiers');
 
         const statPill = document.createElement('span');
         statPill.classList.add('tier-icon', 'stat-box');
-        statPill.textContent = player.tier; // Usamos el campo 'tier'
+        statPill.textContent = player.tier; // USANDO EL CAMPO 'tier'
         tiersCol.appendChild(statPill);
         
-        // ORDEN FINAL DE LAS COLUMNAS: #, JUGADOR, REGIÓN, TIERS
+        // ORDEN FINAL DE LAS COLUMNAS
         row.appendChild(rankCol);
         row.appendChild(playerCol);
         row.appendChild(regionCol); 
