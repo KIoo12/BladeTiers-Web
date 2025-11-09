@@ -1,24 +1,29 @@
-/* --- Variables para colores --- */
-:root {
-    --bg-dark: #12161b; 
-    --bg-main: #1a1f26; 
-    --bg-light: #22272e; 
-    --color-primary: #f7a83d; 
-    --color-text: #e0e0e0; 
-    --color-link: #a1a1a1; 
-    --color-rank-1-bg: #e6b301; /* Dorado */
-    --color-rank-2-bg: #808080; /* Plata */
-    --color-rank-3-bg: #cd7f32; /* Bronce */
-    --color-rank-text-dark: #212121; 
-    --color-rank-other-bg: #3d4a5c; 
-    --border-color: #2e3640; 
-    --card-border: #2e3640; 
+/* --- Fuentes de Google Fonts (MCtiers usa Roboto y Open Sans) --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
 
-    /* Colores de región */
-    --region-bg-na: #9d1a33; 
-    --region-bg-eu: #3a539b; 
-    --region-bg-as: #3c8d2f; 
-    --region-bg-br: #7b297b; 
+/* Variables para colores (Basadas en MCtiers Dark Theme) */
+:root {
+    --bg-dark: #1a1a1c; /* Fondo general más oscuro */
+    --bg-main: #222226; /* Fondo de tarjetas y navbar */
+    --bg-light: #2c2c31; /* Fondo de botones y elementos interactivos */
+    --color-primary: #f7a83d; /* Naranja/Dorado principal */
+    --color-text: #e0e0e0; /* Color de texto general */
+    --color-link: #a1a1a1; /* Color para enlaces y texto secundario */
+    --border-color: #38383e; /* Bordes sutiles */
+
+    /* Colores de ranking */
+    --rank-gold: #ffd700;
+    --rank-silver: #c0c0c0;
+    --rank-bronze: #cd7f32;
+    --rank-other: #3a3a3f; /* Para rangos más allá del top 3 */
+    --rank-text-dark: #212121; /* Texto para rangos claros */
+    --rank-text-light: #ffffff; /* Texto para rangos oscuros */
+
+    /* Colores de región (personalizados para coincidir con estilos MCtiers) */
+    --region-bg-na: #882222; /* Rojo oscuro */
+    --region-bg-eu: #224488; /* Azul oscuro */
+    --region-bg-as: #228844; /* Verde oscuro */
+    --region-bg-br: #662266; /* Morado oscuro */
 }
 
 /* Estilos Globales */
@@ -26,13 +31,14 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: sans-serif; 
+    font-family: 'Roboto', sans-serif; /* Usar Roboto como fuente principal */
 }
 
 body {
     background-color: var(--bg-dark);
     color: var(--color-text);
     min-height: 100vh;
+    line-height: 1.6;
 }
 
 .container {
@@ -41,55 +47,202 @@ body {
     padding: 0 20px;
 }
 
-.navbar, .filters {
+/* --- Barra de Navegación (Navbar) --- */
+.navbar {
     background-color: var(--bg-main);
-    border: 1px solid var(--card-border);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-/* ... otros estilos de navegación y filtros ... */
 
-/* --- Encabezado de la Tabla (DEFINICIÓN DE GRID CRÍTICA) --- */
+.navbar .logo {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar .nav-link {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--color-primary);
+}
+
+.navbar .search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .search-bar i {
+    position: absolute;
+    left: 10px;
+    color: var(--color-link);
+    font-size: 14px;
+}
+
+.navbar .search-bar input {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 8px 10px 8px 35px; /* Padding a la izquierda para el icono */
+    color: var(--color-text);
+    font-size: 14px;
+    width: 200px;
+    transition: border-color 0.3s ease;
+}
+
+.navbar .search-bar input::placeholder {
+    color: var(--color-link);
+}
+
+.navbar .search-bar input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* --- Encabezado de la Sección (RANKINGS) --- */
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.leaderboard-header h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.server-info {
+    display: flex;
+    gap: 25px;
+    font-size: 13px;
+    color: var(--color-link);
+    align-items: center;
+}
+
+.server-info .info-item i,
+.server-info .server-ip i {
+    margin-right: 5px;
+    color: var(--color-primary);
+}
+
+/* --- Filtros (Botones) --- */
+.filters {
+    background-color: var(--bg-main);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.filter-btn {
+    background-color: var(--bg-light);
+    color: var(--color-text);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn:hover {
+    background-color: lighten(var(--bg-light), 5%); /* Simula un hover más claro */
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--bg-dark); /* Texto oscuro para contraste */
+    font-weight: 700;
+}
+
+/* --- Tarjeta de la Tabla (Leaderboard Card) --- */
+.leaderboard-card {
+    background-color: var(--bg-main);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* --- Encabezado de la Tabla --- */
 .table-header {
     display: grid;
-    /* # | JUGADOR | REGIÓN | TIERS */
-    grid-template-columns: 80px 2.5fr 100px 1fr; 
-    padding: 10px 0;
-    font-size: 12px;
+    /* Columnas: # | JUGADOR | REGIÓN | TIERS */
+    grid-template-columns: 80px 3fr 120px 1.5fr; 
+    padding: 12px 10px;
+    font-size: 13px;
     color: var(--color-link);
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     border-bottom: 1px solid var(--border-color);
     align-items: center;
 }
 
-/* --- Estilo de la Fila del Jugador (DEFINICIÓN DE GRID CRÍTICA) --- */
+/* --- Filas de Jugadores --- */
 .player-row {
     background-color: var(--bg-main); 
-    border-radius: 8px;
-    margin-bottom: 10px; 
+    border-bottom: 1px solid var(--border-color); /* Separador entre filas */
     display: grid;
-    grid-template-columns: 80px 2.5fr 100px 1fr; /* DEBE COINCIDIR EXACTAMENTE CON EL HEADER */
+    grid-template-columns: 80px 3fr 120px 1.5fr; /* MISMO QUE EL ENCABEZADO */
     align-items: center;
-    overflow: hidden; 
-    height: 65px; 
-    border: 1px solid var(--card-border); 
+    min-height: 70px; /* Altura mínima para cada fila */
+    transition: background-color 0.2s ease;
 }
 
-/* --- Estilos Comunes de Columna --- */
+.player-row:last-child {
+    border-bottom: none; /* Eliminar el borde inferior de la última fila */
+}
+
+.player-row:hover {
+    background-color: var(--bg-light); /* Efecto hover en las filas */
+}
+
 .player-row > div {
-    height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 10px; 
+    padding: 8px 10px; 
 }
 
 /* ======================================================= */
-/* --- PLACA (RANKING) Y ANIMACIÓN --- */
+/* --- COLUMNA # (PLACA DE RANKING) --- */
 /* ======================================================= */
-
 .col-rank-placa {
-    padding: 0; 
     position: relative; 
     overflow: hidden; 
+    height: 100%; /* Asegura que la columna ocupe toda la altura de la fila */
 }
 
 .rank-placa {
@@ -99,23 +252,24 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
     position: relative;
     z-index: 2;
-    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); 
+    /* Forma trapezoidal similar a MCtiers */
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); 
 }
 
-/* Colores de placa */
-.rank-1 .rank-placa { background-color: var(--color-rank-1-bg); color: var(--color-rank-text-dark); }
-.rank-2 .rank-placa { background-color: var(--color-rank-2-bg); color: var(--color-rank-text-dark); }
-.rank-3 .rank-placa { background-color: var(--color-rank-3-bg); color: var(--color-rank-text-dark); }
-
+/* Colores de placa para TOP 3 */
+.rank-1 .rank-placa { background-color: var(--rank-gold); color: var(--rank-text-dark); }
+.rank-2 .rank-placa { background-color: var(--rank-silver); color: var(--rank-text-dark); }
+.rank-3 .rank-placa { background-color: var(--rank-bronze); color: var(--rank-text-dark); }
+/* Color para el resto */
 .rank-placa:not(.rank-1):not(.rank-2):not(.rank-3) {
-    background-color: var(--color-rank-other-bg); 
-    color: white;
+    background-color: var(--rank-other); 
+    color: var(--rank-text-light);
 }
 
-/* Animación de Brillo (Solo en la Placa del Top 3) */
+/* Animación de Brillo (Solo para Top 3) */
 @keyframes shine {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
@@ -131,58 +285,172 @@ body {
     background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.25) 50%, /* Ligeramente más visible */
         rgba(255, 255, 255, 0) 100%
     );
     background-size: 200% 100%;
     animation: shine 3s infinite linear;
     z-index: 0; 
     pointer-events: none;
-    opacity: 0.7; 
+    opacity: 0.8; 
 }
 
-
 /* ======================================================= */
-/* --- ESTILOS CORREGIDOS: REGIÓN Y TIER --- */
+/* --- COLUMNA JUGADOR --- */
 /* ======================================================= */
-
-/* Centrado de Región (Asegurado) */
-.col-region {
-    display: flex; 
-    justify-content: center; /* CENTRADO HORIZONTAL */
-    align-items: center; 
-    padding: 0; 
+.col-player {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.region-NA, .region-EU, .region-AS, .region-BR {
-    color: white;
-    padding: 5px 8px;
-    border-radius: 4px;
+.player-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-details img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    object-fit: cover;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--color-text);
+}
+
+.player-title {
     font-size: 12px;
-    font-weight: bold;
-    width: 50px; 
-    
-    /* Asignación de colores */
-    &.region-NA { background-color: var(--region-bg-na); }
-    &.region-EU { background-color: var(--region-bg-eu); }
-    &.region-AS { background-color: var(--region-bg-as); }
-    &.region-BR { background-color: var(--region-bg-br); }
+    color: var(--color-link);
 }
 
-/* Columna de un solo Tier */
+/* ======================================================= */
+/* --- COLUMNA REGIÓN (CENTRADa) --- */
+/* ======================================================= */
+.col-region {
+    display: flex;
+    justify-content: center; /* CENTRADO HORIZONTAL */
+    align-items: center;
+    padding: 0 10px; /* Padding reducido para centrar mejor la píldora */
+}
+
+/* Estilo de la píldora de región */
+.region-pill {
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px; /* Bordes ligeramente redondeados */
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 45px; /* Ancho mínimo para la píldora */
+}
+
+/* Colores de región específicos */
+.region-NA .region-pill { background-color: var(--region-bg-na); }
+.region-EU .region-pill { background-color: var(--region-bg-eu); }
+.region-AS .region-pill { background-color: var(--region-bg-as); }
+.region-BR .region-pill { background-color: var(--region-bg-br); }
+
+/* ======================================================= */
+/* --- COLUMNA TIERS (UN SOLO TIER) --- */
+/* ======================================================= */
 .col-tiers {
     display: flex;
-    justify-content: flex-start;
-    padding-left: 10px;
+    justify-content: flex-start; /* Alineado a la izquierda */
+    align-items: center;
+    padding: 0 10px;
 }
 
-.tier-icon {
-    font-size: 14px; 
-    font-weight: bold;
-    padding: 4px 8px; 
-    border-radius: 4px; 
+.tier-pill {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 10px; 
+    border-radius: 5px; 
     color: var(--color-text); 
     background-color: var(--bg-light); 
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--border-color);
     white-space: nowrap;
+}
+
+/* --- Responsive Básico --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    .navbar nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .leaderboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .server-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .filters {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .table-header, .player-row {
+        grid-template-columns: 60px 2fr 100px 1fr; /* Ajustar columnas en pantallas pequeñas */
+        font-size: 11px;
+    }
+    .col-player .player-details img {
+        width: 30px;
+        height: 30px;
+    }
+    .player-name {
+        font-size: 13px;
+    }
+    .player-title {
+        font-size: 11px;
+    }
+    .rank-placa {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .search-bar input {
+        width: 150px;
+    }
+    .table-header, .player-row {
+        grid-template-columns: 50px 1.5fr 80px 1fr; 
+    }
+    .col-rank-placa, .col-region, .col-tiers {
+        padding: 0 5px;
+    }
+    .player-details img {
+        width: 25px;
+        height: 25px;
+    }
+    .player-name {
+        font-size: 12px;
+    }
+    .player-title {
+        display: none; /* Ocultar el título en pantallas muy pequeñas */
+    }
+    .rank-placa {
+        font-size: 14px;
+    }
+    .region-pill, .tier-pill {
+        font-size: 11px;
+        padding: 4px 6px;
+    }
 }

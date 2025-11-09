@@ -11,10 +11,10 @@
     <div class="navbar">
         <span class="logo">BLADETIERS</span>
         <nav>
-            <a href="#"><i class="fas fa-home"></i> Home</a>
-            <a href="#rankings-section"><i class="fas fa-chart-line"></i> Rankings</a> 
-            <a href="#"><i class="fab fa-discord"></i> Discords</a>
-            <a href="#"><i class="fas fa-book"></i> Docs</a>
+            <a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+            <a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Rankings</a>
+            <a href="#" class="nav-link"><i class="fab fa-discord"></i> Discords</a>
+            <a href="#" class="nav-link"><i class="fas fa-book"></i> Docs</a>
         </nav>
         <div class="search-bar">
             <i class="fas fa-search"></i>
@@ -23,35 +23,31 @@
     </div>
 
     <div class="container">
-        <div class="leaderboard-container">
-            
-            <div id="rankings-section" class="rankings-header">
-                <h2>RANKINGS</h2>
+        <div class="leaderboard-header">
+            <h1>RANKINGS</h1>
+            <div class="server-info">
+                <span class="info-item"><i class="fas fa-info-circle"></i> Estadísticas simuladas</span>
+                <span class="server-ip"><i class="fas fa-wifi"></i> DATOS DE BLADE BALL</span>
             </div>
-            
-            <div class="filters">
-                <button class="filter-btn active" data-filter="overall"><i class="fas fa-globe"></i> Overall</button>
-                <button class="filter-btn" data-filter="eliminaciones"><i class="fas fa-skull"></i> Eliminaciones</button>
-                <button class="filter-btn" data-filter="victorias"><i class="fas fa-trophy"></i> Victorias</button>
-                <button class="filter-btn" data-filter="tiendas"><i class="fas fa-store"></i> Tiendas</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="overall"><i class="fas fa-globe"></i> Overall</button>
+            <button class="filter-btn" data-filter="eliminaciones"><i class="fas fa-skull"></i> Eliminaciones</button>
+            <button class="filter-btn" data-filter="victorias"><i class="fas fa-trophy"></i> Victorias</button>
+            <button class="filter-btn" data-filter="tiendas"><i class="fas fa-store"></i> Tiendas</button>
+        </div>
+
+        <div class="leaderboard-card">
+            <div class="table-header">
+                <div>#</div> 
+                <div>JUGADOR</div> 
+                <div>REGIÓN</div> 
+                <div>TIERS</div> 
             </div>
 
-            <div class="leaderboard-card">
-                <div class="server-info">
-                    <span class="info-item"><i class="fas fa-info-circle"></i> Estadísticas simuladas</span>
-                    <span class="server-ip"><i class="fas fa-wifi"></i> DATOS DE BLADE BALL</span>
+            <div id="leaderboard-body">
                 </div>
-
-                <div class="table-header">
-                    <div>#</div> 
-                    <div>JUGADOR</div> 
-                    <div>REGIÓN</div> 
-                    <div>TIERS</div> 
-                </div>
-
-                <div id="leaderboard-body">
-                    </div>
-            </div>
         </div>
     </div>
 
